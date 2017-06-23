@@ -1,0 +1,111 @@
+% Chapter Template
+
+
+\chapter{Material and Methods} % Main chapter title
+
+\label{Chapter2} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+\section{An ACT-R - jobschedule - model}
+
+In the introduction, I will explain the basics of ACT-R and job shop scheduling (pyschedule in particular). Roughly: Actions of one module (=resource) can only happen successively, all actions of different modules can happen simultaneously. The procedural memory is the 'impulse generator' that orchestrates the actions of the other modules by production rule firing. 
+
+The following modules (resources) are available:
+Cognitive Modules:
+\begin{itemize}
+\item
+Procedural Memory;
+\item
+Working Memory;
+\item
+Declarative Memory;
+\item
+Visual Module;
+\end{itemize}
+Motor Modules:
+\begin{itemize}
+\item
+Aural module;
+\item 
+Head module; 
+\item
+Eyes Module;
+\item
+Feet Module;
+\item
+Thorax Module
+\end{itemize}
+
+The basic tasks of every take-over are described in the following. 
+
+\subsection{Basic Takeover}
+\subsubsection{Attend Aural}
+The takeover begins with a production rule that commands the Aural module to encode the sound that is heard, see \ref{encodesound}. A production rule always takes 50ms in ACT-R \cite{bothell2004act, anderson2009can}.
+
+\subsubsection{Request Meaning Sound}
+After the sound has been encoded, another production rule commands the procedural memory to 'remember' the meaning of the sound. This is different than in e.g. \cite{anderson2009can}, where the sound is only encoded and 'immediately' understood. Whereas the model by Anderson models behavior in a (very typical ACT-R) simple reaction time experiment, the complexity of the options what the sound could mean here requires the driver to remember what the sound means. In some cases, it will be a very long time ago that the driver was last requested to take over. 
+
+\subsubsection{Meaning Sound}
+Is done by the procedural memory. It takes 100ms. This is derived from the 50ms which a request takes if only one matching chunk is present in declarative memory \cite{tutorial}. Another 50ms are added to choose the right chunk from several matching ones, because the sound will most likely not be the only possible sound with which the car requests some action from the driver. For simplicity, it is assumed that the driver always chooses the right chunk. Such a severe misunderstanding at the very beginning of the takeover would lead to the car entering a 'minimal risk state' (such as stopping the car on the hard shoulder), which makes modeling of driver behavior unnecessary.
+
+\subsubsection{Change Goal}
+This production commands a change of the goal buffer in ACT-R. A goal buffer representation did not seem to be helpful in my case (the goal would just be 'take over' during the whole takeover), but the time-consuming production rule was implemented.
+
+\subsubsection{move Attention}
+As the 'impulse generator', the procedural memory commands every move of attention (see \cite{salvucci2009toward, salvucci2008threaded} for examples). This happened already in the 'attend aural' command. It also precedes every saccade. In this case, it is requested that attention is moved to the road.
+\label{moveAttention}
+
+
+
+In case the driver is not ready to take over, the following inputs can model the driver's changing state.
+
+
+\subsection{Lockout}
+It has been observed that subjects take longer to disengage from a secondary task if the secondary task is not automatically quit by the in-car entertainment \cite{}. 
+\subsubsection{Quit Non-driving related task}
+Therefore, another production rule that commands the disengagement from the non-driving related task.
+
+\subsection{Expert}
+
+Depending on whether the person that takes over is novice or expert, the task 'encode sound' has a different length. 
+
+\subsubsection{Encode Sound}
+A novice or someone who has not taken over for a very long time always listens to the whole output which takes five seconds. Thus, 'encode sound' takes five seconds. Someone who has experienced several Requests to Intervene recently, 'encode sound' takes 1000ms for an RtI that indicates a critical takeover scenario (one reacts right after the first sound), and 2000ms for a RtI that indicates an uncritical takeover scenario. encode sound can only happn after the production rule 
+\label{encodesound}
+
+
+\subsection{Gaze Off}
+
+If the driver has his gaze off road, the following tasks are added:
+
+\subsubsection{motor preparation head}
+In ACT-R, motor preparation time depends on the complexity of the movement and how different it is from the previous movement \cite{bothell2004act, anderson2004integrated}. For simplicity, I will always use a motor preparation time of 250ms in my model, which corresponds to a typical motor preparation time in ACT-R \cite{tutorial}.
+
+\subsubsection{motor initiation head}
+Like in ACT-R, every motor action is preceded by a 50ms initiation \cite{bothell2004act}.
+
+\subsubsection{move head}
+Movement times were, as in ACT-R, calculated by Fitt's law. The index of difficulty for head movement was calculated with $ID = \log _2 \left( \frac{2A}{W} \right)$. The main movement was assumed to be 60\textdegree (from codriver seat to the road), the target size was assumed to be 30\textdegree (the part of the wind shield that shows the relevant part of the road). The resulting movement time was taken from \cite{hoffmann2017head}. In this case Index of Difficulty was 2, and the resulting movement time 600ms. 
+
+\subsubsection{move attention}
+see \ref{moveAttention} - maybe this one is too much?
+
+\subsubsection{eye movement preparation}
+
+\subsubsection{saccade}
+
+\subsubsection{encode visual object}
+
+
+
+
+
+In addition, if the non-driving-related task is not automatically ended by the in-car entertainment and the situation is uncritical, the task 'quit non-driving related task' is added. If the gaze was off road for a longer period of time, the tasks '' are added. if also the body was turned away, the tasks '' are added.
+
+\subsubsection{}
+
+\subsection{Gaze On}
+ In case the driver looks at the street, but just started looking there, these tasks are also added, without the tasks that are added for turning the head to the road
