@@ -1,0 +1,53 @@
+@article{anderson2004integrated,
+  title={An integrated theory of the mind.},
+  author={Anderson, John R and Bothell, Daniel and Byrne, Michael D and Douglass, Scott and Lebiere, Christian and Qin, Yulin},
+  journal={Psychological review},
+  volume={111},
+  number={4},
+  pages={1036},
+  year={2004},
+  publisher={American Psychological Association}
+}
+
+@article{hoffmann2017head,
+  title={Head Rotation Movement Times},
+  author={Hoffmann, Errol R and Chan, Alan HS and Heung, PT},
+  journal={Human Factors},
+  pages={0018720817701000},
+  year={2017},
+  publisher={SAGE Publications Sage CA: Los Angeles, CA}
+}
+
+@article{bothell2004act,
+  title={Act-r 6.0 reference manual},
+  author={Bothell, Dan},
+  journal={Working Draft},
+  year={2004}
+}
+
+@book{anderson2009can,
+  title={How can the human mind occur in the physical universe?},
+  author={Anderson, John R},
+  year={2009},
+  publisher={Oxford University Press}
+}
+
+@inproceedings{salvucci2009toward,
+  title={Toward a unified theory of the multitasking continuum: from concurrent performance to task switching, interruption, and resumption},
+  author={Salvucci, Dario D and Taatgen, Niels A and Borst, Jelmer P},
+  booktitle={Proceedings of the SIGCHI conference on human factors in computing systems},
+  pages={1819--1828},
+  year={2009},
+  organization={ACM}
+}
+
+@article{salvucci2008threaded,
+  title={Threaded cognition: an integrated theory of concurrent multitasking.},
+  author={Salvucci, Dario D and Taatgen, Niels A},
+  journal={Psychological review},
+  volume={115},
+  number={1},
+  pages={101},
+  year={2008},
+  publisher={American Psychological Association}
+}
