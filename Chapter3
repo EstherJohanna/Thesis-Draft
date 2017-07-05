@@ -1,3 +1,5 @@
+% Chapter Template
+
 \chapter{Results} 
 
 \label{Chapter3} 
@@ -68,7 +70,83 @@ We will try both a stepwise regression using the `forward' method, and an `enter
 \\
 \subsection{checking the multiple regression requirements}
 \subsubsection{Linearity of the problem}
-Since we postulated a linear model, we have to check whether all independent variables have a linear relationship with the dependent variable when controlled for the other factors. This can be done by looking at the partial regression diagrams (See Fig ... ). On the Y axis this shows the residual that would result if the dependent variable would be regressed on all independent variables except the one written on X. On the X axis it shows the residual that would result if X would be regressed on all other variables.  Thus, the part of the variance that is not explained by all factors but X is plotted against the part of X that is independent of the other variables. If these scatterplots look linear, we can assume a linear relationship. While most scatterplots look very little linear, we will assume a linear relationship for simplicity of the analysis (Golds Begruending nachschauen!). 
+Since we postulated a linear model, we have to check whether all independent variables have a linear relationship with the dependent variable when controlled for the other factors. This can be done by looking at the partial regression diagrams (See Fig \ref{regdiag} ). On the Y axis this shows the residual that would result if the dependent variable would be regressed on all independent variables except the one written on X. On the X axis it shows the residual that would result if X would be regressed on all other variables.  Thus, the part of the variance that is not explained by all factors but X is plotted against the part of X that is independent of the other variables. If these scatterplots look linear, we can assume a linear relationship. While most scatterplots look very little linear, we will assume a linear relationship for simplicity of the analysis (Golds Begruending nachschauen!). 
+
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/4}
+        \caption{A gull}
+        \label{fig:gull}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/5}
+        \caption{A tiger}
+        \label{fig:tiger}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/6}
+        \caption{A mouse}
+        \label{fig:mouse}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/7}
+        \caption{A gull}
+        \label{fig:gull}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/8}
+        \caption{A tiger}
+        \label{fig:tiger}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/9}
+        \caption{A mouse}
+        \label{fig:mouse}
+    \end{subfigure}
+        \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/10}
+        \caption{A gull}
+        \label{fig:gull}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/11}
+        \caption{A tiger}
+        \label{fig:tiger}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/12}
+        \caption{A mouse}
+        \label{fig:mouse}
+    \end{subfigure}
+        \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/13}
+        \caption{A gull}
+        \label{fig:gull}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/14}
+        \caption{A tiger}
+        \label{fig:tiger}
+    \end{subfigure}
+    \caption{Partial Regression Diagrams}\label{regdiag}
+\end{figure}
+
 
 \subsubsection{Linearity of the coefficients (Gauss-Markov-Theorem 1)}
 we assume that the postulated model is linear in the coefficients: 
@@ -142,10 +220,107 @@ The following shows a frequency table of the design matrix. Piecharts can be fou
 \includegraphics[width = 1\textwidth]{Figures/Korrs}
 \decoRule
 \caption[A Piechart]{Haeufigkeit.}
-\label{korrs}
+\label{bla}
 \end{figure}
 
-Just by looking at the frequency table, it becomes obvious that some factors are varied only very little. Besides this being a problem because of little information available, it is also a problem because all factors that are kept the same over most studies correlate highly with the constant, which is a row of ones in front of the design matrix. In general, we have the problem that many factors correlate. This can be seen in Fig. \ref{korrs} . While correlations between Takeover time (`Uebernahmezeit') and all the other factors (first row) are desired, all other correlations between factors are not. `Hands Occupied' (`Handbelegung') and `Gaze Off Road' have a Pearson-Correlation of 0.931. This makes sense because most likely one looks towards one's hands if those are occupied. Time pressure (`Zeitnot') and Mirror Check (`Spiegelblick') have a correlation of 0.71, which might be coincidence. Also other factors have more or less high correlations. This leads to imprecise estimates of the regression parameters. 
+Just by looking at the frequency table, it becomes obvious that some factors are varied only very little. Besides this being a problem because of little information available, it is also a problem because all factors that are kept the same over most studies correlate highly with the constant, which is a row of ones in front of the design matrix. In general, we have the problem that many factors correlate. This can be seen in Fig. \ref{bla} . While correlations between Takeover time (`Uebernahmezeit') and all the other factors (first row) are desired, all other correlations between factors are not. `Hands Occupied' (`Handbelegung') and `Gaze Off Road' have a Pearson-Correlation of 0.931. This makes sense because most likely one looks towards one's hands if those are occupied. Time pressure (`Zeitnot') and Mirror Check (`Spiegelblick') have a correlation of 0.71, which might be coincidence. Also other factors have more or less high correlations. In other words, variables party explain each other and do not necessarily add completely new information. This can be compared to a matrix that does not have full rank because its rows are linearly dependent; it results in an ill-defined problem because we have more variables we want to find than equations that can independently explain those variables. Thus, using a design matrix with factors that correlate leads to imprecise estimates of the regression parameters. Unfortunately, it can not be clearly said how much correlation is too much correlation. For this, the measures of Tolerance Value and Variation Inflation Factor (`VIF', which is simply the inverse of the Tolerance Value) are typically examined. Those are measures of multicollinearity. While one can have multiple variables that do not correlate pairwise, there might still be significant multicollinearity between the set of all of them. The Tolerance Value is calculated by $T_{j} = 1- R^{2}$, where $R^{2}$ is the coefficient of Determination. $R^{2}$ measures how much of the variance of the dependent variable is explained by this independent variable. In other words, the VIF/Tolerance Value measure how much larger the variance of the regression coefficient is than if the variable had been completely uncorrelated with other variables in the model ref (https://stats.stackexchange.com/questions/86269/what-is-the-effect-of-having-correlated-predictors-in-a-multiple-regression-mode/86965#86965). This Tolerance Value should, as a rule of thumb, not be smaller than 0.1. Including correlating variables in a model leads to p-values that are higher (=less significant) by a factor of the VIF than they would otherwise would be. 
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/3}
+\decoRule
+\caption[A Piechart]{Haeufigkeit.}
+\label{3}
+\end{figure}
+
+As can be seen in Fig. \ref{3}, none of the Tolerance Values (`Toleranz', second-last column under `Kollinearitaetsstatistik') are smaller than 0.1. While this first seems surprising due to the correlation between several factors, Belsley writes in his book on `Regression Diagnostics' that high correlations are not always problematic \cite{belsley2005regression}. Thus, we will continue our analysis while keeping the high correlations in mind. They are the reason we will try a singular value decomposition in part \ref{svd}.\\
+In Fig. \ref{3} it can be seen that besides the constant (`Konstante'), much traffic (`viel Verkehr') and urgency of the situation (`Dringlichkeit Situation'), none of the coefficients are significant (sixth column `Sig.'). This significance depends on the magnitude of the effect, the magnitude of the error variance, the variance of the variable itself, the amount of data, and the number of variables in the model cite(https://stats.stackexchange.com/questions/86269/what-is-the-effect-of-having-correlated-predictors-in-a-multiple-regression-mode/86965#86965). In theory, our resulting regression equation would look the following:
+
+\begin{equation}
+\begin{split}
+TakeOverTime = 3.16 - 0.07 \cdot Gaze Off Road + 0.005 \cdot Mirror Check Necessary - \\
+0.25 \cdot Body Turned Away + 0.19 \cdot Hands Occupied  + 0.07 \cdot Cognitive Distraction + \\
+0.46 \cdot Much Traffic - 0.43 \cdot Urgency of Situation - 0.08 \cdot Decision Necessary - \\
+0.11 \cdot  Time Pressure + 0.17 \cdot Long Autonomous Ride  - 0.14 \cdot Elderly Subject  + \\ 
+\epsilon_{i}
+ \end{split}
+\end{equation}
+
+This is quite unlikely, since e.g. a participant would become 0.25 sec faster at taking over by having the body turned away. Also the signs of `Gaze Off Road' and `Decision Necessary' do not make sense. An off road gaze should make take-over time longer, and a necessary decision as well.  Calculating the regression with Matlab and Excel leads to the exact same results. While the sign of the other variables makes sense, their beta should not be interpreted due to aforementioned reasons.
 \\
-Multicollinearity can be measured by the Tolerance Value and the Variation Inflation Factor (`VIF', which is simply the inverse of the Tolerance Value). The Tolerance Value is calculated by $T_{j} = 1- R^{2}$, where R^{2} is the coefficient of Determination. It measures how much of the variance of the dependent variable is explained by this independent variable. This Tolerance Value should, as a rule of thumb, not be smaller than 0.1. 
+Also the Goodness of fit ($R^2$) of the whole model can be measured with SPSS (Fig. \ref{15}, upper part `Modelluebersicht'). As already mentioned, $R^2$ measures the amount of variability in takeover time that is explained by the model. The adjusted $R^2$ is corrected by the amount of independent variables. This is necessary because $R^2$ rises with the amount of independent variables, even if they do not add any information. The adjusted $R^2$ is reduced by the number of independent variables and increased by sample size. In our case, 22,7\% of the variability of takeover time are explained by our eleven factors. A plot of the predicted against the measured takeover time can be found in Fig. \ref{16}. The significance of different studies can be compared by the effect size. The resulting effect size can be calculated by Cohen's d: $\sqrt{\frac{0.227}{1-0.227}} = 0.53$. This corresponds to a strong effect according to Cohen \cite{cohen1992power}. 
+The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model, which is calculated to be significant. Considering the significance of the single betas, this of course does not hold true. 
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/15}
+\decoRule
+\caption[A Piechart]{Haeufigkeit.}
+\label{15}
+\end{figure}
+\\
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/16}
+\decoRule
+\caption[A Piechart]{Haeufigkeit.}
+\label{15}
+\end{figure}
+\\
+This approach has used the `enter' method for including variables in the regression. When using the stepwise forward regression not all variables are in included at once, but variable per variable is included until adding another makes no significant change in the model anymore. 
+The question whether it is better to include all variables that one thinks to have an influence, or to do so stepwise until no further improvement of significance is reached divides opinions. A criticism of the stepwards regression is that one `picks out' the most suitable variables. Typically, for testing an a-priori hypothesis, the `enter' method is used (thus, all variables are being included). Thus, in my case, I would say that I assume that all factors have a relevant influence, and with my regression I only want to show which factor has which weighting. The stepwise regression is used for more explorative approaches: I am not sure whether all eleven factors have an influence, so I test which ones make a significant difference. Considering that I chose all factors from literature that showed that the corresponding factor does have an influence, the `enter' method seems more suitable. 
+
+This will be most likely due to the aforementioned multicollinearity. Also the proposed linearity of the problem can be questioned (Fig. \ref{regdiag}). 
+
+\subsection{Singular Value Decomposition} \label{svd}
+
+https://stats.stackexchange.com/questions/70899/what-correlation-makes-a-matrix-singular-and-what-are-implications-of-singularit?noredirect=1&lq=1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
