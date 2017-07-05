@@ -97,5 +97,38 @@
   publisher={American Association for the Advancement of Science}
 }
 
+@article{cohen1992power,
+  title={A power primer.},
+  author={Cohen, Jacob},
+  journal={Psychological bulletin},
+  volume={112},
+  number={1},
+  pages={155},
+  year={1992},
+  publisher={American Psychological Association}
+}
 
+
+@book{belsley2005regression,
+  title={Regression diagnostics: Identifying influential data and sources of collinearity},
+  author={Belsley, David A and Kuh, Edwin and Welsch, Roy E},
+  volume={571},
+  year={2005},
+  publisher={John Wiley \& Sons}
+}
+
+@phdthesis{goldmodeling,
+  title={Modeling of Take-Over Performance in Highly Automated Vehicle Guidance},
+  author={Gold, Christian G{\"u}nter},
+  school={Dissertation, M{\"u}nchen, Technische Universit{\"a}t M{\"u}nchen, 2016}
+}
+
+@article{mason1991collinearity,
+  title={Collinearity, power, and interpretation of multiple regression analysis},
+  author={Mason, Charlotte H and Perreault Jr, William D},
+  journal={Journal of marketing research},
+  pages={268--280},
+  year={1991},
+  publisher={JSTOR}
+}
 
