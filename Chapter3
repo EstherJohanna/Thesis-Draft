@@ -1,0 +1,151 @@
+\chapter{Results} 
+
+\label{Chapter3} 
+
+
+\section{Meta-analysis of literature by regression}
+
+Several studies have investigated on factors that influence takeover time. While it is impossible to study all influencing factors in one study, it is possible to compare the studies' results with each other. The aim of the following meta-analysis was to find across studies which influencing factors are the most crucial ones to consider in a takeover model. In addition, a regression equation that includes all influencing factors could be used to predict takeover time. 
+
+\subsection{Literature search}
+We found a broad width of studies through an existing database at Bosch. Furthermore, we chose papers with matching titles from a Google scholar search with the keywords `takeover time highly automated driving'. From both searches, further publications were found through the cited references. A sum of \~{100} papers was found. 
+
+\subsection{Selection of Studies}
+Of those papers, all papers were chosen that were concerned with Highly Automated Driving (SAE Level 3). In addition, we had the following inclusion criteria:
+\begin{itemize}
+\item The subjects knew that a takeover would occur and were instructed on how to behave in that case (Excluded papers: ...);
+\item Takeover consists of a takeover request, time given for the takeover, and a full transfer of control after the driver indicates that he wants to take back control (Excluded papers: );
+\item studies that measured takeover time (excluded ..., because they gave 8 seconds time and measured how many mistakes were made)
+\item enough information about the study was given (Excluded : ...);
+\item they measured something that we expect to have an influence `on the road'; excluded ... because they test visual vs. visual-auditory takeover requests; we expect always visual-auditory to be used;
+\item about highly automated driving in a car, not platooning (excluded ...);
+\item where did they find a difference between the conditions; excluded ... because they showed that presenting the RtI on a cell phone vs. a display does not make a significant difference.
+\end{itemize}
+By this, we have a selection of ... papers to be compared in the meta-analysis. Those were ....
+
+\subsection{criteria for selection of influencing factors}
+As influencing factors we chose all factors that showed to have a relevant influence in the ... papers. In addition, we chose three factors that we considered to be important and that could be inferred from the papers. 
+\\
+The factors chosen from the papers were the following:
+\begin{itemize}
+\item Gaze Off Road
+\item Body Turned Away
+\item Hands Occupied
+\item Cognitive Distraction
+\item Much Traffic
+\item Urgency Of Situation
+\item Time Pressure
+\item Long Autonomous Ride
+\item Elderly Subject
+\end{itemize}
+
+The factors chosen because of their relevance were:
+\begin{itemize}
+\item Mirror Check Needed
+\item Decision Necessary
+\end{itemize}
+
+\subsection{Regression Equation}
+Studies report mean or median, and some standard deviation. Data on single subjects is not given. Therefore, one line in our regression equation did not (as usual) include one subject, but one condition in a study. For example, if vollrath had one baseline condition that on average took 2,2 seconds for the takeover, the first number of the result vector was 2,2. For the Design matrix, we filled out every condition as `True', `Not True', or `Not Measured'. As an example, I show how the row of the design matrix for Vollrath's baseline condition was filled out:
+ Gaze Off Road (`Not True'), Mirror Check Necessary(`Not Measured'), Body Turned Away(`Not True'), Hands Occupied(`Not True'), Cognitive Distraction(`Not True'), Much Traffic(`Not Measured'), Urgency of Situation(`Not Measured'), Decision Necessary(`Not Measured'), Time Pressure(`True'), Long Autonomous Ride(`Not True'), Elderly Subject(`Not Measured').
+ \\
+ A complete version of design- and result matrix can be found in \ref{Appendix}. 
+\\
+While some of the factors are `naturally binary' (Gaze Off Road, Mirror Check Necessary, Body Turned, Hands Occupied and Decision Necessary), for others a threshold needed to be found. Elderly Subject, Long Autonomous Ride and Tiredness were binary because they were only investigated in one study each with a relevant difference. Only ... included subjects over ... years old; and only ... drive 60 minutes highly automated until they request to take over. Cognitive Distraction was rated as `High' when the subject played tetris, solved the 20 question task, read an email, solved the difficult remote association test, calculated, did the 2-back task, did a cognitive-motoric task or had to do a fill-in-the-blanks text. It was rated low when the subjects did nothing, read newspaper, watched a video, solved the easy remote association task or the surrogate reference task. Reading emails was assumed to be cognitively more demanding than reading newspapers, because one has to come up with an answer to emails, but not to the newspaper. In Feldhuetter subjects could choose their activities which was rated as cognitively demanding, because we assume subjects to choose something that keeps them busy and not bored. For traffic, the threshold was chosen between no traffic at all and traffic existed on the road. This showed to induce a bigger difference than little and much traffic in Koerber. A takeover situation was rated urgent when a collision had to be avoided, and as uncritical when a ride simply had to be continued on a straight road. Also `curve with wind gust' in Zeeb was rated as urgent. For Time Pressure the threshold was set at 6 seconds, because Gold et al. find that at 5 seconds an overhasty takeover occurs, but not at 7 seconds Gold. 
+\\
+Thus, we postulate the following regression equation:
+\begin{equation}
+\begin{split}
+TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Mirror Check Necessary + \\
+\beta_{3} \cdot Body Turned Away + \beta_{4} \cdot Hands Occupied  + \beta_{5} \cdot Cognitive Distraction + \\
+\beta_{6} \cdot Much Traffic + \beta_{7} \cdot Urgency of Situation +  \beta_{8} \cdot Decision Necessary + \\
+\beta_{9} \cdot  Time Pressure + \beta_{10} \cdot Long Autonomous Ride  + \beta_{11} \cdot Elderly Subject  + \\ 
+\epsilon_{i}
+ \end{split}
+\end{equation}
+\\
+We will try both a stepwise regression using the `forward' method, and an `enter' regression which uses all given variables. 
+\\
+\subsection{checking the multiple regression requirements}
+\subsubsection{Linearity of the problem}
+Since we postulated a linear model, we have to check whether all independent variables have a linear relationship with the dependent variable when controlled for the other factors. This can be done by looking at the partial regression diagrams (See Fig ... ). On the Y axis this shows the residual that would result if the dependent variable would be regressed on all independent variables except the one written on X. On the X axis it shows the residual that would result if X would be regressed on all other variables.  Thus, the part of the variance that is not explained by all factors but X is plotted against the part of X that is independent of the other variables. If these scatterplots look linear, we can assume a linear relationship. While most scatterplots look very little linear, we will assume a linear relationship for simplicity of the analysis (Golds Begruending nachschauen!). 
+
+\subsubsection{Linearity of the coefficients (Gauss-Markov-Theorem 1)}
+we assume that the postulated model is linear in the coefficients: 
+
+\begin{equation}
+\begin{split}
+TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Mirror Check Necessary + \\
+\beta_{3} \cdot Body Turned Away + \beta_{4} \cdot Hands Occupied  + \beta_{5} \cdot Cognitive Distraction + \\
+\beta_{6} \cdot Much Traffic + \beta_{7} \cdot Urgency of Situation +  \beta_{8} \cdot Decision Necessary + \\
+\beta_{9} \cdot  Time Pressure + \beta_{10} \cdot Long Autonomous Ride  + \beta_{11} \cdot Elderly Subject  + \\ 
+\epsilon_{i}
+ \end{split}
+\end{equation}
+
+\subsubsection{random sample (Gauss-Markov-Theorem 2)}
+We assume that all subjects were drawn from a random sample. Most likely we have a skew for a WEIRD sample (western, educated, industrialized, rich, democratic, see \cite{jones2010weird}) , which needs to be kept in mind. 
+
+\subsubsection{Strict exogeneity (Gauss-Markov-Theorem 3)}
+This hypothesizes that the the error term has a mean of zero for every value of an independent variable. For this, we look at a scatter plot of the standardized estimated value of y on the X-axis, and the standardized error terms (residuals) on the Y-axis, see Fig. \ref{1} . By visual inspection we estimate that the mean error is zero.
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/1}
+\decoRule
+\caption[Scatter Plot of errors]{piep.}
+\label{1}
+\end{figure}
+
+%prev
+\subsubsection{Homoscedasticity}
+This means that the error has the same amount of variance for every value of the independent variable. This can also be checked by visual inspection of Fig. \ref{1}. Now, it is important that no `shape' can be seen. The dots need to be equally distributed along the x-axis. This seems to be the case. This can be statistically proven by e.g. the Breusch-Pagan-Test or the White-test , which would go beyond the scope of this thesis.
+
+\subsubsection{Independence of the Error Term}
+this requires that the errors of the independent variables are independent (thus, have no influence on each other). This can be checked by the Durbin-Watson test. The statistic can have values between 0 and 4, both of which indicate a high correlation, while 2 indicates a low correlation. In our case, the Durbin-Watson value is 0.99, which indicates medium correlation between the error terms. 
+
+\subsubsection{Normal Distribution of the Error Term}
+The residuals should be normally distributed. This can be checked and confirmed by Fig. \ref{2}
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/2}
+\decoRule
+\caption[Scatter Plot of errors]{piep.}
+\label{2}
+\end{figure}
+
+\subsubsection{No Multicollinearity}
+The following shows a frequency table of the design matrix. Piecharts can be found in Fig. ... . 
+
+\begin{center}
+  \begin{tabular}{ l | c | c | c| r}
+    \hline
+    Factor & Amount 0 & Amount 1 & Amount -1 & Sum\\ \hline
+    Gaze Off Road & 9 & 51 & 53 & 113\\ \hline
+    Mirror Check Necessary & 6 &41 &66 &113\\ \hline
+    Body Turned Away & 7 & 4 & 102 & 113\\ \hline
+    Hands Occupied & 6 & 56 &51 &113\\ \hline
+    Cognitive Distraction & 25 & 28 &  60 & 113 \\ \hline
+     Much Traffic & 15 & 32 & 66 & 113\\ \hline
+     Urgency of Situation & 6 &  100 & 7 & 113 \\ \hline
+     Decision Necessary & 6 & 23 & 84 &  113 \\ \hline
+     Time Pressure & 5 &  38 & 70 & 113 \\ \hline
+      Long Autonomous Ride & 11 & 3 & 99 & 113\\ \hline
+      Elderly Subject & 77 & 21 & 15 & 113\\ \hline
+    \hline
+  \end{tabular}
+\end{center}
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/Korrs}
+\decoRule
+\caption[A Piechart]{Haeufigkeit.}
+\label{korrs}
+\end{figure}
+
+Just by looking at the frequency table, it becomes obvious that some factors are varied only very little. Besides this being a problem because of little information available, it is also a problem because all factors that are kept the same over most studies correlate highly with the constant, which is a row of ones in front of the design matrix. In general, we have the problem that many factors correlate. This can be seen in Fig. \ref{korrs} . While correlations between Takeover time (`Uebernahmezeit') and all the other factors (first row) are desired, all other correlations between factors are not. `Hands Occupied' (`Handbelegung') and `Gaze Off Road' have a Pearson-Correlation of 0.931. This makes sense because most likely one looks towards one's hands if those are occupied. Time pressure (`Zeitnot') and Mirror Check (`Spiegelblick') have a correlation of 0.71, which might be coincidence. Also other factors have more or less high correlations. This leads to imprecise estimates of the regression parameters. 
+\\
+Multicollinearity can be measured by the Tolerance Value and the Variation Inflation Factor (`VIF', which is simply the inverse of the Tolerance Value). The Tolerance Value is calculated by $T_{j} = 1- R^{2}$, where R^{2} is the coefficient of Determination. It measures how much of the variance of the dependent variable is explained by this independent variable. This Tolerance Value should, as a rule of thumb, not be smaller than 0.1. 
+
