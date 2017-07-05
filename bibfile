@@ -51,3 +51,51 @@
   year={2008},
   publisher={American Psychological Association}
 }
+
+@article{salvucci2001integrated,
+  title={An integrated model of eye movements and visual encoding},
+  author={Salvucci, Dario D},
+  journal={Cognitive Systems Research},
+  volume={1},
+  number={4},
+  pages={201--220},
+  year={2001},
+  publisher={Elsevier}
+}
+
+@article{becker1979analysis,
+  title={An analysis of the saccadic system by means of double step stimuli},
+  author={Becker, Wolfang and J{\"u}rgens, Reinhart},
+  journal={Vision research},
+  volume={19},
+  number={9},
+  pages={967--983},
+  year={1979},
+  publisher={Elsevier}
+}
+
+@article{gunzelmann2011sleep,
+  title={Sleep loss and driver performance: Quantitative predictions with zero free parameters},
+  author={Gunzelmann, Glenn and Moore, L Richard and Salvucci, Dario D and Gluck, Kevin A},
+  journal={Cognitive Systems Research},
+  volume={12},
+  number={2},
+  pages={154--163},
+  year={2011},
+  publisher={Elsevier}
+}
+
+
+@article{jones2010weird,
+  title={A WEIRD view of human nature skews psychologists' studies},
+  author={Jones, Dan},
+  journal={Science},
+  volume={328},
+  number={5986},
+  pages={1627--1627},
+  year={2010},
+  publisher={American Association for the Advancement of Science}
+}
+
+
+
