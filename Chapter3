@@ -49,7 +49,7 @@ The factors chosen because of their relevance were:
 
 \subsection{Regression Equation}
 Studies report mean or median, and some standard deviation. Data on single subjects is not given. Therefore, one line in our regression equation did not (as usual) include one subject, but one condition in a study. For example, if vollrath had one baseline condition that on average took 2,2 seconds for the takeover, the first number of the result vector was 2,2. For the Design matrix, we filled out every condition as `True', `Not True', or `Not Measured'. As an example, I show how the row of the design matrix for Vollrath's baseline condition was filled out:
- Gaze Off Road (`Not True'), Mirror Check Necessary(`Not Measured'), Body Turned Away(`Not True'), Hands Occupied(`Not True'), Cognitive Distraction(`Not True'), Much Traffic(`Not Measured'), Urgency of Situation(`Not Measured'), Decision Necessary(`Not Measured'), Time Pressure(`True'), Long Autonomous Ride(`Not True'), Elderly Subject(`Not Measured').
+ Gaze Off Road (`Not True'), Mirror Check Necessary(`Not Measured'), Body Turned Away(`Not True'), Hands Occupied(`Not True'), Cognitive Distraction(`Not True'), Much Traffic(`Not Measured'), Urgency of Situation(`Not Measured'), Decision Necessary(`Not Measured'), Time Pressure(`True'), Long Autonomous Ride(`Not True'), Elderly Subject(`Not Measured'). From a `regression' point of view, it would have been ideal to have a series of homogeneous observations with identical boundary conditions that test all possible combinations of factors. This will be assumed for the rest of the analysis and should be kept in mind as a possible source of error for the discussion. 
  \\
  A complete version of design- and result matrix can be found in \ref{Appendix}. 
 \\
@@ -64,13 +64,13 @@ TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Mirro
 \beta_{9} \cdot  Time Pressure + \beta_{10} \cdot Long Autonomous Ride  + \beta_{11} \cdot Elderly Subject  + \\ 
 \epsilon_{i}
  \end{split}
-\end{equation}
-\\
-We will try both a stepwise regression using the `forward' method, and an `enter' regression which uses all given variables. 
-\\
+\end{equation} 
+
+If participants have their gaze off road during the takeover request, it is expected that they take longer for the takeover because additional time is needed to direct the gaze towards the road. The same holds for a necessary mirror check, a turned away body , occupied hands, cognitive distraction and a decision that needs to be taken. If there is much traffic, we expect that it takes longer to build up situation awareness before the takeover, because the situation is more complex. The urgency of the situation is supposed to speed up the takeover in case of an urgent situation (e.g. collision avoidance) and to slow down in the case of a not urgent scenario (e.g. simply continue to drive on a straight road). Under higher time pressure, the subject is also expected to take over faster than without time pressure. After a long autonomous ride, boredom and tiredness are expected to make the whole takeover slower. The effect of age is expected to be very small, according to studies. 
+
 \subsection{checking the multiple regression requirements}
 \subsubsection{Linearity of the problem}
-Since we postulated a linear model, we have to check whether all independent variables have a linear relationship with the dependent variable when controlled for the other factors. This can be done by looking at the partial regression diagrams (See Fig \ref{regdiag} ). On the Y axis this shows the residual that would result if the dependent variable would be regressed on all independent variables except the one written on X. On the X axis it shows the residual that would result if X would be regressed on all other variables.  Thus, the part of the variance that is not explained by all factors but X is plotted against the part of X that is independent of the other variables. If these scatterplots look linear, we can assume a linear relationship. While most scatterplots look very little linear, we will assume a linear relationship for simplicity of the analysis (Golds Begruending nachschauen!). 
+Since we postulated a linear model, we have to check whether all independent variables have a linear relationship with the dependent variable when controlled for the other factors. This can be done by looking at the partial regression diagrams (See Fig \ref{regdiag} ). On the Y axis this shows the residual that would result if the dependent variable would be regressed on all independent variables except the one written on X. On the X axis it shows the residual that would result if X would be regressed on all other variables.  Thus, the part of the variance that is not explained by all factors but X is plotted against the part of X that is independent of the other variables. If these scatterplots look linear, we can assume a linear relationship. We will neglect for simplicity of analysis that most of the scatter plots do not look linear. 
 
 
 \begin{figure}
@@ -194,7 +194,7 @@ The residuals should be normally distributed. This can be checked and confirmed 
 \end{figure}
 
 \subsubsection{No Multicollinearity}
-The following shows a frequency table of the design matrix. Piecharts can be found in Fig. ... . 
+Table \ref{frequ} shows a frequency table of the design matrix.
 
 \begin{center}
   \begin{tabular}{ l | c | c | c| r}
@@ -212,6 +212,7 @@ The following shows a frequency table of the design matrix. Piecharts can be fou
       Long Autonomous Ride & 11 & 3 & 99 & 113\\ \hline
       Elderly Subject & 77 & 21 & 15 & 113\\ \hline
     \hline
+    \label{frequ}
   \end{tabular}
 \end{center}
 
@@ -223,7 +224,7 @@ The following shows a frequency table of the design matrix. Piecharts can be fou
 \label{bla}
 \end{figure}
 
-Just by looking at the frequency table, it becomes obvious that some factors are varied only very little. Besides this being a problem because of little information available, it is also a problem because all factors that are kept the same over most studies correlate highly with the constant, which is a row of ones in front of the design matrix. In general, we have the problem that many factors correlate. This can be seen in Fig. \ref{bla} . While correlations between Takeover time (`Uebernahmezeit') and all the other factors (first row) are desired, all other correlations between factors are not. `Hands Occupied' (`Handbelegung') and `Gaze Off Road' have a Pearson-Correlation of 0.931. This makes sense because most likely one looks towards one's hands if those are occupied. Time pressure (`Zeitnot') and Mirror Check (`Spiegelblick') have a correlation of 0.71, which might be coincidence. Also other factors have more or less high correlations. In other words, variables party explain each other and do not necessarily add completely new information. This can be compared to a matrix that does not have full rank because its rows are linearly dependent; it results in an ill-defined problem because we have more variables we want to find than equations that can independently explain those variables. Thus, using a design matrix with factors that correlate leads to imprecise estimates of the regression parameters. Unfortunately, it can not be clearly said how much correlation is too much correlation. For this, the measures of Tolerance Value and Variation Inflation Factor (`VIF', which is simply the inverse of the Tolerance Value) are typically examined. Those are measures of multicollinearity. While one can have multiple variables that do not correlate pairwise, there might still be significant multicollinearity between the set of all of them. The Tolerance Value is calculated by $T_{j} = 1- R^{2}$, where $R^{2}$ is the coefficient of Determination. $R^{2}$ measures how much of the variance of the dependent variable is explained by this independent variable. In other words, the VIF/Tolerance Value measure how much larger the variance of the regression coefficient is than if the variable had been completely uncorrelated with other variables in the model ref (https://stats.stackexchange.com/questions/86269/what-is-the-effect-of-having-correlated-predictors-in-a-multiple-regression-mode/86965#86965). This Tolerance Value should, as a rule of thumb, not be smaller than 0.1. Including correlating variables in a model leads to p-values that are higher (=less significant) by a factor of the VIF than they would otherwise would be. 
+Just by looking at the frequency table, it becomes obvious that some factors are varied only very little. Besides this being a problem because of little information available, it is also a problem because all factors that are kept the same over most studies correlate highly with the constant, which is a row of ones in front of the design matrix. In general, we have the problem that many factors correlate. This can be seen in Fig. \ref{bla} . While correlations between Takeover time (`Uebernahmezeit') and all the other factors (first row) are desired, all other correlations between factors are not. Here it has to be kept in mind that all correlations between factors only indicate how often they were measured together in studies, and says nothing about a relationship between the factors themselves. A correlation between any factor with takeover time on the other hand does say something about the influence of this factor on takeover time.`Hands Occupied' (`Handbelegung') and `Gaze Off Road' have a Pearson-Correlation of 0.931. This makes sense because most likely one looks towards one's hands if those are occupied. Time pressure (`Zeitnot') and Mirror Check (`Spiegelblick') have a correlation of 0.71, which might be coincidence. Also other factors have more or less high correlations. In other words, variables party explain each other and do not necessarily add completely new information. This can be compared to a matrix that does not have full rank because its rows are linearly dependent; it results in an ill-defined problem because we have more variables we want to find than equations that can independently explain those variables. Thus, using a design matrix with factors that correlate leads to imprecise estimates of the regression parameters. Unfortunately, it can not be clearly said how much correlation is too much correlation. For this, the measures of Tolerance Value and Variation Inflation Factor (`VIF', which is simply the inverse of the Tolerance Value) are typically examined. Those are measures of multicollinearity. While one can have multiple variables that do not correlate pairwise, there might still be significant multicollinearity between the set of all of them. The Tolerance Value is calculated by $T_{j} = 1- R^{2}$, where $R^{2}$ is the coefficient of Determination. $R^{2}$ measures how much of the variance of the dependent variable is explained by this independent variable. In other words, the VIF/Tolerance Value measure how much larger the variance of the regression coefficient is than if the variable had been completely uncorrelated with other variables in the model. This Tolerance Value should, as a rule of thumb, not be smaller than 0.1. Including correlating variables in a model leads to p-values that are higher (=less significant) by a factor of the VIF than they would otherwise would be. 
 
 \begin{figure}
 \centering
@@ -233,22 +234,18 @@ Just by looking at the frequency table, it becomes obvious that some factors are
 \label{3}
 \end{figure}
 
-As can be seen in Fig. \ref{3}, none of the Tolerance Values (`Toleranz', second-last column under `Kollinearitaetsstatistik') are smaller than 0.1. While this first seems surprising due to the correlation between several factors, Belsley writes in his book on `Regression Diagnostics' that high correlations are not always problematic \cite{belsley2005regression}. Thus, we will continue our analysis while keeping the high correlations in mind. They are the reason we will try a singular value decomposition in part \ref{svd}.\\
-In Fig. \ref{3} it can be seen that besides the constant (`Konstante'), much traffic (`viel Verkehr') and urgency of the situation (`Dringlichkeit Situation'), none of the coefficients are significant (sixth column `Sig.'). This significance depends on the magnitude of the effect, the magnitude of the error variance, the variance of the variable itself, the amount of data, and the number of variables in the model cite(https://stats.stackexchange.com/questions/86269/what-is-the-effect-of-having-correlated-predictors-in-a-multiple-regression-mode/86965#86965). In theory, our resulting regression equation would look the following:
+As can be seen in Fig. \ref{3}, none of the Tolerance Values (`Toleranz', second-last column under `Kollinearitaetsstatistik') are smaller than 0.1. While this first seems surprising due to the correlation between several factors, Belsley writes in his book on `Regression Diagnostics' that high correlations are not always problematic \cite{belsley2005regression}. Some authors even suggest correlations as high as 0.7 should not be considered severe \cite{mason1991collinearity}. Thus, we will continue our analysis while keeping the high correlations in mind for subsequent analysis. They are the reason we will try a singular value decomposition in part \ref{svd}.\\
+In Fig. \ref{3} it can be seen that besides the constant (`Konstante'), much traffic (`viel Verkehr') and urgency of the situation (`Dringlichkeit Situation'), none of the coefficients are significant (sixth column `Sig.'). This significance depends on 1) the magnitude of the effect, 2) the magnitude of the error variance, 3) the variance of the variable itself, 4) the amount of data, and 5) the number of variables in the model. Nonsignificant variables need to be excluded in the regression equation. Thus, our resulting regression equation looks the following:
 
 \begin{equation}
 \begin{split}
-TakeOverTime = 3.16 - 0.07 \cdot Gaze Off Road + 0.005 \cdot Mirror Check Necessary - \\
-0.25 \cdot Body Turned Away + 0.19 \cdot Hands Occupied  + 0.07 \cdot Cognitive Distraction + \\
-0.46 \cdot Much Traffic - 0.43 \cdot Urgency of Situation - 0.08 \cdot Decision Necessary - \\
-0.11 \cdot  Time Pressure + 0.17 \cdot Long Autonomous Ride  - 0.14 \cdot Elderly Subject  + \\ 
-\epsilon_{i}
+TakeOverTime = 3.16 + 0.46 \cdot Much Traffic - 0.43 \cdot Urgency of Situation + \epsilon_{i}
  \end{split}
 \end{equation}
 
-This is quite unlikely, since e.g. a participant would become 0.25 sec faster at taking over by having the body turned away. Also the signs of `Gaze Off Road' and `Decision Necessary' do not make sense. An off road gaze should make take-over time longer, and a necessary decision as well.  Calculating the regression with Matlab and Excel leads to the exact same results. While the sign of the other variables makes sense, their beta should not be interpreted due to aforementioned reasons.
+Both significant variables seem to have a quite strong impact on takeover time, `much traffic' making the takeover about half a second slower and an urgent situation making the takeover about half a second faster. The constant of 3.15 seconds suits to typical takeover times in literature. Those two factors having the biggest influence suits to the recently published dissertation by Christian Gold's dissertation. He finds by regression analysis that Time Budget, Repetition (which was not included in out model) and traffic density are the main predictors of takeover time \ref{goldmodeling}. In addition to being insignificant, the other regression weights are quite unlikely. For example, a participant would become 0.25 sec faster at taking over by having the body turned away. Also the signs of `Gaze Off Road' and `Decision Necessary' do not make sense. An off road gaze should make take-over time longer, and a necessary decision as well.  Calculating the regression with Matlab and Excel leads to the exact same results. Due to their insignificance, those results cannot be interpreted anyways. 
 \\
-Also the Goodness of fit ($R^2$) of the whole model can be measured with SPSS (Fig. \ref{15}, upper part `Modelluebersicht'). As already mentioned, $R^2$ measures the amount of variability in takeover time that is explained by the model. The adjusted $R^2$ is corrected by the amount of independent variables. This is necessary because $R^2$ rises with the amount of independent variables, even if they do not add any information. The adjusted $R^2$ is reduced by the number of independent variables and increased by sample size. In our case, 22,7\% of the variability of takeover time are explained by our eleven factors. A plot of the predicted against the measured takeover time can be found in Fig. \ref{16}. The significance of different studies can be compared by the effect size. The resulting effect size can be calculated by Cohen's d: $\sqrt{\frac{0.227}{1-0.227}} = 0.53$. This corresponds to a strong effect according to Cohen \cite{cohen1992power}. 
+Also the Goodness of fit ($R^2$) of the whole model can be measured with SPSS (Fig. \ref{15}, upper part `Modelluebersicht'). As already mentioned, $R^2$ measures the amount of variability in takeover time that is explained by the model. The adjusted $R^2$ is corrected by the amount of independent variables. This is necessary because $R^2$ rises with the amount of independent variables, even if they do not add any information. The adjusted $R^2$ is reduced by the number of independent variables and increased by sample size. The archievable $R^2$ depends on the variance present in the data. Thus, also a model with a low  $R^2$ can be a good model, if there is a lot of `natural' variance in the data (like e.g. with humans) \cite{goldmodeling}. In our case, 22,7\% of the variability of takeover time are explained by our eleven factors. A plot of the predicted against the measured takeover time can be found in Fig. \ref{16}. The significance of different studies can be compared by the effect size. The resulting effect size can be calculated by Cohen's d: $\sqrt{\frac{0.227}{1-0.227}} = 0.53$. This corresponds to a strong effect according to Cohen \cite{cohen1992power}. 
 The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model, which is calculated to be significant. Considering the significance of the single betas, this of course does not hold true. 
 
 \begin{figure}
@@ -258,7 +255,6 @@ The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model
 \caption[A Piechart]{Haeufigkeit.}
 \label{15}
 \end{figure}
-\\
 
 \begin{figure}
 \centering
@@ -267,56 +263,53 @@ The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model
 \caption[A Piechart]{Haeufigkeit.}
 \label{15}
 \end{figure}
-\\
+
 This approach has used the `enter' method for including variables in the regression. When using the stepwise forward regression not all variables are in included at once, but variable per variable is included until adding another makes no significant change in the model anymore. 
-The question whether it is better to include all variables that one thinks to have an influence, or to do so stepwise until no further improvement of significance is reached divides opinions. A criticism of the stepwards regression is that one `picks out' the most suitable variables. Typically, for testing an a-priori hypothesis, the `enter' method is used (thus, all variables are being included). Thus, in my case, I would say that I assume that all factors have a relevant influence, and with my regression I only want to show which factor has which weighting. The stepwise regression is used for more explorative approaches: I am not sure whether all eleven factors have an influence, so I test which ones make a significant difference. Considering that I chose all factors from literature that showed that the corresponding factor does have an influence, the `enter' method seems more suitable. 
-
-This will be most likely due to the aforementioned multicollinearity. Also the proposed linearity of the problem can be questioned (Fig. \ref{regdiag}). 
-
-\subsection{Singular Value Decomposition} \label{svd}
-
-https://stats.stackexchange.com/questions/70899/what-correlation-makes-a-matrix-singular-and-what-are-implications-of-singularit?noredirect=1&lq=1
+The question whether it is better to include all variables that one thinks to have an influence, or to do so stepwise until no further improvement of significance is reached divides opinions. A criticism of the stepwise regression is that one `picks out' the most suitable variables. Typically, for testing an a-priori hypothesis, the `enter' method is used (thus, all variables are being included). Thus, in my case, I would say that I assume that all factors have a relevant influence, and with my regression I only want to show which factor has which weighting. The stepwise regression is used for more explorative approaches: I am not sure whether all eleven factors have an influence, so I test which ones make a significant difference. Considering that I chose all factors from literature that showed that the corresponding factor does have an influence, the `enter' method seems more suitable. 
 
 
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/17}
+\decoRule
+\caption{Result of the regression with non-correlating factors and concordant studies only.}
+\label{17}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/18}
+\decoRule
+\caption{Scatter plot of the regression with non-correlating factors and concordant studies only. The X-axis shows the predicted value, the Y-axis the measured value of takeover time.}
+\label{18}
+\end{figure}
 
 
+When testing the multiple regression requirements, all seem to be fulfilled except for the linearity of the problem(Fig. \ref{regdiag}). Even though the VIF indicates that no multicollinearity exists, a high correlation between variables might still have an influence and lead to high p-values and high variability of estimated betas. There certainly is another problem hidden in the design matrix: some studies that investigated the same factor conclude conflictive results. While for example most studies find that a gaze off road leads to longer takeover times, Louw et al. have a lower mean takeover time in the group that had the gaze off road. Louw et al. reason that .... . Even after removing all studies that have conflictive results, and after removing all factors that show high correlation with another factor, the resulting betas do not make much sense and their p-values are still high (Fig. \ref{17}). This regression has an adjusted $R^2$ of 11.8\%, seeFig. \ref{18}. Thus, these two problems can not be the only ones exisiting in our regression. Another problem might be that studies are less comparable than expected. Most likely, factors other than the ones included in our regression varied between studies. This might be many little things: Differences in simulators, study setup, study subjects, etc. might be reasons that make studies incomparable. Also, a nominal scale has a low level of measurement. This can hardly be changed because most measures are nominal by how they were measured or reported in the given studies. Furthermore, in many studies takeover times were reported independent of takeover quality. Thus, if an overhasty takeover leading to high lane deviations and lateral accelerations occurred, takeover time was very short. Even if e.g. traffic would have had an influence on the takeover time, this would have been omitted by the fact that the takeover happened overhasty. Since we are modeling a normative (`driving school') takeover, we would be interested in any factor that influences takeover time in the case of a calm, planned takeover.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\subsubsection{Outlook}
+Considering that even though in statistical theory it seems like everything about the model is fine, the results do not make sense when applied in the `real world'. Suggestions to improve the regression equation would be to try nonlinear factors (in a still linear equation), for example .... . Furthermore, a nonlinear regression equation could be tried. Due to several advantages when comparing studies, we propose to use a random-effect meta-regression. Other than a `simple' regression, this considers / takes into account .... .   
 
 
 
+While the sign of the other variables makes sense, their beta should not be interpreted due to the correlation between variables.
+
+\section{Singular Value Decomposition} \label{svd}
+Another option to interpret Design- and Result matrix without being disturbed by the problem of multicollinearity is Singular Value Decomposition (`SVD').
+A more intuitive example to explain singular value decomposition is to explain principle component analysis (`PCA'), of which the core part is the SVD. In PCA, one tries to explain observations for many particular things in few general explanations. For example, if I have 100 CDs at home, when asked for my music preference, I will most likely not answer all 100 names of those CDs, but `I like Jazz'. Another example is handling the data of Magnetic Resonance Imaging: Instead of reporting all voxels of all subjects that were active for a certain task, I report `For all subjects, the motor cortex was active'. PCA tries to find those underlying features like Jazz and motor cortex in our examples. In mathematical terms, this is called dimensionality reduction. As an example, we will reduce a 3-dimensional matrix X to a 2-dimensional matrix. We plot the matrix in 3-D space and draw a 2-D plane into it. Subsequently, we project all data points on this 2-D plane. This projection is now our matrix with reduced dimensions. The plane should be drawn in a way that the projected distance is as short as possible. How this can be done by SVD:
+1)Perform a mean normalization and feature scaling on X. 
+2) Compute a covariance matrix Sigma for X
+3) compute the SVD on Sigma to obtain it's eigenvectors. 
+As an equation:
+\begin{equation}
+\begin{split}
+[U, S, V] = SVD(Sigma).
+ \end{split}
+\end{equation}
+Now, U are the eigenvectors of Sigma and S is the diagonal matrix containing the singular values. V is an  
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+%https://stats.stackexchange.com/questions/70899/what-correlation-makes-a-matrix-singular-and-what-are-implications-of-singularit?noredirect=1&lq=1
 
 
 
