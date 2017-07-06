@@ -5,7 +5,7 @@
 \label{Chapter3} 
 
 
-\section{Meta-analysis of literature by regression}
+\section{Meta-analysis of literature by regression}\label{regLit}
 
 Several studies have investigated on factors that influence takeover time. While it is impossible to study all influencing factors in one study, it is possible to compare the studies' results with each other. The aim of the following meta-analysis was to find across studies which influencing factors are the most crucial ones to consider in a takeover model. In addition, a regression equation that includes all influencing factors could be used to predict takeover time. 
 
@@ -296,8 +296,15 @@ While the sign of the other variables makes sense, their beta should not be inte
 
 \section{Singular Value Decomposition} \label{svd}
 \subsection{Method}
+\begin{figure}
+\centering
+\includegraphics[width = 0.3\textwidth]{Figures/19}
+\decoRule
+\caption{lalala}
+\label{19}
+\end{figure}
 Another option to interpret Design- and Result matrix is Singular Value Decomposition (`SVD'). Its advantage is that it is not disturbed by multicollinearity in the design matrix. While SVD can not be used to predict takeover time, it can be used to reduce the dimensionality of the problem (thus, the amount of influencing factors). This might be useful for other modeling approaches or future study design.  
-A more intuitive example to explain singular value decomposition is to explain principle component analysis (`PCA'), of which the core part is the SVD. In PCA, one tries to explain observations for many particular things in few general explanations. For example, if I have 100 CDs at home, when asked for my music preference, I will most likely not answer all 100 names of those CDs, but `I like Jazz'. Another example is handling the data of Magnetic Resonance Imaging: Instead of reporting all voxels of all subjects that were active for a certain task, I report `For all subjects, the motor cortex was active'. PCA tries to find those underlying features like `Jazz' and `motor cortex' in our examples. In mathematical terms, this is called dimensionality reduction. As an example, we will reduce a 3-dimensional matrix F to a 2-dimensional matrix. We plot the matrix in 3-D space and draw a 2-D plane into it. Subsequently, we project all data points on this 2-D plane. This projection is now our matrix with reduced dimensions. The plane should be drawn in a way that the projected distance is as short as possible. To do this by singular value decomposition, the first step is to perform a mean normalization and feature scaling on matrix F with size (n x p). Second, the covariance matrix $\sigma$ is calculated for F. Subsequently, the singular value decomposition is computed on $\sigma$ to obtain its eigenvectors. 
+A more intuitive example to explain singular value decomposition is to explain principle component analysis (`PCA'), of which the core part is the SVD. In PCA, one tries to explain observations for many particular things in few general explanations. For example, if I have 100 CDs at home, when asked for my music preference, I will most likely not answer all 100 names of those CDs, but `I like Jazz'. Another example is handling the data of Magnetic Resonance Imaging: Instead of reporting all voxels of all subjects that were active for a certain task, I report `For all subjects, the motor cortex was active'. PCA tries to find those underlying features like `Jazz' and `motor cortex' in our examples. Graphically, this can be imagined as shown in Fig. \ref{19}. While factors 1 to n correspond to the many voxels with different activities, their change in activity can be traced back to a combination of activity in `motor cortex' and `visual cortex' , which are the `real' explanatory factors behind the differences in the result (h1 and h2). In mathematical terms, this is called dimensionality reduction. As an example, we will reduce a 3-dimensional matrix F to a 2-dimensional matrix. We plot the matrix in 3-D space and draw a 2-D plane into it. Subsequently, we project all data points on this 2-D plane. This projection is now our matrix with reduced dimensions. The plane should be drawn in a way that the projected distance is as short as possible. To do this by singular value decomposition, the first step is to perform a mean normalization and feature scaling on matrix F with size (n x p). Second, the covariance matrix $\sigma$ is calculated for F. Subsequently, the singular value decomposition is computed on $\sigma$ to obtain its eigenvectors. 
 
 As an equation:
 \begin{equation}
@@ -306,7 +313,7 @@ As an equation:
  \end{split}
 \end{equation}
 
-Now, U (n x p) are the eigenvectors of $\sigma$ and S (p x p) is the diagonal matrix containing the singular values. V is an (p x p) matrix that transforms all correlated variables into uncorrelated ones. 
+Now, U (n x p) are the eigenvectors of $\sigma$ , which corresponds to the hyperplane in 2D in our example. S (p x p) is the diagonal matrix containing the singular values. They give the amount of variance retained by the reduction. V is an (p x p) matrix that transforms all correlated variables into uncorrelated ones. 
 Now, we are interested in the influence of these singular values on our result vector r (n x 1). It contains n takeover times in our case. Thus, we calculate:
 
 \begin{equation}
@@ -320,25 +327,99 @@ With the singular values it can be estimated which of the $\gamma$ have a releva
 \subsection{Results}
 The V resulting from the singular value decomposition of our matrix F looks the following: 
 
+\begin{comment}
+ $
+ \begin{bmatrix}
+ 
+-0.4508 &   0.1918 &  -0.0691 &   0.0961  & -0.0310  &  0.1469 &  -0.0241 &   0.0438  &  0.2660 &  -0.1717 &   0.2443 &   0.7490\\
+    0.1380  &  0.5067  &  0.2362  &  0.3473 &  -0.0018 &  -0.1270 &  -0.0568  &  0.0222 &  -0.0566  & -0.0035  & -0.6966 &   0.1988\\
+   -0.2275 &  -0.3458  &  0.4370  &  0.1710 &  -0.0518 &  -0.5935 &  -0.1994 &   0.1945 &   0.3965 &  -0.0949  &  0.0078 &  -0.0987\\
+    0.4385  & -0.1307&   -0.0566 &   0.0932 &  -0.0273  & -0.0921&   -0.0009 &   0.0237  &  0.2689  &  0.7554  &  0.1076  &  0.3383\\
+    0.1087 &   0.5214 &   0.2294 &   0.3586 &  -0.1047 &  -0.1738 &   0.0056  & -0.1678 &  -0.1356 &   0.0302 &   0.6357 &  -0.2056\\
+    0.1107 &  -0.2836&   -0.1322 &   0.4007 &  -0.7981&    0.2145   &-0.1274  & -0.0011 &  -0.0881  & -0.1421  & -0.0454  &  0.0101\\
+    0.1041  & -0.3292&   -0.1251  &  0.6758  &  0.5813 &   0.1816 &  -0.0437  &  0.0201 &  -0.0978  & -0.1485  &  0.0586  &  0.0162\\
+   -0.4243 &   0.0783  &  0.0630  &  0.0748 &  -0.0012  &  0.2119 &  -0.3012 &   0.5826 &  -0.3287  &  0.4449  &  0.0173 &  -0.1515\\
+    0.2907   & 0.0115 &   0.6010  & -0.1129 &   0.0304 &   0.6081 &  -0.0185  &  0.1993  &  0.3221 &  -0.1378  &  0.0687  & -0.0567\\
+    0.2640  &  0.3001 &  -0.5259 &  -0.0060  &  0.0197  & -0.0774 &  -0.2383 &   0.4746  &  0.4229  & -0.2300 &   0.0467 &  -0.2033\\
+    0.4051  & -0.1099  &  0.1326 &  -0.2377  &  0.0318  & -0.2438&   -0.2643  &  0.2978  & -0.5149 &  -0.2744 &   0.1610 &   0.4054\\
+   -0.0207 &   0.0269  & -0.0177 &  -0.1072  &  0.0866 &   0.1104 &  -0.8489 &  -0.4874 &   0.0714 &   0.0509 &  -0.0252 &  -0.0296
 
+\end{bmatrix}
+$ 
+\end{comment}
 
  $
  \begin{bmatrix}
-a_1 & a_2 & a_3 & a_4 \\
-b_1 & b_2 & b_3 & b_4 \\
-c_1 & c_2 & c_3 & c_4 \\
-d_1 & d_2 & d_3 & d_4
+  a_1    & a_2    &   a_3 &   a_4   \\
+ b_1 & b_2 & b_3 & b_4 \\
+ c_1 & c_2 & c_3 & c_4 \\
+ d_1 & d_2 & d_3 & d_4
 \end{bmatrix}
-$  
+$ 
 
+While the result of $\gamma = S^{-1} * U' * r$ is:
+\\
+ $
+ \begin{bmatrix}
+   -1.2660\\
+    0.4385\\
+   -0.2391\\
+    0.6188\\
+    0.0880\\
+    0.3699\\
+    0.1297\\
+   -0.0859\\
+    0.6744\\
+   -1.0122\\
+    0.9504\\
+    2.4003\\
+\end{bmatrix}
+$ 
+\\
+Of $\gamma$, the last value is by far the one with the highest absolute value. Thus, the last column of V is examined. Here, every row corresponds to a factor. The three variables that have the biggest influence on this gamma are the ones in row one, four, ten and eleven. They correspond to the factors `constant', `body turned' and `long autonomous ride'. Thus, we can assume that those factors have the highest amount of independent impact on takeover time. 
 
-
-
-
+\subsection{Discussion}
+It makes sense that the constant has a high impact on takeover time, since a lot of things that take time have to happen in every takeover, no matter the influencing factors. It is also intuitive that it takes time until the body is turned back towards the road. Interestingly, one of the two factors (besides the constant) represents a motoric transition to driving, while the other represents the mental transition to driving. This perfectly fits with why we did the singular value decomposition: we wanted to find out all factors that have the most impact independent from the others. Thus, it can be stated that the most crucial points to pay attention to in designing future driving studies are to have one task that is mainly motoric, and one that is mainly cognitive. This is in line with previous research assumptions of nearly all papers that examine takeover time. 
+\\
+Interestingly, the fourth-most relevant factor is time pressure, which is also a factor that Gold et al. find to have a great impact on resulting takeover time. 
+\\
+The multiple linear regression in section \ref{regLit} resulted in `traffic' and `Criticality of the situation' having the strongest influence besides the constant. While both are cognitive factors, they have an opposing influence on takeover time: while traffic leads to a longer takeover time, a critical situation leads to a shorter takeover time. Thus, it is still import to differentiate between cognitive factors that have opposing influence. 
+\\
 
 
 
 %https://stats.stackexchange.com/questions/70899/what-correlation-makes-a-matrix-singular-and-what-are-implications-of-singularit?noredirect=1&lq=1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
