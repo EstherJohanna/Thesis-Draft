@@ -295,21 +295,60 @@ Considering that even though in statistical theory it seems like everything abou
 While the sign of the other variables makes sense, their beta should not be interpreted due to the correlation between variables.
 
 \section{Singular Value Decomposition} \label{svd}
-Another option to interpret Design- and Result matrix without being disturbed by the problem of multicollinearity is Singular Value Decomposition (`SVD').
-A more intuitive example to explain singular value decomposition is to explain principle component analysis (`PCA'), of which the core part is the SVD. In PCA, one tries to explain observations for many particular things in few general explanations. For example, if I have 100 CDs at home, when asked for my music preference, I will most likely not answer all 100 names of those CDs, but `I like Jazz'. Another example is handling the data of Magnetic Resonance Imaging: Instead of reporting all voxels of all subjects that were active for a certain task, I report `For all subjects, the motor cortex was active'. PCA tries to find those underlying features like Jazz and motor cortex in our examples. In mathematical terms, this is called dimensionality reduction. As an example, we will reduce a 3-dimensional matrix X to a 2-dimensional matrix. We plot the matrix in 3-D space and draw a 2-D plane into it. Subsequently, we project all data points on this 2-D plane. This projection is now our matrix with reduced dimensions. The plane should be drawn in a way that the projected distance is as short as possible. How this can be done by SVD:
-1)Perform a mean normalization and feature scaling on X. 
-2) Compute a covariance matrix Sigma for X
-3) compute the SVD on Sigma to obtain it's eigenvectors. 
+\subsection{Method}
+Another option to interpret Design- and Result matrix is Singular Value Decomposition (`SVD'). Its advantage is that it is not disturbed by multicollinearity in the design matrix. While SVD can not be used to predict takeover time, it can be used to reduce the dimensionality of the problem (thus, the amount of influencing factors). This might be useful for other modeling approaches or future study design.  
+A more intuitive example to explain singular value decomposition is to explain principle component analysis (`PCA'), of which the core part is the SVD. In PCA, one tries to explain observations for many particular things in few general explanations. For example, if I have 100 CDs at home, when asked for my music preference, I will most likely not answer all 100 names of those CDs, but `I like Jazz'. Another example is handling the data of Magnetic Resonance Imaging: Instead of reporting all voxels of all subjects that were active for a certain task, I report `For all subjects, the motor cortex was active'. PCA tries to find those underlying features like `Jazz' and `motor cortex' in our examples. In mathematical terms, this is called dimensionality reduction. As an example, we will reduce a 3-dimensional matrix F to a 2-dimensional matrix. We plot the matrix in 3-D space and draw a 2-D plane into it. Subsequently, we project all data points on this 2-D plane. This projection is now our matrix with reduced dimensions. The plane should be drawn in a way that the projected distance is as short as possible. To do this by singular value decomposition, the first step is to perform a mean normalization and feature scaling on matrix F with size (n x p). Second, the covariance matrix $\sigma$ is calculated for F. Subsequently, the singular value decomposition is computed on $\sigma$ to obtain its eigenvectors. 
+
 As an equation:
 \begin{equation}
 \begin{split}
-[U, S, V] = SVD(Sigma).
+[U, S, V] = SVD(\sigma).
  \end{split}
 \end{equation}
-Now, U are the eigenvectors of Sigma and S is the diagonal matrix containing the singular values. V is an  
+
+Now, U (n x p) are the eigenvectors of $\sigma$ and S (p x p) is the diagonal matrix containing the singular values. V is an (p x p) matrix that transforms all correlated variables into uncorrelated ones. 
+Now, we are interested in the influence of these singular values on our result vector r (n x 1). It contains n takeover times in our case. Thus, we calculate:
+
+\begin{equation}
+\begin{split}
+\gamma = S^{-1} * U' * r
+ \end{split}
+\end{equation}
+
+With the singular values it can be estimated which of the $\gamma$ have a relevant influence. For this, we choose the largest absolute values of $\gamma$ and examine which variables have the biggest influence on it. This will be the variables that explain most of the variance in the data.
+
+\subsection{Results}
+The V resulting from the singular value decomposition of our matrix F looks the following: 
+
+
+
+ $
+ \begin{bmatrix}
+a_1 & a_2 & a_3 & a_4 \\
+b_1 & b_2 & b_3 & b_4 \\
+c_1 & c_2 & c_3 & c_4 \\
+d_1 & d_2 & d_3 & d_4
+\end{bmatrix}
+$  
+
+
+
+
+
+
 
 
 %https://stats.stackexchange.com/questions/70899/what-correlation-makes-a-matrix-singular-and-what-are-implications-of-singularit?noredirect=1&lq=1
+
+
+
+
+
+
+
+
+
+
 
 
 
