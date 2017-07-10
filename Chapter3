@@ -1,6 +1,6 @@
 % Chapter Template
 
-\chapter{Results} 
+\chapter{Linear Regression and Singular Value Decomposition} 
 
 \label{Chapter3} 
 
@@ -10,7 +10,7 @@
 Several studies have investigated on factors that influence takeover time. While it is impossible to study all influencing factors in one study, it is possible to compare the studies' results with each other. The aim of the following meta-analysis was to find across studies which influencing factors are the most crucial ones to consider in a takeover model. In addition, a regression equation that includes all influencing factors could be used to predict takeover time. 
 
 \subsection{Literature search}
-We found a broad width of studies through an existing database at Bosch. Furthermore, we chose papers with matching titles from a Google scholar search with the keywords `takeover time highly automated driving'. From both searches, further publications were found through the cited references. A sum of \~{100} papers was found. 
+We found a broad width of studies through an existing database at Bosch. Furthermore, we chose papers with matching titles from a Google scholar search with the keywords `takeover time highly automated driving'. From both searches, further publications were found through the cited references. A sum of \~ 100 papers was found. 
 
 \subsection{Selection of Studies}
 Of those papers, all papers were chosen that were concerned with Highly Automated Driving (SAE Level 3). In addition, we had the following inclusion criteria:
@@ -47,7 +47,7 @@ The factors chosen because of their relevance were:
 \item Decision Necessary
 \end{itemize}
 
-\subsection{Regression Equation}
+\subsection{Regression Equation}\label{equ}
 Studies report mean or median, and some standard deviation. Data on single subjects is not given. Therefore, one line in our regression equation did not (as usual) include one subject, but one condition in a study. For example, if vollrath had one baseline condition that on average took 2,2 seconds for the takeover, the first number of the result vector was 2,2. For the Design matrix, we filled out every condition as `True', `Not True', or `Not Measured'. As an example, I show how the row of the design matrix for Vollrath's baseline condition was filled out:
  Gaze Off Road (`Not True'), Mirror Check Necessary(`Not Measured'), Body Turned Away(`Not True'), Hands Occupied(`Not True'), Cognitive Distraction(`Not True'), Much Traffic(`Not Measured'), Urgency of Situation(`Not Measured'), Decision Necessary(`Not Measured'), Time Pressure(`True'), Long Autonomous Ride(`Not True'), Elderly Subject(`Not Measured'). From a `regression' point of view, it would have been ideal to have a series of homogeneous observations with identical boundary conditions that test all possible combinations of factors. This will be assumed for the rest of the analysis and should be kept in mind as a possible source of error for the discussion. 
  \\
@@ -69,7 +69,7 @@ TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Mirro
 If participants have their gaze off road during the takeover request, it is expected that they take longer for the takeover because additional time is needed to direct the gaze towards the road. The same holds for a necessary mirror check, a turned away body , occupied hands, cognitive distraction and a decision that needs to be taken. If there is much traffic, we expect that it takes longer to build up situation awareness before the takeover, because the situation is more complex. The urgency of the situation is supposed to speed up the takeover in case of an urgent situation (e.g. collision avoidance) and to slow down in the case of a not urgent scenario (e.g. simply continue to drive on a straight road). Under higher time pressure, the subject is also expected to take over faster than without time pressure. After a long autonomous ride, boredom and tiredness are expected to make the whole takeover slower. The effect of age is expected to be very small, according to studies. 
 
 \subsection{checking the multiple regression requirements}
-\subsubsection{Linearity of the problem}
+\subsubsection{Linearity of the problem}\label{req1}
 Since we postulated a linear model, we have to check whether all independent variables have a linear relationship with the dependent variable when controlled for the other factors. This can be done by looking at the partial regression diagrams (See Fig \ref{regdiag} ). On the Y axis this shows the residual that would result if the dependent variable would be regressed on all independent variables except the one written on X. On the X axis it shows the residual that would result if X would be regressed on all other variables.  Thus, the part of the variance that is not explained by all factors but X is plotted against the part of X that is independent of the other variables. If these scatterplots look linear, we can assume a linear relationship. We will neglect for simplicity of analysis that most of the scatter plots do not look linear. 
 
 
@@ -303,61 +303,55 @@ While the sign of the other variables makes sense, their beta should not be inte
 \caption{lalala}
 \label{19}
 \end{figure}
-Another option to interpret Design- and Result matrix is Singular Value Decomposition (`SVD'). Its advantage is that it is not disturbed by multicollinearity in the design matrix. While SVD can not be used to predict takeover time, it can be used to reduce the dimensionality of the problem (thus, the amount of influencing factors). This might be useful for other modeling approaches or future study design.  
-A more intuitive example to explain singular value decomposition is to explain principle component analysis (`PCA'), of which the core part is the SVD. In PCA, one tries to explain observations for many particular things in few general explanations. For example, if I have 100 CDs at home, when asked for my music preference, I will most likely not answer all 100 names of those CDs, but `I like Jazz'. Another example is handling the data of Magnetic Resonance Imaging: Instead of reporting all voxels of all subjects that were active for a certain task, I report `For all subjects, the motor cortex was active'. PCA tries to find those underlying features like `Jazz' and `motor cortex' in our examples. Graphically, this can be imagined as shown in Fig. \ref{19}. While factors 1 to n correspond to the many voxels with different activities, their change in activity can be traced back to a combination of activity in `motor cortex' and `visual cortex' , which are the `real' explanatory factors behind the differences in the result (h1 and h2). In mathematical terms, this is called dimensionality reduction. As an example, we will reduce a 3-dimensional matrix F to a 2-dimensional matrix. We plot the matrix in 3-D space and draw a 2-D plane into it. Subsequently, we project all data points on this 2-D plane. This projection is now our matrix with reduced dimensions. The plane should be drawn in a way that the projected distance is as short as possible. To do this by singular value decomposition, the first step is to perform a mean normalization and feature scaling on matrix F with size (n x p). Second, the covariance matrix $\sigma$ is calculated for F. Subsequently, the singular value decomposition is computed on $\sigma$ to obtain its eigenvectors. 
+Another option to interpret the (previously called) design- and result matrix is Singular Value Decomposition (`SVD'). Its advantage is that it is not disturbed by multicollinearity in the design matrix. While SVD can not be used to predict takeover time, it can be used to reduce the dimensionality of the problem (thus, the amount of influencing factors). This might be useful for other modeling approaches or future study design.  
+A more intuitive example to explain singular value decomposition is to explain principle component analysis (`PCA'), of which the core part is the SVD. In PCA, one tries to explain observations for many particular things in few general explanations. For example, if I have 100 CDs at home, when asked for my music preference, I will most likely not answer all 100 names of those CDs, but `I like Jazz'. Another example is handling the data of Magnetic Resonance Imaging: Instead of reporting all voxels of all subjects that were active for a certain task, I report `For all subjects, the motor cortex was active'. PCA tries to find those underlying features like `Jazz' and `motor cortex' in our examples. Graphically, this can be imagined as shown in Fig. \ref{19}. While factors 1 to n correspond to the many voxels with different activities, their change in activity can be traced back to a combination of activity in `motor cortex' and `visual cortex' , which are the `real' explanatory factors behind the differences in the result (h1 and h2). In mathematical terms, this is called dimensionality reduction. As an example, we will reduce a 3-dimensional matrix F to a 2-dimensional matrix. We plot the matrix in 3-D space and draw a 2-D plane into it. Subsequently, we project all data points on this 2-D plane. This projection is now our matrix with reduced dimensions. The plane should be drawn in a way that the projected distance is as short as possible. To do this by singular value decomposition, the first step is to perform a mean normalization and feature scaling on matrix F with size (n x p). Second, the covariance matrix $\Sigma$ is calculated for F. Subsequently, the singular value decomposition is computed on $\Sigma$ to obtain its eigenvectors. 
 
 As an equation:
 \begin{equation}
 \begin{split}
-[U, S, V] = SVD(\sigma).
+[U, S, V] = SVD(\Sigma).
  \end{split}
 \end{equation}
 
-Now, U (n x p) are the eigenvectors of $\sigma$ , which corresponds to the hyperplane in 2D in our example. S (p x p) is the diagonal matrix containing the singular values. They give the amount of variance retained by the reduction. V is an (p x p) matrix that transforms all correlated variables into uncorrelated ones. 
+Now, U (n x p) are the eigenvectors of $\Sigma$ , which corresponds to the hyperplane in 2D in our example. S (p x p) is the diagonal matrix containing the singular values. They give the amount of variance retained by the reduction. V is an (p x p) matrix that transforms all correlated variables into uncorrelated ones. 
 Now, we are interested in the influence of these singular values on our result vector r (n x 1). It contains n takeover times in our case. Thus, we calculate:
 
 \begin{equation}
 \begin{split}
-\gamma = S^{-1} * U' * r
+\gamma = S^{-1} \cdot U' \cdot r
  \end{split}
 \end{equation}
 
-With the singular values it can be estimated which of the $\gamma$ have a relevant influence. For this, we choose the largest absolute values of $\gamma$ and examine which variables have the biggest influence on it. This will be the variables that explain most of the variance in the data.
+With the singular values it can be estimated which of the $\gamma$ have a relevant influence. For this, we choose the largest absolute values of $\gamma$ and examine which variables have the biggest influence on it. This will be the variables that explain most of the variance in the data \cite{christensen2011plane}.
 
 \subsection{Results}
 The V resulting from the singular value decomposition of our matrix F looks the following: 
-
-\begin{comment}
- $
+\\
+$
  \begin{bmatrix}
  
--0.4508 &   0.1918 &  -0.0691 &   0.0961  & -0.0310  &  0.1469 &  -0.0241 &   0.0438  &  0.2660 &  -0.1717 &   0.2443 &   0.7490\\
-    0.1380  &  0.5067  &  0.2362  &  0.3473 &  -0.0018 &  -0.1270 &  -0.0568  &  0.0222 &  -0.0566  & -0.0035  & -0.6966 &   0.1988\\
-   -0.2275 &  -0.3458  &  0.4370  &  0.1710 &  -0.0518 &  -0.5935 &  -0.1994 &   0.1945 &   0.3965 &  -0.0949  &  0.0078 &  -0.0987\\
-    0.4385  & -0.1307&   -0.0566 &   0.0932 &  -0.0273  & -0.0921&   -0.0009 &   0.0237  &  0.2689  &  0.7554  &  0.1076  &  0.3383\\
-    0.1087 &   0.5214 &   0.2294 &   0.3586 &  -0.1047 &  -0.1738 &   0.0056  & -0.1678 &  -0.1356 &   0.0302 &   0.6357 &  -0.2056\\
-    0.1107 &  -0.2836&   -0.1322 &   0.4007 &  -0.7981&    0.2145   &-0.1274  & -0.0011 &  -0.0881  & -0.1421  & -0.0454  &  0.0101\\
-    0.1041  & -0.3292&   -0.1251  &  0.6758  &  0.5813 &   0.1816 &  -0.0437  &  0.0201 &  -0.0978  & -0.1485  &  0.0586  &  0.0162\\
-   -0.4243 &   0.0783  &  0.0630  &  0.0748 &  -0.0012  &  0.2119 &  -0.3012 &   0.5826 &  -0.3287  &  0.4449  &  0.0173 &  -0.1515\\
-    0.2907   & 0.0115 &   0.6010  & -0.1129 &   0.0304 &   0.6081 &  -0.0185  &  0.1993  &  0.3221 &  -0.1378  &  0.0687  & -0.0567\\
-    0.2640  &  0.3001 &  -0.5259 &  -0.0060  &  0.0197  & -0.0774 &  -0.2383 &   0.4746  &  0.4229  & -0.2300 &   0.0467 &  -0.2033\\
-    0.4051  & -0.1099  &  0.1326 &  -0.2377  &  0.0318  & -0.2438&   -0.2643  &  0.2978  & -0.5149 &  -0.2744 &   0.1610 &   0.4054\\
-   -0.0207 &   0.0269  & -0.0177 &  -0.1072  &  0.0866 &   0.1104 &  -0.8489 &  -0.4874 &   0.0714 &   0.0509 &  -0.0252 &  -0.0296
+   -0.4508 &   0.1918& \dots & 0.7490\\
+    0.1380  &  0.5067  &  \dots &   0.1988\\
+   -0.2275 &  -0.3458  &  \dots &  -0.0987\\
+    0.4385  & -0.1307&   \dots  &  0.3383\\
+    0.1087 &   0.5214 &   \dots &  -0.2056\\
+    0.1107 &  -0.2836&   \dots  &  0.0101\\
+    0.1041  & -0.3292&   \dots  &  0.0162\\
+   -0.4243 &   0.0783  &  \dots &  -0.1515\\
+    0.2907   & 0.0115 &   \dots  & -0.0567\\
+    0.2640  &  0.3001 &  \dots &  -0.2033\\
+    0.4051  & -0.1099  &  \dots &   0.4054\\
+   -0.0207 &   0.0269  & \dots &  -0.0296
 
 \end{bmatrix}
 $ 
-\end{comment}
+\\
 
- $
- \begin{bmatrix}
-  a_1    & a_2    &   a_3 &   a_4   \\
- b_1 & b_2 & b_3 & b_4 \\
- c_1 & c_2 & c_3 & c_4 \\
- d_1 & d_2 & d_3 & d_4
-\end{bmatrix}
-$ 
 
-While the result of $\gamma = S^{-1} * U' * r$ is:
+
+
+
+While the result of $\gamma = S^{-1} \cdot U' \cdot r$ is:
 \\
  $
  \begin{bmatrix}
@@ -376,12 +370,12 @@ While the result of $\gamma = S^{-1} * U' * r$ is:
 \end{bmatrix}
 $ 
 \\
-Of $\gamma$, the last value is by far the one with the highest absolute value. Thus, the last column of V is examined. Here, every row corresponds to a factor. The three variables that have the biggest influence on this gamma are the ones in row one, four, ten and eleven. They correspond to the factors `constant', `body turned' and `long autonomous ride'. Thus, we can assume that those factors have the highest amount of independent impact on takeover time. 
+Of $\gamma$, the last value is by far the one with the highest absolute value. Thus, the last column of V is examined. Here, every row corresponds to a factor. The three variables that have the biggest influence on this gamma are the ones in row one, four and eleven. They correspond to the factors `constant', `body turned' and `long autonomous ride'. Thus, we can assume that those factors have the highest amount of independent impact on takeover time. 
 
 \subsection{Discussion}
-It makes sense that the constant has a high impact on takeover time, since a lot of things that take time have to happen in every takeover, no matter the influencing factors. It is also intuitive that it takes time until the body is turned back towards the road. Interestingly, one of the two factors (besides the constant) represents a motoric transition to driving, while the other represents the mental transition to driving. This perfectly fits with why we did the singular value decomposition: we wanted to find out all factors that have the most impact independent from the others. Thus, it can be stated that the most crucial points to pay attention to in designing future driving studies are to have one task that is mainly motoric, and one that is mainly cognitive. This is in line with previous research assumptions of nearly all papers that examine takeover time. 
+In short, what we try to do with the SVD is to find out the most important component of the matrix F and check which factors have the strongest influence on it. The most important factor in the most important component is the `most-most important' factor influencing takeover time. and those are the factors that are assumed to be the most important ones for takeover time. It makes sense that the constant has a high impact on takeover time, since a lot of things that take time have to happen in every takeover, no matter the influencing factors (notice request, motor preparation, move hands to steering wheel, mentally prepare etc.). It is also intuitive that it takes time until the body is turned back towards the road. Interestingly, one of the two factors (besides the constant) represents a motoric transition to driving, while the other represents the mental transition to driving. This perfectly fits with why we did the singular value decomposition: we wanted to find out all factors that have the most impact independent from the others. Thus, it can be assumed that the most crucial points to pay attention to in designing future driving studies are to have one task that is mainly motoric, and one that is mainly cognitive. This is in line with previous research assumptions of nearly all papers that examine takeover time. 
 \\
-Interestingly, the fourth-most relevant factor is time pressure, which is also a factor that Gold et al. find to have a great impact on resulting takeover time. 
+Interestingly, the fourth-most relevant factor is time pressure, which is also a factor that Gold et al. find to have a large impact on resulting takeover time. 
 \\
 The multiple linear regression in section \ref{regLit} resulted in `traffic' and `Criticality of the situation' having the strongest influence besides the constant. While both are cognitive factors, they have an opposing influence on takeover time: while traffic leads to a longer takeover time, a critical situation leads to a shorter takeover time. Thus, it is still import to differentiate between cognitive factors that have opposing influence. 
 \\
@@ -391,14 +385,224 @@ The multiple linear regression in section \ref{regLit} resulted in `traffic' and
 %https://stats.stackexchange.com/questions/70899/what-correlation-makes-a-matrix-singular-and-what-are-implications-of-singularit?noredirect=1&lq=1
 
 
+\section{Regression Analysis of Experimental Data}\label{regBosch}
+To compare literature with results of our own study, we also conducted a multiple linear regression with data obtained from our own experiments. Those were conducted on a route from ... to ... . For a closer description of Experimental setup, please check reference Claus. 
+ 
+\subsection{Regression Equation}
+To make the analysis comparable, the same factors as in the literature study were chosen. Only `criticality of the situation' could not be assessed, because the study took place on a real road. Thus, all situations were uncritical. The design matrix is not binary in all cases this time. sagen was nominal orginal etc und von wo bis wo sie gingen (zB 0-15). 
+\\
+Thus, we postulate the following regression equation:
+\begin{equation}
+\begin{split}
+TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Mirror Check Necessary + \\
+\beta_{3} \cdot Body Turned Away + \beta_{4} \cdot Hands Occupied  + \beta_{5} \cdot Cognitive Distraction + \\
+\beta_{6} \cdot Much Traffic +  \beta_{7} \cdot Decision Necessary + \\
+\beta_{8} \cdot  Time Pressure + \beta_{9} \cdot Long Autonomous Ride  + \beta_{10} \cdot Elderly Subject  + \\ 
+\epsilon_{i}
+ \end{split}
+\end{equation}
 
 
+\subsection{checking the multiple regression requirements}
+\subsubsection{Linearity of the problem}
+For a description, please refer to \ref{req1}. In this case, the diagrams for ... look linear, while the ones for ... might not be linear. this should be kept in mind. 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/}
+        \caption{A gull}
+        \label{fig:gull}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/}
+        \caption{A tiger}
+        \label{fig:tiger}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/}
+        \caption{A mouse}
+        \label{fig:mouse}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/}
+        \caption{A gull}
+        \label{fig:gull}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/}
+        \caption{A tiger}
+        \label{fig:tiger}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/}
+        \caption{A mouse}
+        \label{fig:mouse}
+    \end{subfigure}
+        \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/}
+        \caption{A gull}
+        \label{fig:gull}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/}
+        \caption{A tiger}
+        \label{fig:tiger}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/}
+        \caption{A mouse}
+        \label{fig:mouse}
+    \end{subfigure}
+        \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/}
+        \caption{A gull}
+        \label{fig:gull}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Figures/}
+        \caption{A tiger}
+        \label{fig:tiger}
+    \end{subfigure}
+    \caption{Partial Regression Diagrams}\label{regdiag2}
+\end{figure}
 
 
+\subsubsection{Linearity of the coefficients (Gauss-Markov-Theorem 1)}
+we assume that the postulated model is linear in the coefficients: 
+
+\begin{equation}
+\begin{split}
+TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Mirror Check Necessary + \\
+\beta_{3} \cdot Body Turned Away + \beta_{4} \cdot Hands Occupied  + \beta_{5} \cdot Cognitive Distraction + \\
+\beta_{6} \cdot Much Traffic +  \beta_{7} \cdot Decision Necessary + \\
+\beta_{8} \cdot  Time Pressure + \beta_{9} \cdot Long Autonomous Ride  + \beta_{10} \cdot Elderly Subject  + \\ 
+\epsilon_{i}
+ \end{split}
+\end{equation}
+
+\subsubsection{random sample (Gauss-Markov-Theorem 2)}
+See \ref{req3} 
+
+\subsubsection{Strict exogeneity (Gauss-Markov-Theorem 3)}
+See \ref{req4} - aber hier noch chekcen ob es auch stimmt! 
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/}
+\decoRule
+\caption[Scatter Plot of errors]{piep.}
+\label{1}
+\end{figure}
+
+%prev
+\subsubsection{Homoscedasticity}
+See \ref{req4} 
+
+\subsubsection{Independence of the Error Term}
+See \ref{req5}  In our case, the Durbin-Watson value is ..., which indicates medium correlation between the error terms. 
+
+\subsubsection{Normal Distribution of the Error Term}
+The residuals should be normally distributed. This can be checked and confirmed by Fig. \ref{2}
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/}
+\decoRule
+\caption[Scatter Plot of errors]{piep.}
+\label{2}
+\end{figure}
+
+\subsubsection{No Multicollinearity}
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/Korrs}
+\decoRule
+\caption[A Piechart]{Haeufigkeit.}
+\label{bla}
+\end{figure}
+
+%das hier noch anpassen! ab hier alles nur von oben reinkopiert!
+Just by looking at the frequency table, it becomes obvious that some factors are varied only very little. Besides this being a problem because of little information available, it is also a problem because all factors that are kept the same over most studies correlate highly with the constant, which is a row of ones in front of the design matrix. In general, we have the problem that many factors correlate. This can be seen in Fig. \ref{bla} . While correlations between Takeover time (`Uebernahmezeit') and all the other factors (first row) are desired, all other correlations between factors are not. Here it has to be kept in mind that all correlations between factors only indicate how often they were measured together in studies, and says nothing about a relationship between the factors themselves. A correlation between any factor with takeover time on the other hand does say something about the influence of this factor on takeover time.`Hands Occupied' (`Handbelegung') and `Gaze Off Road' have a Pearson-Correlation of 0.931. This makes sense because most likely one looks towards one's hands if those are occupied. Time pressure (`Zeitnot') and Mirror Check (`Spiegelblick') have a correlation of 0.71, which might be coincidence. Also other factors have more or less high correlations. In other words, variables party explain each other and do not necessarily add completely new information. This can be compared to a matrix that does not have full rank because its rows are linearly dependent; it results in an ill-defined problem because we have more variables we want to find than equations that can independently explain those variables. Thus, using a design matrix with factors that correlate leads to imprecise estimates of the regression parameters. Unfortunately, it can not be clearly said how much correlation is too much correlation. For this, the measures of Tolerance Value and Variation Inflation Factor (`VIF', which is simply the inverse of the Tolerance Value) are typically examined. Those are measures of multicollinearity. While one can have multiple variables that do not correlate pairwise, there might still be significant multicollinearity between the set of all of them. The Tolerance Value is calculated by $T_{j} = 1- R^{2}$, where $R^{2}$ is the coefficient of Determination. $R^{2}$ measures how much of the variance of the dependent variable is explained by this independent variable. In other words, the VIF/Tolerance Value measure how much larger the variance of the regression coefficient is than if the variable had been completely uncorrelated with other variables in the model. This Tolerance Value should, as a rule of thumb, not be smaller than 0.1. Including correlating variables in a model leads to p-values that are higher (=less significant) by a factor of the VIF than they would otherwise would be. 
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/3}
+\decoRule
+\caption[A Piechart]{Haeufigkeit.}
+\label{3}
+\end{figure}
+
+As can be seen in Fig. \ref{3}, none of the Tolerance Values (`Toleranz', second-last column under `Kollinearitaetsstatistik') are smaller than 0.1. While this first seems surprising due to the correlation between several factors, Belsley writes in his book on `Regression Diagnostics' that high correlations are not always problematic \cite{belsley2005regression}. Some authors even suggest correlations as high as 0.7 should not be considered severe \cite{mason1991collinearity}. Thus, we will continue our analysis while keeping the high correlations in mind for subsequent analysis. They are the reason we will try a singular value decomposition in part \ref{svd}.\\
+In Fig. \ref{3} it can be seen that besides the constant (`Konstante'), much traffic (`viel Verkehr') and urgency of the situation (`Dringlichkeit Situation'), none of the coefficients are significant (sixth column `Sig.'). This significance depends on 1) the magnitude of the effect, 2) the magnitude of the error variance, 3) the variance of the variable itself, 4) the amount of data, and 5) the number of variables in the model. Nonsignificant variables need to be excluded in the regression equation. Thus, our resulting regression equation looks the following:
+
+\begin{equation}
+\begin{split}
+TakeOverTime = 3.16 + 0.46 \cdot Much Traffic - 0.43 \cdot Urgency of Situation + \epsilon_{i}
+ \end{split}
+\end{equation}
+
+Both significant variables seem to have a quite strong impact on takeover time, `much traffic' making the takeover about half a second slower and an urgent situation making the takeover about half a second faster. The constant of 3.15 seconds suits to typical takeover times in literature. Those two factors having the biggest influence suits to the recently published dissertation by Christian Gold's dissertation. He finds by regression analysis that Time Budget, Repetition (which was not included in out model) and traffic density are the main predictors of takeover time \ref{goldmodeling}. In addition to being insignificant, the other regression weights are quite unlikely. For example, a participant would become 0.25 sec faster at taking over by having the body turned away. Also the signs of `Gaze Off Road' and `Decision Necessary' do not make sense. An off road gaze should make take-over time longer, and a necessary decision as well.  Calculating the regression with Matlab and Excel leads to the exact same results. Due to their insignificance, those results cannot be interpreted anyways. 
+\\
+Also the Goodness of fit ($R^2$) of the whole model can be measured with SPSS (Fig. \ref{15}, upper part `Modelluebersicht'). As already mentioned, $R^2$ measures the amount of variability in takeover time that is explained by the model. The adjusted $R^2$ is corrected by the amount of independent variables. This is necessary because $R^2$ rises with the amount of independent variables, even if they do not add any information. The adjusted $R^2$ is reduced by the number of independent variables and increased by sample size. The archievable $R^2$ depends on the variance present in the data. Thus, also a model with a low  $R^2$ can be a good model, if there is a lot of `natural' variance in the data (like e.g. with humans) \cite{goldmodeling}. In our case, 22,7\% of the variability of takeover time are explained by our eleven factors. A plot of the predicted against the measured takeover time can be found in Fig. \ref{16}. The significance of different studies can be compared by the effect size. The resulting effect size can be calculated by Cohen's d: $\sqrt{\frac{0.227}{1-0.227}} = 0.53$. This corresponds to a strong effect according to Cohen \cite{cohen1992power}. 
+The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model, which is calculated to be significant. Considering the significance of the single betas, this of course does not hold true. 
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/15}
+\decoRule
+\caption[A Piechart]{Haeufigkeit.}
+\label{15}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/16}
+\decoRule
+\caption[A Piechart]{Haeufigkeit.}
+\label{15}
+\end{figure}
+
+This approach has used the `enter' method for including variables in the regression. When using the stepwise forward regression not all variables are in included at once, but variable per variable is included until adding another makes no significant change in the model anymore. 
+The question whether it is better to include all variables that one thinks to have an influence, or to do so stepwise until no further improvement of significance is reached divides opinions. A criticism of the stepwise regression is that one `picks out' the most suitable variables. Typically, for testing an a-priori hypothesis, the `enter' method is used (thus, all variables are being included). Thus, in my case, I would say that I assume that all factors have a relevant influence, and with my regression I only want to show which factor has which weighting. The stepwise regression is used for more explorative approaches: I am not sure whether all eleven factors have an influence, so I test which ones make a significant difference. Considering that I chose all factors from literature that showed that the corresponding factor does have an influence, the `enter' method seems more suitable. 
 
 
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/17}
+\decoRule
+\caption{Result of the regression with non-correlating factors and concordant studies only.}
+\label{17}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/18}
+\decoRule
+\caption{Scatter plot of the regression with non-correlating factors and concordant studies only. The X-axis shows the predicted value, the Y-axis the measured value of takeover time.}
+\label{18}
+\end{figure}
 
 
+When testing the multiple regression requirements, all seem to be fulfilled except for the linearity of the problem(Fig. \ref{regdiag}). Even though the VIF indicates that no multicollinearity exists, a high correlation between variables might still have an influence and lead to high p-values and high variability of estimated betas. There certainly is another problem hidden in the design matrix: some studies that investigated the same factor conclude conflictive results. While for example most studies find that a gaze off road leads to longer takeover times, Louw et al. have a lower mean takeover time in the group that had the gaze off road. Louw et al. reason that .... . Even after removing all studies that have conflictive results, and after removing all factors that show high correlation with another factor, the resulting betas do not make much sense and their p-values are still high (Fig. \ref{17}). This regression has an adjusted $R^2$ of 11.8\%, seeFig. \ref{18}. Thus, these two problems can not be the only ones exisiting in our regression. Another problem might be that studies are less comparable than expected. Most likely, factors other than the ones included in our regression varied between studies. This might be many little things: Differences in simulators, study setup, study subjects, etc. might be reasons that make studies incomparable. Also, a nominal scale has a low level of measurement. This can hardly be changed because most measures are nominal by how they were measured or reported in the given studies. Furthermore, in many studies takeover times were reported independent of takeover quality. Thus, if an overhasty takeover leading to high lane deviations and lateral accelerations occurred, takeover time was very short. Even if e.g. traffic would have had an influence on the takeover time, this would have been omitted by the fact that the takeover happened overhasty. Since we are modeling a normative (`driving school') takeover, we would be interested in any factor that influences takeover time in the case of a calm, planned takeover.
+
+\subsubsection{Outlook}
+Considering that even though in statistical theory it seems like everything about the model is fine, the results do not make sense when applied in the `real world'. Suggestions to improve the regression equation would be to try nonlinear factors (in a still linear equation), for example .... . Furthermore, a nonlinear regression equation could be tried. Due to several advantages when comparing studies, we propose to use a random-effect meta-regression. Other than a `simple' regression, this considers / takes into account .... . 
 
 
 
