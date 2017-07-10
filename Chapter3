@@ -60,7 +60,7 @@ Thus, we postulate the following regression equation:
 \begin{split}
 TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Mirror Check Necessary + \\
 \beta_{3} \cdot Body Turned Away + \beta_{4} \cdot Hands Occupied  + \beta_{5} \cdot Cognitive Distraction + \\
-\beta_{6} \cdot Much Traffic + \beta_{7} \cdot Urgency of Situation +  \beta_{8} \cdot Decision Necessary + \\
+\beta_{6} \cdot Much Traffic + \beta_{7} \cdot Criticality of Situation +  \beta_{8} \cdot Decision Necessary + \\
 \beta_{9} \cdot  Time Pressure + \beta_{10} \cdot Long Autonomous Ride  + \beta_{11} \cdot Elderly Subject  + \\ 
 \epsilon_{i}
  \end{split}
@@ -193,7 +193,7 @@ The residuals should be normally distributed. This can be checked and confirmed 
 \label{2}
 \end{figure}
 
-\subsubsection{No Multicollinearity}
+\subsubsection{No Multicollinearity}\label{multi}
 Table \ref{frequ} shows a frequency table of the design matrix.
 
 \begin{center}
@@ -235,18 +235,20 @@ Just by looking at the frequency table, it becomes obvious that some factors are
 \end{figure}
 
 As can be seen in Fig. \ref{3}, none of the Tolerance Values (`Toleranz', second-last column under `Kollinearitaetsstatistik') are smaller than 0.1. While this first seems surprising due to the correlation between several factors, Belsley writes in his book on `Regression Diagnostics' that high correlations are not always problematic \cite{belsley2005regression}. Some authors even suggest correlations as high as 0.7 should not be considered severe \cite{mason1991collinearity}. Thus, we will continue our analysis while keeping the high correlations in mind for subsequent analysis. They are the reason we will try a singular value decomposition in part \ref{svd}.\\
-In Fig. \ref{3} it can be seen that besides the constant (`Konstante'), much traffic (`viel Verkehr') and urgency of the situation (`Dringlichkeit Situation'), none of the coefficients are significant (sixth column `Sig.'). This significance depends on 1) the magnitude of the effect, 2) the magnitude of the error variance, 3) the variance of the variable itself, 4) the amount of data, and 5) the number of variables in the model. Nonsignificant variables need to be excluded in the regression equation. Thus, our resulting regression equation looks the following:
+
+\subsection{Results}\label{resLit}
+In Fig. \ref{3} it can be seen that the constant (`Konstante'), much traffic (`viel Verkehr') and urgency of the situation (`Dringlichkeit Situation') are significant (sixth column `Sig.'). This significance depends on 1) the magnitude of the effect, 2) the magnitude of the error variance, 3) the variance of the variable itself, 4) the amount of data, and 5) the number of variables in the model. Nonsignificant variables need to be excluded in the regression equation. Thus, our resulting regression equation looks the following:
 
 \begin{equation}
 \begin{split}
-TakeOverTime = 3.16 + 0.46 \cdot Much Traffic - 0.43 \cdot Urgency of Situation + \epsilon_{i}
+TakeOverTime = 3.16 + 0.46 \cdot Much Traffic - 0.43 \cdot Criticality of Situation + \epsilon_{i}
  \end{split}
 \end{equation}
 
-Both significant variables seem to have a quite strong impact on takeover time, `much traffic' making the takeover about half a second slower and an urgent situation making the takeover about half a second faster. The constant of 3.15 seconds suits to typical takeover times in literature. Those two factors having the biggest influence suits to the recently published dissertation by Christian Gold's dissertation. He finds by regression analysis that Time Budget, Repetition (which was not included in out model) and traffic density are the main predictors of takeover time \ref{goldmodeling}. In addition to being insignificant, the other regression weights are quite unlikely. For example, a participant would become 0.25 sec faster at taking over by having the body turned away. Also the signs of `Gaze Off Road' and `Decision Necessary' do not make sense. An off road gaze should make take-over time longer, and a necessary decision as well.  Calculating the regression with Matlab and Excel leads to the exact same results. Due to their insignificance, those results cannot be interpreted anyways. 
+`Much traffic' and `Criticality of Situation' have an effect of similar strength, but in opposite directions. It makes sense that a person takes longer to prepare for the takeover if there is more traffic, and that one is faster if the situation is critical. The constant of 3.15 seconds suits to typical takeover times in literature. Those two factors having the biggest influence suits to the recently published dissertation by Christian Gold. He finds by regression analysis that Time Budget, Repetition (which was not included in out model) and traffic density are the main predictors of takeover time \cite{goldmodeling}. Considering the signs of the non-significant variables, one might think that some negative signs do not make sense (e.g. in front of `body turned away'). This is misleading since the regression represents the effect of a variable given the effect of all other explanatory variables. Thus, a negative sign can not directly be translated into the factors influence in seconds. Due to their insignificance and correlation with one another, they should not be interpreted anyways. Calculating the same regression in Matlab and Excel confirmed our results. 
 \\
 Also the Goodness of fit ($R^2$) of the whole model can be measured with SPSS (Fig. \ref{15}, upper part `Modelluebersicht'). As already mentioned, $R^2$ measures the amount of variability in takeover time that is explained by the model. The adjusted $R^2$ is corrected by the amount of independent variables. This is necessary because $R^2$ rises with the amount of independent variables, even if they do not add any information. The adjusted $R^2$ is reduced by the number of independent variables and increased by sample size. The archievable $R^2$ depends on the variance present in the data. Thus, also a model with a low  $R^2$ can be a good model, if there is a lot of `natural' variance in the data (like e.g. with humans) \cite{goldmodeling}. In our case, 22,7\% of the variability of takeover time are explained by our eleven factors. A plot of the predicted against the measured takeover time can be found in Fig. \ref{16}. The significance of different studies can be compared by the effect size. The resulting effect size can be calculated by Cohen's d: $\sqrt{\frac{0.227}{1-0.227}} = 0.53$. This corresponds to a strong effect according to Cohen \cite{cohen1992power}. 
-The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model, which is calculated to be significant. Considering the significance of the single betas, this of course does not hold true. 
+The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model, which is calculated to be significant. 
 
 \begin{figure}
 \centering
@@ -264,6 +266,7 @@ The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model
 \label{15}
 \end{figure}
 
+\subsection{Discussion}
 This approach has used the `enter' method for including variables in the regression. When using the stepwise forward regression not all variables are in included at once, but variable per variable is included until adding another makes no significant change in the model anymore. 
 The question whether it is better to include all variables that one thinks to have an influence, or to do so stepwise until no further improvement of significance is reached divides opinions. A criticism of the stepwise regression is that one `picks out' the most suitable variables. Typically, for testing an a-priori hypothesis, the `enter' method is used (thus, all variables are being included). Thus, in my case, I would say that I assume that all factors have a relevant influence, and with my regression I only want to show which factor has which weighting. The stepwise regression is used for more explorative approaches: I am not sure whether all eleven factors have an influence, so I test which ones make a significant difference. Considering that I chose all factors from literature that showed that the corresponding factor does have an influence, the `enter' method seems more suitable. 
 
@@ -285,14 +288,10 @@ The question whether it is better to include all variables that one thinks to ha
 \end{figure}
 
 
-When testing the multiple regression requirements, all seem to be fulfilled except for the linearity of the problem(Fig. \ref{regdiag}). Even though the VIF indicates that no multicollinearity exists, a high correlation between variables might still have an influence and lead to high p-values and high variability of estimated betas. There certainly is another problem hidden in the design matrix: some studies that investigated the same factor conclude conflictive results. While for example most studies find that a gaze off road leads to longer takeover times, Louw et al. have a lower mean takeover time in the group that had the gaze off road. Louw et al. reason that .... . Even after removing all studies that have conflictive results, and after removing all factors that show high correlation with another factor, the resulting betas do not make much sense and their p-values are still high (Fig. \ref{17}). This regression has an adjusted $R^2$ of 11.8\%, seeFig. \ref{18}. Thus, these two problems can not be the only ones exisiting in our regression. Another problem might be that studies are less comparable than expected. Most likely, factors other than the ones included in our regression varied between studies. This might be many little things: Differences in simulators, study setup, study subjects, etc. might be reasons that make studies incomparable. Also, a nominal scale has a low level of measurement. This can hardly be changed because most measures are nominal by how they were measured or reported in the given studies. Furthermore, in many studies takeover times were reported independent of takeover quality. Thus, if an overhasty takeover leading to high lane deviations and lateral accelerations occurred, takeover time was very short. Even if e.g. traffic would have had an influence on the takeover time, this would have been omitted by the fact that the takeover happened overhasty. Since we are modeling a normative (`driving school') takeover, we would be interested in any factor that influences takeover time in the case of a calm, planned takeover.
+When testing the multiple regression requirements, all seem to be fulfilled except for the linearity of the problem(Fig. \ref{regdiag}). Even though the VIF indicates that no multicollinearity exists, a high correlation between variables might still have an influence and lead to high p-values and high variability of estimated betas. There certainly is another problem hidden in the design matrix: some studies that investigated the same factor conclude conflictive results. While for example most studies find that a gaze off road leads to longer takeover times, Louw et al. have a lower mean takeover time in the group that had the gaze off road. Louw et al. reason that .... . Results after removing all studies that have conflictive results, and after removing all factors that show high correlation with another factor, can be found in Fig. \ref{17}. This regression has an adjusted $R^2$ of 11.8\%, seeFig. \ref{18}. Another problem might be that studies are less comparable than expected. Most likely, factors other than the ones included in our regression varied between studies. This might be many little things: Differences in simulators, study setup, study subjects, etc. might be reasons that make studies incomparable. Also, a nominal scale has a low level of measurement. This can hardly be changed because most measures are nominal by how they were measured or reported in the given studies. Furthermore, in many studies takeover times were reported independent of takeover quality. Thus, if an overhasty takeover leading to high lane deviations and lateral accelerations occurred, takeover time was very short. Even if e.g. traffic would have had an influence on the takeover time, this would have been omitted by the fact that the takeover happened overhasty. Since we are modeling a normative (`driving school') takeover, we would be interested in any factor that influences takeover time in the case of a calm, planned takeover. In the end, it has to be taken into account that it might be that we simply included several independent variables that have no or very little explanatory value. Those would then compete for explanatory power (especially if they are correlated) and thus decrease all p-values.
 
-\subsubsection{Outlook}
-Considering that even though in statistical theory it seems like everything about the model is fine, the results do not make sense when applied in the `real world'. Suggestions to improve the regression equation would be to try nonlinear factors (in a still linear equation), for example .... . Furthermore, a nonlinear regression equation could be tried. Due to several advantages when comparing studies, we propose to use a random-effect meta-regression. Other than a `simple' regression, this considers / takes into account .... .   
-
-
-
-While the sign of the other variables makes sense, their beta should not be interpreted due to the correlation between variables.
+\subsection{Outlook}
+Suggestions to improve the regression equation would be to try nonlinear factors (in a still linear equation). Furthermore, a nonlinear regression equation could be tried. In case we chose a linear regression even though the correct model is not linear, the slope and intercept estimates and the fitted values from the linear regression will be biased \cite{statsrequ}. Due to several advantages when comparing studies, we propose to use a random-effect meta-regression. Other than a `simple' regression, this considers / takes into account .... .   
 
 \section{Singular Value Decomposition} \label{svd}
 \subsection{Method}
@@ -389,92 +388,72 @@ The multiple linear regression in section \ref{regLit} resulted in `traffic' and
 To compare literature with results of our own study, we also conducted a multiple linear regression with data obtained from our own experiments. Those were conducted on a route from ... to ... . For a closer description of Experimental setup, please check reference Claus. 
  
 \subsection{Regression Equation}
-To make the analysis comparable, the same factors as in the literature study were chosen. Only `criticality of the situation' could not be assessed, because the study took place on a real road. Thus, all situations were uncritical. The design matrix is not binary in all cases this time. sagen was nominal orginal etc und von wo bis wo sie gingen (zB 0-15). 
+For the regression with out own data we included as much as possible of the factors that were also measured in the literature regression. `Criticality of the situation' could not be assessed, because the study took place on a real road. Thus, all situations were uncritical. Therefore, mirror checks and decisions were never required. Takeover time was again measured in seconds. Age was binary for under and above 45 years; Gaze on road was binary; Hand and body position were binary; what was called `traffic' in the literature regression was here measured in whether a car was in front which could be `no car ahead', `appropriate distance to front vehicle' or `short distance to front vehicle'. The length of the ride before takeover was either `long' (15 minutes) or `short' (5 minutes). Mental workload during takeover request was rated by participants on a scale from 0 to 15. Perceived urgency at the takeover request was rated on a scale from 1-3. 
 \\
 Thus, we postulate the following regression equation:
 \begin{equation}
 \begin{split}
-TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Mirror Check Necessary + \\
-\beta_{3} \cdot Body Turned Away + \beta_{4} \cdot Hands Occupied  + \beta_{5} \cdot Cognitive Distraction + \\
-\beta_{6} \cdot Much Traffic +  \beta_{7} \cdot Decision Necessary + \\
-\beta_{8} \cdot  Time Pressure + \beta_{9} \cdot Long Autonomous Ride  + \beta_{10} \cdot Elderly Subject  + \\ 
+TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Body Turned Away +\\
+ \beta_{3} \cdot Hands Occupied  + \beta_{4} \cdot Cognitive Distraction + \beta_{5} \cdot Much Traffic +\\
+\beta_{6} \cdot  Time Pressure + \beta_{7} \cdot Long Autonomous Ride  + \beta_{8} \cdot Elderly Subject  + \\ 
 \epsilon_{i}
  \end{split}
 \end{equation}
 
 
-\subsection{checking the multiple regression requirements}
+\subsection{Checking the Multiple Regression Requirements}
 \subsubsection{Linearity of the problem}
-For a description, please refer to \ref{req1}. In this case, the diagrams for ... look linear, while the ones for ... might not be linear. this should be kept in mind. 
+For a description, please refer to \ref{req1}. In this case, the diagrams for Cognitive Distraction, time pressure and age look linear, while the ones for Gaze Off Road, Hands Occupied, Body Turned Away, Long Autonomous Ride and traffic are most likely not linear. This should be kept in mind. 
 
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figures/}
+        \includegraphics[width=\textwidth]{Figures/20}
         \caption{A gull}
         \label{fig:gull}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figures/}
+        \includegraphics[width=\textwidth]{Figures/21}
         \caption{A tiger}
         \label{fig:tiger}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figures/}
+        \includegraphics[width=\textwidth]{Figures/22}
         \caption{A mouse}
         \label{fig:mouse}
     \end{subfigure}
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figures/}
+        \includegraphics[width=\textwidth]{Figures/23}
         \caption{A gull}
         \label{fig:gull}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figures/}
+        \includegraphics[width=\textwidth]{Figures/24}
         \caption{A tiger}
         \label{fig:tiger}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figures/}
-        \caption{A mouse}
-        \label{fig:mouse}
-    \end{subfigure}
-        \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figures/}
-        \caption{A gull}
-        \label{fig:gull}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figures/}
-        \caption{A tiger}
-        \label{fig:tiger}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-    %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figures/}
+        \includegraphics[width=\textwidth]{Figures/25}
         \caption{A mouse}
         \label{fig:mouse}
     \end{subfigure}
         \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figures/}
+        \includegraphics[width=\textwidth]{Figures/26}
         \caption{A gull}
         \label{fig:gull}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Figures/}
+        \includegraphics[width=\textwidth]{Figures/27}
         \caption{A tiger}
         \label{fig:tiger}
     \end{subfigure}
@@ -499,112 +478,88 @@ TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Mirro
 See \ref{req3} 
 
 \subsubsection{Strict exogeneity (Gauss-Markov-Theorem 3)}
-See \ref{req4} - aber hier noch chekcen ob es auch stimmt! 
+See \ref{req4} and \ref{28}. Even though the data points are higher on the positive side of zero, this is assumed to be evened out by a larger amount of data points smaller than zero. In case there would be an upwards trend, this would imply the existence of an implicit X. This means that a factor that influences takeover time in all experiments is not included in the regression equation. This would lead to biased fitted estimates for the slope and intercept. Another option in case of linear dependency in the plot of residuals against fitted values is an implicit block effect. This can be detected by performing an analysis of covariance. This divides the data into different regression lines. If there is a significant difference between the slopes, the linear relationship between X and Y varies with the value of the blocking factor \cite{statsrequ}. For simplicity, we will assume strict exogeneity. 
 
 \begin{figure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/}
+\includegraphics[width = 1\textwidth]{Figures/28}
 \decoRule
-\caption[Scatter Plot of errors]{piep.}
-\label{1}
+\caption{Scatter Plot of errors.}
+\label{28}
 \end{figure}
 
 %prev
 \subsubsection{Homoscedasticity}
-See \ref{req4} 
+See \ref{req4}. There is no shape in \ref{28} 
 
 \subsubsection{Independence of the Error Term}
-See \ref{req5}  In our case, the Durbin-Watson value is ..., which indicates medium correlation between the error terms. 
+See \ref{req5}.  In our case, the Durbin-Watson value is 1.76, which indicates medium correlation between the error terms. 
 
 \subsubsection{Normal Distribution of the Error Term}
-The residuals should be normally distributed. This can be checked and confirmed by Fig. \ref{2}
+The residuals should be normally distributed. This can be checked and confirmed by Fig. \ref{29}. The distribution has a slight skew to the right.
 
 \begin{figure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/}
+\includegraphics[width = 1\textwidth]{Figures/29}
 \decoRule
 \caption[Scatter Plot of errors]{piep.}
-\label{2}
+\label{29}
 \end{figure}
 
 \subsubsection{No Multicollinearity}
 
 \begin{figure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/Korrs}
+\includegraphics[width = 1\textwidth]{Figures/30}
 \decoRule
-\caption[A Piechart]{Haeufigkeit.}
-\label{bla}
+\caption[A Piechart]{Correlations.}
+\label{corr2}
 \end{figure}
 
-%das hier noch anpassen! ab hier alles nur von oben reinkopiert!
-Just by looking at the frequency table, it becomes obvious that some factors are varied only very little. Besides this being a problem because of little information available, it is also a problem because all factors that are kept the same over most studies correlate highly with the constant, which is a row of ones in front of the design matrix. In general, we have the problem that many factors correlate. This can be seen in Fig. \ref{bla} . While correlations between Takeover time (`Uebernahmezeit') and all the other factors (first row) are desired, all other correlations between factors are not. Here it has to be kept in mind that all correlations between factors only indicate how often they were measured together in studies, and says nothing about a relationship between the factors themselves. A correlation between any factor with takeover time on the other hand does say something about the influence of this factor on takeover time.`Hands Occupied' (`Handbelegung') and `Gaze Off Road' have a Pearson-Correlation of 0.931. This makes sense because most likely one looks towards one's hands if those are occupied. Time pressure (`Zeitnot') and Mirror Check (`Spiegelblick') have a correlation of 0.71, which might be coincidence. Also other factors have more or less high correlations. In other words, variables party explain each other and do not necessarily add completely new information. This can be compared to a matrix that does not have full rank because its rows are linearly dependent; it results in an ill-defined problem because we have more variables we want to find than equations that can independently explain those variables. Thus, using a design matrix with factors that correlate leads to imprecise estimates of the regression parameters. Unfortunately, it can not be clearly said how much correlation is too much correlation. For this, the measures of Tolerance Value and Variation Inflation Factor (`VIF', which is simply the inverse of the Tolerance Value) are typically examined. Those are measures of multicollinearity. While one can have multiple variables that do not correlate pairwise, there might still be significant multicollinearity between the set of all of them. The Tolerance Value is calculated by $T_{j} = 1- R^{2}$, where $R^{2}$ is the coefficient of Determination. $R^{2}$ measures how much of the variance of the dependent variable is explained by this independent variable. In other words, the VIF/Tolerance Value measure how much larger the variance of the regression coefficient is than if the variable had been completely uncorrelated with other variables in the model. This Tolerance Value should, as a rule of thumb, not be smaller than 0.1. Including correlating variables in a model leads to p-values that are higher (=less significant) by a factor of the VIF than they would otherwise would be. 
+
+For explanation, see \ref{multi}. There is one high correlation between `hand position' and `gaze offroad'. This can be seen in Fig. \ref{corr2} . It is the same correlation we also found in the literature regression, and it makes sense because one that does a task with his hands most likely also looks at that task. 
 
 \begin{figure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/3}
+\includegraphics[width = 1\textwidth]{Figures/31}
 \decoRule
 \caption[A Piechart]{Haeufigkeit.}
-\label{3}
+\label{31}
 \end{figure}
 
-As can be seen in Fig. \ref{3}, none of the Tolerance Values (`Toleranz', second-last column under `Kollinearitaetsstatistik') are smaller than 0.1. While this first seems surprising due to the correlation between several factors, Belsley writes in his book on `Regression Diagnostics' that high correlations are not always problematic \cite{belsley2005regression}. Some authors even suggest correlations as high as 0.7 should not be considered severe \cite{mason1991collinearity}. Thus, we will continue our analysis while keeping the high correlations in mind for subsequent analysis. They are the reason we will try a singular value decomposition in part \ref{svd}.\\
-In Fig. \ref{3} it can be seen that besides the constant (`Konstante'), much traffic (`viel Verkehr') and urgency of the situation (`Dringlichkeit Situation'), none of the coefficients are significant (sixth column `Sig.'). This significance depends on 1) the magnitude of the effect, 2) the magnitude of the error variance, 3) the variance of the variable itself, 4) the amount of data, and 5) the number of variables in the model. Nonsignificant variables need to be excluded in the regression equation. Thus, our resulting regression equation looks the following:
+As can be seen in Fig. \ref{31}, none of the Tolerance Values (`Toleranz', second-last column under `Kollinearitaetsstatistik') are smaller than 0.1. 
+
+\subsection{Results}\label{resData}
+In the same Figure (\ref{31}) it can be seen that besides the constant (`Konstante'), hands occupied (`Handposition') and length of ride before takeover request (`Dauer Nebenaufgabe'), none of the coefficients are significant (sixth column `Sig.'). Nonsignificant variables need to be excluded in the regression equation. Thus, our resulting regression equation looks the following:
 
 \begin{equation}
 \begin{split}
-TakeOverTime = 3.16 + 0.46 \cdot Much Traffic - 0.43 \cdot Urgency of Situation + \epsilon_{i}
+TakeOverTime = 1.95 + 1.45 \cdot Hands Occupied - 0.71 \cdot Length Of Ride Before TOR + \epsilon_{i}
  \end{split}
 \end{equation}
 
-Both significant variables seem to have a quite strong impact on takeover time, `much traffic' making the takeover about half a second slower and an urgent situation making the takeover about half a second faster. The constant of 3.15 seconds suits to typical takeover times in literature. Those two factors having the biggest influence suits to the recently published dissertation by Christian Gold's dissertation. He finds by regression analysis that Time Budget, Repetition (which was not included in out model) and traffic density are the main predictors of takeover time \ref{goldmodeling}. In addition to being insignificant, the other regression weights are quite unlikely. For example, a participant would become 0.25 sec faster at taking over by having the body turned away. Also the signs of `Gaze Off Road' and `Decision Necessary' do not make sense. An off road gaze should make take-over time longer, and a necessary decision as well.  Calculating the regression with Matlab and Excel leads to the exact same results. Due to their insignificance, those results cannot be interpreted anyways. 
-\\
-Also the Goodness of fit ($R^2$) of the whole model can be measured with SPSS (Fig. \ref{15}, upper part `Modelluebersicht'). As already mentioned, $R^2$ measures the amount of variability in takeover time that is explained by the model. The adjusted $R^2$ is corrected by the amount of independent variables. This is necessary because $R^2$ rises with the amount of independent variables, even if they do not add any information. The adjusted $R^2$ is reduced by the number of independent variables and increased by sample size. The archievable $R^2$ depends on the variance present in the data. Thus, also a model with a low  $R^2$ can be a good model, if there is a lot of `natural' variance in the data (like e.g. with humans) \cite{goldmodeling}. In our case, 22,7\% of the variability of takeover time are explained by our eleven factors. A plot of the predicted against the measured takeover time can be found in Fig. \ref{16}. The significance of different studies can be compared by the effect size. The resulting effect size can be calculated by Cohen's d: $\sqrt{\frac{0.227}{1-0.227}} = 0.53$. This corresponds to a strong effect according to Cohen \cite{cohen1992power}. 
-The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model, which is calculated to be significant. Considering the significance of the single betas, this of course does not hold true. 
+Other than in the literature regression, here the betas do not correspond to seconds. They can only be compared in relation to each other. Thus, while the biggest influence comes from the constant, also hand occupation has a relevant influence on takeover time. This, again, could be a representative of `motor' readiness, while `length of ride before TOR' could be a representative of the `cognitive' readiness. 
+For explanation, see \ref{resLit}. Again, Goodness of fit ($R^2$) is 0.22 - thus, the included factors explain 22\% of the variability in takeover time. A scatter plot of predicted against measured takeover time can be found in Fig. \ref{33}.
 
 \begin{figure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/15}
+\includegraphics[width = 1\textwidth]{Figures/32}
 \decoRule
-\caption[A Piechart]{Haeufigkeit.}
-\label{15}
+\caption{Goodness of fit and ANOVA.$(R^2) = 0.22$.}
+\label{3}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/16}
+\includegraphics[width = 1\textwidth]{Figures/33}
 \decoRule
-\caption[A Piechart]{Haeufigkeit.}
-\label{15}
+\caption{Predicted against measured takeover time.}
+\label{33}
 \end{figure}
 
-This approach has used the `enter' method for including variables in the regression. When using the stepwise forward regression not all variables are in included at once, but variable per variable is included until adding another makes no significant change in the model anymore. 
-The question whether it is better to include all variables that one thinks to have an influence, or to do so stepwise until no further improvement of significance is reached divides opinions. A criticism of the stepwise regression is that one `picks out' the most suitable variables. Typically, for testing an a-priori hypothesis, the `enter' method is used (thus, all variables are being included). Thus, in my case, I would say that I assume that all factors have a relevant influence, and with my regression I only want to show which factor has which weighting. The stepwise regression is used for more explorative approaches: I am not sure whether all eleven factors have an influence, so I test which ones make a significant difference. Considering that I chose all factors from literature that showed that the corresponding factor does have an influence, the `enter' method seems more suitable. 
+\subsection{Discussion and Outlook}
 
-
-\begin{figure}
-\centering
-\includegraphics[width = 1\textwidth]{Figures/17}
-\decoRule
-\caption{Result of the regression with non-correlating factors and concordant studies only.}
-\label{17}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width = 1\textwidth]{Figures/18}
-\decoRule
-\caption{Scatter plot of the regression with non-correlating factors and concordant studies only. The X-axis shows the predicted value, the Y-axis the measured value of takeover time.}
-\label{18}
-\end{figure}
-
-
-When testing the multiple regression requirements, all seem to be fulfilled except for the linearity of the problem(Fig. \ref{regdiag}). Even though the VIF indicates that no multicollinearity exists, a high correlation between variables might still have an influence and lead to high p-values and high variability of estimated betas. There certainly is another problem hidden in the design matrix: some studies that investigated the same factor conclude conflictive results. While for example most studies find that a gaze off road leads to longer takeover times, Louw et al. have a lower mean takeover time in the group that had the gaze off road. Louw et al. reason that .... . Even after removing all studies that have conflictive results, and after removing all factors that show high correlation with another factor, the resulting betas do not make much sense and their p-values are still high (Fig. \ref{17}). This regression has an adjusted $R^2$ of 11.8\%, seeFig. \ref{18}. Thus, these two problems can not be the only ones exisiting in our regression. Another problem might be that studies are less comparable than expected. Most likely, factors other than the ones included in our regression varied between studies. This might be many little things: Differences in simulators, study setup, study subjects, etc. might be reasons that make studies incomparable. Also, a nominal scale has a low level of measurement. This can hardly be changed because most measures are nominal by how they were measured or reported in the given studies. Furthermore, in many studies takeover times were reported independent of takeover quality. Thus, if an overhasty takeover leading to high lane deviations and lateral accelerations occurred, takeover time was very short. Even if e.g. traffic would have had an influence on the takeover time, this would have been omitted by the fact that the takeover happened overhasty. Since we are modeling a normative (`driving school') takeover, we would be interested in any factor that influences takeover time in the case of a calm, planned takeover.
-
-\subsubsection{Outlook}
-Considering that even though in statistical theory it seems like everything about the model is fine, the results do not make sense when applied in the `real world'. Suggestions to improve the regression equation would be to try nonlinear factors (in a still linear equation), for example .... . Furthermore, a nonlinear regression equation could be tried. Due to several advantages when comparing studies, we propose to use a random-effect meta-regression. Other than a `simple' regression, this considers / takes into account .... . 
-
-
+In this regression, the linearity of the problem, the independence of the error term and a correlation between two factors (`hand position' and `gaze off road') might lead to mistakes in slope, interception and the fitted Y values in the regression equation. The dependence of the error term is rather small. Because the VIF indicates no multicollinearity, the correlation can most likely be neglected. To reach linearity of the problem, it might be interesting to transform the data. What needs to be kept in mind is that nothing about the regression model says that the explanatory variables actually explain the dependent variable. In addition, variables that `truly' come from the same underlying factor (see \ref{svd}) compete for explanatory power and maybe only one out of several becomes significant. Thus, it might well be that the `general' message of one cognitive influencing factor with smaller impact and one motor influencing factor with larger impact is true.
 
 
 
