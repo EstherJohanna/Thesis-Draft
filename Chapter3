@@ -19,7 +19,7 @@ Of those papers, all papers were chosen that were concerned with Highly Automate
 \item about highly automated driving in a car, not platooning (excluded ...);
 \item where did they find a difference between the conditions; excluded ... because they showed that presenting the RtI on a cell phone vs. a display does not make a significant difference.
 \end{itemize}
-By this, we have a selection of 19 papers to be compared in the meta-analysis. Those were \cite{unfallforschung, eriksson2016take, korber2016influence, gold2016taking, maas2016losungsansatze, zeeb2016take, bueno2016different, louw2017you, feldhutter2016duration, befelein2016, Gold2015, Zeeb2015, kerschbaum2015transforming, walch2015autonomous, Lorenz2014, radlmayr2014traffic, Gold2013, feldhuetterFahrer, Gold2016}.
+By this, we have a selection of 19 papers to be compared in the meta-analysis. Those were \cite{unfallforschung, eriksson2016take, korber2016influence, gold2016taking, maas2016losungsansatze, zeeb2016take, bueno2016different, louw2015engaging, feldhutter2016duration, befelein2016, Gold2015, Zeeb2015, kerschbaum2015transforming, walch2015autonomous, Lorenz2014, radlmayr2014traffic, Gold2013, feldhuetterFahrer, Gold2016}.
 
 \subsection{Criteria for Selection of Influencing Factors}
 As influencing factors we chose all factors that showed to have a relevant influence in the 19 papers. In addition, we chose two factors that we considered to be important and that could be inferred from the papers. 
@@ -49,7 +49,7 @@ Studies report mean or median, and some standard deviation. Data on single subje
  \\
  A complete version of design- and result matrix can be found in \ref{Appendix}. 
 \\
-While some of the factors are `naturally binary' (Gaze Off Road, Mirror Check Necessary, Body Turned, Hands Occupied and Decision Necessary), for others a threshold needed to be set. Elderly Subject, Long Autonomous Ride and Tiredness were binary because they were only investigated in one study each with a relevant difference. Only one study included subjects over 60 years old \cite{korber2016influence}; and only one study drives 20 minutes highly automated until they request to take over \cite{feldhutter2016duration}. Cognitive Distraction was rated as `High' when the subject played tetris, solved the 20 question task, read an email, solved the difficult remote association test, calculated, did the 2-back task, did a cognitive-motoric task or had to do a fill-in-the-blanks text. It was rated low when the subjects did nothing, read newspaper, watched a video, solved the easy remote association task or the surrogate reference task. Reading emails was assumed to be cognitively more demanding than reading newspapers, because one has to come up with an answer to emails, but not to the newspaper. In \cite{feldhuetterFahrer} subjects could choose their activities which was rated as cognitively demanding, because we assume subjects to choose something that keeps them busy and not bored. For traffic, the threshold was chosen between no traffic at all and traffic existed on the road. This showed to induce a bigger difference than little and much traffic in \cite{gold2016taking}. A takeover situation was rated urgent when a collision had to be avoided, and as uncritical when a ride simply had to be continued on a straight road. Also `curve with wind gust' in \cite{Zeeb2015} was rated as urgent. For Time Pressure the threshold was set at 6 seconds, because Gold et al. find that at 5 seconds an overhasty takeover occurs, but not at 7 seconds \cite{Gold2013}. 
+While some of the factors are `naturally binary' (Gaze Off Road, Mirror Check Necessary, Body Turned, Hands Occupied and Decision Necessary), for others a threshold needed to be set. Elderly Subject, Long Autonomous Ride and Tiredness were binary because they were only investigated in one study each with a relevant difference. Only one study included subjects over 60 years old [\cite{korber2016influence}]; and only one study drives 20 minutes highly automated until they request to take over [\cite{feldhutter2016duration}]. Cognitive Distraction was rated as `High' when the subject played tetris, solved the 20 question task, read an email, solved the difficult remote association test, calculated, did the 2-back task, did a cognitive-motoric task or had to do a fill-in-the-blanks text. It was rated low when the subjects did nothing, read newspaper, watched a video, solved the easy remote association task or the surrogate reference task. Reading emails was assumed to be cognitively more demanding than reading newspapers, because one has to come up with an answer to emails, but not to the newspaper. In \cite{feldhuetterFahrer} subjects could choose their activities which was rated as cognitively demanding, because we assume subjects to choose something that keeps them busy and not bored. For traffic, the threshold was chosen between no traffic at all and traffic existed on the road. This showed to induce a bigger difference than little and much traffic in \cite{gold2016taking}. A takeover situation was rated urgent when a collision had to be avoided, and as uncritical when a ride simply had to be continued on a straight road. Also `curve with wind gust' in \cite{Zeeb2015} was rated as urgent. For Time Pressure the threshold was set at 6 seconds, because Gold et al. find that at 5 seconds an overhasty takeover occurs, but not at 7 seconds [\cite{Gold2013}]. 
 \\
 Thus, we postulate the following regression equation:
 \begin{equation}
@@ -159,15 +159,15 @@ TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Mirro
  \end{split}
 \end{equation}
 
-\subsubsection{Random Sample (Gauss-Markov-Theorem 2)}
+\subsubsection{Random Sample (Gauss-Markov-Theorem 2)}\label{req3}
 We assume that all subjects were drawn from a random sample. Most likely we have a skew for a WEIRD sample (western, educated, industrialized, rich, democratic, see \cite{jones2010weird}) , which needs to be kept in mind. 
 
-\subsubsection{Strict Exogeneity (Gauss-Markov-Theorem 3)}
+\subsubsection{Strict Exogeneity (Gauss-Markov-Theorem 3)}\label{req4}
 This hypothesizes that the the error term has a mean of zero for every value of an independent variable. For this, we look at a scatter plot of the standardized estimated value of y on the X-axis, and the standardized error terms (residuals) on the Y-axis, see Fig. \ref{1} . By visual inspection we estimate that the mean error is zero.
 
 \begin{figure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/1}
+\includegraphics[width = 0.5\textwidth]{Figures/1}
 \decoRule
 \caption{Scatter Plot of errors.}
 \label{1}
@@ -177,7 +177,7 @@ This hypothesizes that the the error term has a mean of zero for every value of 
 \subsubsection{Homoscedasticity}
 This means that the error has the same amount of variance for every value of the independent variable. This can also be checked by visual inspection of Fig. \ref{1}. Now, it is important that no `shape' can be seen. The dots need to be equally distributed along the x-axis. This seems to be the case. This can be statistically proven by e.g. the Breusch-Pagan-Test or the White-test , which would go beyond the scope of this thesis.
 
-\subsubsection{Independence of the Error Term}
+\subsubsection{Independence of the Error Term}\label{req5}
 This requires that the errors of the independent variables are independent (thus, have no influence on each other). This can be checked by the Durbin-Watson test. The statistic can have values between 0 and 4, both of which indicate a high correlation, while 2 indicates a low correlation. In our case, the Durbin-Watson value is 0.99, which indicates medium correlation between the error terms. 
 
 \subsubsection{Normal Distribution of the Error Term}
@@ -185,7 +185,7 @@ The residuals should be normally distributed. This can be checked and confirmed 
 
 \begin{figure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/2}
+\includegraphics[width = 0.5\textwidth]{Figures/2}
 \decoRule
 \caption{Histogram of residuals.}
 \label{2}
@@ -278,7 +278,7 @@ The question whether it is better to include all variables that one thinks to ha
 
 \begin{figure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/18}
+\includegraphics[width = 0.5\textwidth]{Figures/18}
 \decoRule
 \caption{Scatter plot of the regression with non-correlating factors and concordant studies only. The X-axis shows the predicted value, the Y-axis the measured value of takeover time.}
 \label{18}
@@ -288,7 +288,7 @@ The question whether it is better to include all variables that one thinks to ha
 When testing the multiple regression requirements, all seem to be fulfilled except for the linearity of the problem (Fig. \ref{regdiag}). Even though the VIF indicates that no multicollinearity exists, a high correlation between variables might still have an influence and lead to high p-values and high variability of estimated betas. There certainly is another problem hidden in the design matrix: some studies that investigated the same factor conclude conflictive results. While for example most studies find that a gaze off road leads to longer takeover times, Louw et al. have a lower mean takeover time in the group that had the gaze off road [\cite{louw2015engaging}]. Results after removing all studies that have conflictive results, and after removing all factors that show high correlation with another factor, can be found in Fig. \ref{17}. This regression has an adjusted $R^2$ of 11.8\%, see Fig. \ref{18}. Another problem might be that studies are less comparable than expected. Most likely, factors other than the ones included in our regression varied between studies. This might be little things: Differences in simulators, study setup, study subjects, etc. might be reasons that make studies incomparable. Also, a nominal scale has a low level of measurement. This can hardly be changed because most measures are nominal by how they were measured or reported in the given studies. Furthermore, in many studies takeover times were reported independent of takeover quality. Thus, if an overhasty takeover leading to high lane deviations and lateral accelerations occurred, takeover time was very short. Even if e.g. traffic would have had an influence on the takeover time, this would have been omitted by the fact that the takeover happened overhasty. Since we are modeling a normative (`driving school') takeover, we would be interested in any factor that influences takeover time in the case of a calm, planned takeover. In the end, it has to be taken into account that it might be that we simply included several independent variables that have no or very little explanatory value. Those would then compete for explanatory power (especially if they are correlated) and thus decrease all p-values.
 
 \subsection{Outlook}
-Suggestions to improve the regression equation would be to try nonlinear factors (in a still linear equation). Furthermore, a nonlinear regression equation could be tried. In case we chose a linear regression even though the correct model is not linear, the slope and intercept estimates and the fitted values from the linear regression will be biased \cite{statsrequ}. Due to several advantages when comparing studies, we propose to use a random-effect meta-regression. Other than a linear regression, the meta-regression takes into account the sampling variances of the observed outcomes or effect size estimates.   
+Suggestions to improve the regression equation would be to try nonlinear factors (in a still linear equation). Furthermore, a nonlinear regression equation could be tried. In case we chose a linear regression even though the correct model is not linear, the slope and intercept estimates and the fitted values from the linear regression will be biased [\cite{statsrequ}]. Due to several advantages when comparing studies, we propose to use a random-effect meta-regression. Other than a linear regression, the meta-regression takes into account the sampling variances of the observed outcomes or effect size estimates.   
 
 \section{Singular Value Decomposition} \label{svd}
 \subsection{Method}
@@ -318,7 +318,7 @@ Now, we are interested in the influence of these singular values on our result v
  \end{split}
 \end{equation}
 
-With the singular values it can be estimated which of the $\gamma$ have a relevant influence. For this, we choose the largest absolute values of $\gamma$ and examine which variables have the biggest influence on it. This will be the variables that explain most of the variance in the data \cite{christensen2011plane}.
+With the singular values it can be estimated which of the $\gamma$ have a relevant influence. For this, we choose the largest absolute values of $\gamma$ and examine which variables have the biggest influence on it. This will be the variables that explain most of the variance in the data [\cite{christensen2011plane}].
 
 \subsection{Results}
 The V resulting from the singular value decomposition of our matrix F looks the following: 
@@ -474,7 +474,7 @@ For a description, please refer to \ref{req1}. In this case, the diagrams for Co
 
 
 \subsubsection{Linearity of the coefficients (Gauss-Markov-Theorem 1)}
-we assume that the postulated model is linear in the coefficients: 
+We assume that the postulated model is linear in the coefficients: 
 
 \begin{equation}
 \begin{split}
@@ -487,14 +487,14 @@ TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Mirro
 \end{equation}
 
 \subsubsection{Random Sample (Gauss-Markov-Theorem 2)}
-See \ref{req3} 
+See \ref{req3} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsubsection{Strict Exogeneity (Gauss-Markov-Theorem 3)}
-See \ref{req4} and \ref{28}. Even though the data points are higher on the positive side of zero, this is assumed to be evened out by a larger amount of data points smaller than zero. In case there would be an upwards trend, this would imply the existence of an implicit X. This means that a variable that influences takeover time in all experiments is not included in the regression equation. This would lead to biased fitted estimates for the slope and intercept. Another option in case of linear dependency in the plot of residuals against fitted values is an implicit block effect. This can be detected by performing an analysis of covariance. This divides the data into different regression lines. If there is a significant difference between the slopes, the linear relationship between X and Y varies with the value of the blocking factor \cite{statsrequ}. For simplicity, we will assume strict exogeneity. 
+See \ref{req4} and \ref{28}. Even though the data points are higher on the positive side of zero, this is assumed to be evened out by a larger amount of data points smaller than zero. In case there would be an upwards trend, this would imply the existence of an implicit X. This means that a variable that influences takeover time in all experiments is not included in the regression equation. This would lead to biased fitted estimates for the slope and intercept. Another option in case of linear dependency in the plot of residuals against fitted values is an implicit block effect. This can be detected by performing an analysis of covariance. This divides the data into different regression lines. If there is a significant difference between the slopes, the linear relationship between X and Y varies with the value of the blocking factor [\cite{statsrequ}]. For simplicity, we will assume strict exogeneity. 
 
 \begin{figure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/28}
+\includegraphics[width = 0.5\textwidth]{Figures/28}
 \decoRule
 \caption{Scatter Plot of errors.}
 \label{28}
@@ -511,7 +511,7 @@ The residuals should be normally distributed. This can be checked and confirmed 
 
 \begin{figure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/29}
+\includegraphics[width = 0.5\textwidth]{Figures/29}
 \decoRule
 \caption{Histogram of residuals.}
 \label{29}
@@ -562,7 +562,7 @@ For explanation, see \ref{resLit}. Again, Goodness of fit ($R^2$) is 0.22 - thus
 
 \begin{figure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/33}
+\includegraphics[width = 0.5\textwidth]{Figures/33}
 \decoRule
 \caption{Predicted against measured takeover time.}
 \label{33}
@@ -571,36 +571,6 @@ For explanation, see \ref{resLit}. Again, Goodness of fit ($R^2$) is 0.22 - thus
 \subsection{Discussion and Outlook}
 
 In this regression, the linearity of the problem, the independence of the error term and a correlation between two factors (`hand position' and `gaze off road') are not perfectly given. If requirements of the multiple regression are not met, this decreases the power of the test and thus leads to high p-values. The dependence of the error term is rather small. Because the VIF indicates no multicollinearity, the correlation can most likely be neglected. To reach linearity of the problem, it might be interesting to transform the data. What needs to be kept in mind is that nothing about the regression model says that the explanatory variables actually explain the dependent variable. In addition, variables that `truly' come from the same underlying factor (see \ref{svd}) compete for explanatory power and maybe only one out of several becomes significant. Thus, it might well be that the `general' message of one cognitive influencing factor with smaller impact and one motor influencing factor with larger impact is true.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
