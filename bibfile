@@ -120,7 +120,7 @@
 @phdthesis{goldmodeling,
   title={Modeling of Take-Over Performance in Highly Automated Vehicle Guidance},
   author={Gold, Christian G{\"u}nter},
-  school={Dissertation, M{\"u}nchen, Technische Universit{\"a}t M{\"u}nchen, 2016}
+  school={Dissertation, Technische Universit{\"a}t M{\"u}nchen, 2016}
 }
 
 @article{mason1991collinearity,
@@ -131,4 +131,286 @@
   year={1991},
   publisher={JSTOR}
 }
+
+@article{hoffmann2017head,
+title={Head Rotation Movement Times},
+author={Hoffmann, Errol R and Chan, Alan HS and Heung, PT},
+journal={Human Factors},
+pages={0018720817701000},
+year={2017},
+publisher={SAGE Publications Sage CA: Los Angeles, CA}
+}
+
+@article{bothell2004act,
+title={Act-r 6.0 reference manual},
+author={Bothell, Dan},
+journal={Working Draft},
+year={2004}
+}
+
+@book{anderson2009can,
+title={How can the human mind occur in the physical universe?},
+author={Anderson, John R},
+year={2009},
+publisher={Oxford University Press}
+}
+
+@inproceedings{salvucci2009toward,
+title={Toward a unified theory of the multitasking continuum: from concurrent performance to task switching, interruption, and resumption},
+author={Salvucci, Dario D and Taatgen, Niels A and Borst, Jelmer P},
+booktitle={Proceedings of the SIGCHI conference on human factors in computing systems},
+pages={1819--1828},
+year={2009},
+organization={ACM}
+}
+
+@article{salvucci2008threaded,
+title={Threaded cognition: an integrated theory of concurrent multitasking.},
+author={Salvucci, Dario D and Taatgen, Niels A},
+journal={Psychological review},
+volume={115},
+number={1},
+pages={101},
+year={2008},
+publisher={American Psychological Association}
+}
+
+@article{salvucci2001integrated,
+title={An integrated model of eye movements and visual encoding},
+author={Salvucci, Dario D},
+journal={Cognitive Systems Research},
+volume={1},
+number={4},
+pages={201--220},
+year={2001},
+publisher={Elsevier}
+}
+
+
+@article{becker1979analysis,
+title={An analysis of the saccadic system by means of double step stimuli},
+author={Becker, Wolfang and J{\"u}rgens, Reinhart},
+journal={Vision research},
+volume={19},
+number={9},
+pages={967--983},
+year={1979},
+publisher={Elsevier}
+}
+
+@article{gunzelmann2011sleep,
+title={Sleep loss and driver performance: Quantitative predictions with zero free parameters},
+author={Gunzelmann, Glenn and Moore, L Richard and Salvucci, Dario D and Gluck, Kevin A},
+journal={Cognitive Systems Research},
+volume={12},
+number={2},
+pages={154--163},
+year={2011},
+publisher={Elsevier}
+}
+
+
+@article{jones2010weird,
+title={A WEIRD view of human nature skews psychologists' studies},
+author={Jones, Dan},
+journal={Science},
+volume={328},
+number={5986},
+pages={1627--1627},
+year={2010},
+publisher={American Association for the Advancement of Science}
+}
+
+@misc{statsrequ,
+title = {Do your data violate linear regression assumptions?},
+howpublished = {\url{http://www.basic.northwestern.edu/statguidefiles/linreg_ass_viol.html}},
+note = {Accessed: 2017-07-10}
+}
+
+@book{christensen2011plane,
+title = {Plane answers to complex questions: the theory of linear models},
+author = {Christensen, Ronald},
+year = {2011},
+publisher = {Springer Science \& Business Media}
+}
+
+@Book{unfallforschung,
+title = {Uebernahmezeiten beim hochautomatisierten Fahren - Unfallforschung kompakt},
+publisher = {Unfallforschung der Versicherer},
+year = {2016},
+author = {Vollrath},
+}
+
+@Article{eriksson2016take,
+author = {Eriksson, Alexander and Stanton, Neville},
+title = {Take-over time in highly automated vehicles: non-critical transitions to and from manual control},
+journal = {Human Factors},
+year = {2016},
+}
+
+@Article{korber2016influence,
+author = {K{\"o}rber, Moritz and Gold, Christian and Lechner, David and Bengler, Klaus},
+title = {The influence of age on the take-over of vehicle control in highly automated driving},
+journal = {Transportation research part F: traffic psychology and behaviour},
+year = {2016},
+volume = {39},
+pages = {19--32},
+publisher = {Elsevier},
+}
+
+@Article{gold2016taking,
+author = {Gold, Christian and K{\"o}rber, Moritz and Lechner, David and Bengler, Klaus},
+title = {Taking Over Control From Highly Automated Vehicles in Complex Traffic Situations The Role of Traffic Density},
+journal = {Human Factors: The Journal of the Human Factors and Ergonomics Society},
+year = {2016},
+pages = {0018720816634226},
+publisher = {Sage Publications},
+}
+
+@Article{maas2016losungsansatze,
+author = {Maas, Niko and Schramm, Dieter},
+title = {L{\"o}sungsans{\"a}tze zur Problematik der {\"U}bergabe der Fahraufgabe an den Fahrer aus automatisiertem Fahrbetrieb},
+journal = {GMM-Fachbericht-AmE 2016--Automotive meets Electronics},
+year = {2016},
+keywords = {rank5},
+publisher = {VDE VERLAG GmbH},
+}
+
+@Article{zeeb2016take,
+author = {Zeeb, Kathrin and Buchner, Axel and Schrauf, Michael},
+title = {Is take-over time all that matters? The impact of visual-cognitive load on driver take-over quality after conditionally automated driving},
+journal = {Accident Analysis \& Prevention},
+year = {2016},
+volume = {92},
+pages = {230--239},
+keywords = {rank5},
+publisher = {Elsevier},
+}
+
+@InProceedings{bueno2016different,
+author = {Bueno, M and Dogan, E and Selem, F Hadj and Monacelli, E and Boverie, S and Guillaume, A},
+title = {How different mental workload levels affect the take-over control after automated driving},
+booktitle = {Intelligent Transportation Systems (ITSC), 2016 IEEE 19th International Conference on},
+year = {2016},
+pages = {2040--2045},
+organization = {IEEE},
+file = {:Bueno2016.pdf:PDF},
+}
+
+@InProceedings{louw2015engaging,
+author = {Louw, Tyron and Merat, Natasha and Jamson, Hamish},
+title = {Engaging with highly automated driving: to be or not to be in the loop},
+booktitle = {8th International Driving Symposium on Human Factors in Driver Assessment, Training and Vehicle Design},
+year = {2015},
+file = {:Louw2015.pdf:PDF},
+}
+
+
+@InProceedings{feldhutter2016duration,
+author = {FELDH{\"U}TTER, Anna and GOLD, Christian and SCHNEIDER, Sonja and BENGLER, Klaus},
+title = {How the Duration of Automated Driving Influences Take-Over Performance and Gaze Behavior},
+booktitle = {Kongress der Gesellschaft f{\"u}r Arbeitswissenschaft},
+year = {2016},
+pages = {62},
+}
+
+@Article{befelein2016,
+author = {Dennis Befelein, Frederik Naujoks, Alexandra Neukum},
+title = {Natuerliche Fahrfremde Tätigkeiten beim Hochautomatisierten Fahren},
+journal = {Ko-HAF Praesentation},
+year = {2016},
+}
+
+@InProceedings{Gold2015,
+author = {Gold, Christian and Berisha, Ilirjan and Bengler, Klaus},
+title = {Utilization of drivetime--performing non-driving related tasks while driving highly automated},
+booktitle = {Proceedings of the Human Factors and Ergonomics Society Annual Meeting},
+year = {2015},
+volume = {59},
+number = {1},
+pages = {1666--1670},
+organization = {SAGE Publications Sage CA: Los Angeles, CA},
+}
+
+@Article{Zeeb2015,
+author = {Zeeb, Kathrin and Buchner, Axel and Schrauf, Michael},
+title = {What determines the take-over time? An integrated model approach of driver take-over after automated driving},
+journal = {Accident Analysis \& Prevention},
+year = {2015},
+volume = {78},
+pages = {212--221},
+publisher = {Elsevier},
+}
+
+@InProceedings{kerschbaum2015transforming,
+author = {Kerschbaum, Philipp and Lorenz, Lutz and Bengler, Klaus},
+title = {A transforming steering wheel for highly automated cars},
+booktitle = {Intelligent Vehicles Symposium (IV), 2015 IEEE},
+year = {2015},
+pages = {1287--1292},
+organization = {IEEE},
+}
+
+@InProceedings{walch2015autonomous,
+author = {Walch, Marcel and Lange, Kristin and Baumann, Martin and Weber, Michael},
+title = {Autonomous driving: investigating the feasibility of car-driver handover assistance},
+booktitle = {Proceedings of the 7th International Conference on Automotive User Interfaces and Interactive Vehicular Applications},
+year = {2015},
+pages = {11--18},
+organization = {ACM},
+}
+
+@InProceedings{Lorenz2014,
+author = {Lorenz, Lutz and Kerschbaum, Philipp and Schumann, Josef},
+title = {Designing take over scenarios for automated driving: How does augmented reality support the driver to get back into the loop?},
+booktitle = {Proceedings of the Human Factors and Ergonomics Society Annual Meeting},
+year = {2014},
+volume = {58},
+number = {1},
+pages = {1681--1685},
+organization = {SAGE Publications Sage CA: Los Angeles, CA},
+}
+
+@InProceedings{radlmayr2014traffic,
+author = {Radlmayr, Jonas and Gold, Christian and Lorenz, Lutz and Farid, Mehdi and Bengler, Klaus},
+title = {How traffic situations and non-driving related tasks affect the take-over quality in highly automated driving},
+booktitle = {Proceedings of the Human Factors and Ergonomics Society Annual Meeting},
+year = {2014},
+volume = {58},
+number = {1},
+pages = {2063--2067},
+organization = {Sage Publications Sage CA: Los Angeles, CA},
+}
+
+@InProceedings{Gold2013,
+author = {Gold, Christian and Damb{\"o}ck, Daniel and Lorenz, Lutz and Bengler, Klaus},
+title = {“Take over!” How long does it take to get the driver back into the loop?},
+booktitle = {Proceedings of the Human Factors and Ergonomics Society Annual Meeting},
+year = {2013},
+volume = {57},
+number = {1},
+pages = {1938--1942},
+organization = {SAGE Publications Sage CA: Los Angeles, CA},
+}
+
+@Article{feldhuetterFahrer,
+author = {Anna Feldhuetter, Tobias Hecht},
+title = {Fahrerspezifische Aspekte beim Hochautomatisierten Fahren},
+journal = {Zwischenbericht},
+year = {2016},
+}
+
+@PhdThesis{Gold2016,
+author = {Gold, Christian G{\"u}nter},
+title = {Modeling of Take-Over Performance in Highly Automated Vehicle Guidance},
+school = {Dissertation, Technische Universit{\"a}t M{\"u}nchen, 2016},
+year = {2016},
+}
+
+@misc{statsZuerich,
+title = {Methodenberatung Uni Zuerich - Multiple Regressionsanalyse},
+howpublished = {\url{http://www.methodenberatung.uzh.ch/de/datenanalyse/zusammenhaenge/mreg.html}},
+note = {Accessed: 2017-07-11}
+}
+
 
