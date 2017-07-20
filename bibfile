@@ -413,4 +413,60 @@ howpublished = {\url{http://www.methodenberatung.uzh.ch/de/datenanalyse/zusammen
 note = {Accessed: 2017-07-11}
 }
 
+@article{hoffmann2015movement,
+  title={Movement of loads with trunk rotation},
+  author={Hoffmann, Errol R and Chan, Alan HS},
+  journal={Ergonomics},
+  volume={58},
+  number={9},
+  pages={1547--1556},
+  year={2015},
+  publisher={Taylor \& Francis}
+}
+
+@article{bothell2004act,
+  title={Act-r 6.0 reference manual},
+  author={Bothell, Dan},
+  journal={Working Draft},
+  year={2004}
+}
+
+@article{morrison1986movement,
+  title={Movement time and brake pedal placement},
+  author={Morrison, Ronald W and Swope, J Geoffrey and Halcomb, Charles G},
+  journal={Human factors},
+  volume={28},
+  number={2},
+  pages={241--246},
+  year={1986},
+  publisher={Sage Publications Sage CA: Los Angeles, CA}
+}
+
+@article{salvucci2001toward,
+  title={Toward an integrated model of driver behavior in cognitive architecture},
+  author={Salvucci, Dario and Boer, Erwin and Liu, Andrew},
+  journal={Transportation Research Record: Journal of the Transportation Research Board},
+  number={1779},
+  pages={9--16},
+  year={2001},
+  publisher={Transportation Research Board of the National Academies}
+}
+
+@article{salvucci2006modeling,
+  title={Modeling driver behavior in a cognitive architecture},
+  author={Salvucci, Dario D},
+  journal={Human factors},
+  volume={48},
+  number={2},
+  pages={362--380},
+  year={2006},
+  publisher={Sage Publications Sage CA: Los Angeles, CA}
+}
+
+@article{bothell2016tut,
+  title={Act-r 7 tutorial},
+  author={Bothell, Dan},
+  journal={comes with ACT-R},
+  year={2016}
+}
 
