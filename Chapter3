@@ -573,4 +573,6 @@ For explanation, see \ref{resLit}. Again, Goodness of fit ($R^2$) is 0.22 - thus
 In this regression, the linearity of the problem, the independence of the error term and a correlation between two factors (`hand position' and `gaze off road') are not perfectly given. If requirements of the multiple regression are not met, this decreases the power of the test and thus leads to high p-values. The dependence of the error term is rather small. Because the VIF indicates no multicollinearity, the correlation can most likely be neglected. To reach linearity of the problem, it might be interesting to transform the data. What needs to be kept in mind is that nothing about the regression model says that the explanatory variables actually explain the dependent variable. In addition, variables that `truly' come from the same underlying factor (see \ref{svd}) compete for explanatory power and maybe only one out of several becomes significant. Thus, it might well be that the `general' message of one cognitive influencing factor with smaller impact and one motor influencing factor with larger impact is true.
 
 
+- erwaehnen dass ich diemsla viele inputs statt outputs habe (ich messe 10mal und habe eine länge des tisches). bei mir haengen unabhaengig faktoren irgendwo voneinander ab - das vernaschlaessige ich. 
+
 
