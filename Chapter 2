@@ -1,17 +1,10 @@
+\chapter{A Cognitive-Motor LEGO Model} 
 
-% Chapter Template
+\label{Chapter2} 
 
-\chapter{Material and Methods} % Main chapter title
+\section{Model}
 
-\label{Chapter2} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
-
-%----------------------------------------------------------------------------------------
-%	SECTION 1
-%----------------------------------------------------------------------------------------
-
-\section{An ACT-R - jobschedule - model}
-
-In the introduction, I will explain the basics of ACT-R and job shop scheduling (pyschedule in particular). Roughly: Actions of one module (=resource) can only happen successively, all actions of different modules can happen simultaneously. The procedural memory is the 'impulse generator' that orchestrates the actions of the other modules by production rule firing. 
+In \ref{Chapter1}, an overview about cognitive modeling and job job scheduling has been given. blabla that's how I combined the two and why. ACT-R long time to learn and for `simple' reaction time laboratory experiments. also for driving but only a very special case. downside: it cannot learn. fine for us because we assume drivers have learnt already. Kritik an ACT-R: schwer zu lernen, `when trying to model more complex tasks, such as driving, the serial processor of ACT-R causes bottlenekcs coincerning the speed of calulation (Marina). in Marina's diss anforderungen: 1)employs knowledge of detailed cognitive structure but simulate performance on higher level 2) with if-then rules 3)modular (easy to add and change) 4)normative and naturalistic driver behavior.  thats what were interested in.Actions of one module (=resource) can only happen successively, all actions of different modules can happen simultaneously. The procedural memory is the 'impulse generator' that orchestrates the actions of the other modules by production rule firing. Fig. \ref{tree} shows the following decision tree more graphically. It is important to note that the added tasks have nothing temporal about them; they only decide which `LEGO-packages' are added to the big LEGO-box out of which in the end the fastest possible solution is built.
 
 The following modules (resources) are available:
 \\
@@ -70,7 +63,7 @@ As the 'impulse generator', the procedural memory commands every move of attenti
 
 
 
-In case the driver is not ready to take over, the following inputs can model the driver's changing state. Fig. \ref{tree} shows the following decision tree more graphically.
+In case the driver is not ready to take over, the following inputs can model the driver's changing state. 
 
 
 \subsection{Lockout}
@@ -281,13 +274,14 @@ See \ref{saccade}.
 \subsubsection{Encode Visual Object}
 See \ref{encode}.
 
-\subsubsection{Request Sourrounding Traffic from Working Memory}
+\subsubsection{Request Surroundings Traffic from Working Memory}
 A production rule.
 
 \subsubsection{Brake Time}
 This is set to zero to compare the output time of the model with what is given as takeover time in literature and our own trials. When applied, the model should be changed to calculate brake time here (Velocity is already an input to the model; a commented line of code gives the equation for brake time). 
 
-\
+\subsection{Example model}
+Fig.  shows the simplest takeover model in an uncritical situation:
 
 
 
@@ -311,7 +305,11 @@ This is set to zero to compare the output time of the model with what is given a
 %- noch eine saccade rein wenn man hände am lever hat aber noch nicht gepresst (aus video)
 %SA komplett rausgelassen!
 
-- 
+\section{Results}
+
+
+- problem vergleich mit literatur: die haben qulatität und zeit untershcielich gemessen  - in zeit sind übernahmen mit crash drin
+
 
 
 
