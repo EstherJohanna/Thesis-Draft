@@ -4,7 +4,7 @@
 
 \section{Model}
 
-In \ref{Chapter1}, an overview about cognitive modeling and job job scheduling has been given. blabla that's how I combined the two and why. ACT-R long time to learn and for `simple' reaction time laboratory experiments. also for driving but only a very special case. downside: it cannot learn. fine for us because we assume drivers have learnt already. Kritik an ACT-R: schwer zu lernen, `when trying to model more complex tasks, such as driving, the serial processor of ACT-R causes bottlenekcs coincerning the speed of calulation (Marina). in Marina's diss anforderungen: 1)employs knowledge of detailed cognitive structure but simulate performance on higher level 2) with if-then rules 3)modular (easy to add and change) 4)normative and naturalistic driver behavior.  thats what were interested in.Actions of one module (=resource) can only happen successively, all actions of different modules can happen simultaneously. The procedural memory is the 'impulse generator' that orchestrates the actions of the other modules by production rule firing. Fig. \ref{tree} shows the following decision tree more graphically. It is important to note that the added tasks have nothing temporal about them; they only decide which `LEGO-packages' are added to the big LEGO-box out of which in the end the fastest possible solution is built.
+In \ref{Chapter1}, an overview about cognitive modeling and job job scheduling (and pyschedule) has been given. blabla that's how I combined the two and why. ACT-R long time to learn and for `simple' reaction time laboratory experiments. also for driving but only a very special case. downside: it cannot learn. fine for us because we assume drivers have learnt already. Kritik an ACT-R: schwer zu lernen, `when trying to model more complex tasks, such as driving, the serial processor of ACT-R causes bottlenekcs coincerning the speed of calulation (Marina). in Marina's diss anforderungen: 1)employs knowledge of detailed cognitive structure but simulate performance on higher level 2) with if-then rules 3)modular (easy to add and change) 4)normative and naturalistic driver behavior.  thats what were interested in.Actions of one module (=resource) can only happen successively, all actions of different modules can happen simultaneously. The procedural memory is the 'impulse generator' that orchestrates the actions of the other modules by production rule firing. Fig. \ref{tree} shows the following decision tree more graphically. It is important to note that the added tasks have nothing temporal about them; they only decide which `LEGO-packages' are added to the big LEGO-box out of which in the end the fastest possible solution is built.
 
 The following modules (resources) are available:
 \\
@@ -32,6 +32,36 @@ Feet Module;
 \item
 Thorax Module
 \end{itemize}
+
+The input variables are:
+\\
+\begin{itemize}
+\item
+Expert - differentiates between a novice that listens to the whole takeover request before taking over, and someone who recognizes right after the first tone that he should take over;
+\item
+Lockout - determines whether the secondary task is automatically ended by in-car entertainment;
+\item
+Declarative Memory;
+\item
+Visual Module;
+\end{itemize}
+Motor Modules:
+\begin{itemize}
+\item
+Aural module;
+\item 
+Head module; 
+\item
+Eyes Module;
+\item
+Feet Module;
+\item
+Thorax Module
+\end{itemize}
+
+Even though we are certain that extreme drowsiness has an influence on takeover time, we excluded it as an influencing variable. In that case, driving should not be allowed and the car should enter a minimal risk state rather than giving control to a drowsy driver. Also boredom was excluded, because its consequences can differentiate between a fast, overhasty takeover due to surprise, or a slow takeover. Cognitive demand is only asked as `yes' or `no' because it is hard to measure in more detail. Felt urgency of the situation is build upo by traffic, time budget and criticality of the scenario; but it is hard to measure. it would make the takeover faster...bei mehr traffic dauert es laenger!
+
+we want a normative `driving school' takeover. 
 
 The basic tasks of every take-over are described in the following. 
 
@@ -69,7 +99,7 @@ In case the driver is not ready to take over, the following inputs can model the
 \subsection{Lockout}
 It has been observed that subjects take longer to disengage from a secondary task if the secondary task is not automatically quit by the in-car entertainment (\cite{}). 
 \subsubsection{Quit Non-driving related task}
-Therefore, another production rule that commands the disengagement from the non-driving related task.
+Therefore, another production rule that commands the disengagement from the non-driving related task. Opel finds 200ms longer of one has to manually end the NDRT? referenz?
 
 \subsection{Expert}
 Depending on whether the person that takes over is novice or expert, the task 'encode sound' has a different length. 
@@ -89,7 +119,9 @@ In ACT-R, motor preparation time depends on the complexity of the movement and h
 Like in ACT-R, every motor action is preceded by a 50ms initiation (\cite{bothell2004act}).
 
 \subsubsection{Move Head}\label{head}
-Movement times were, as in ACT-R, calculated by Fitt's law. The Index of Difficulty for head movement was calculated with $ID = \log _2 \left( \frac{2A}{W} \right)$. The main movement was assumed to be 60\textdegree (from co-driver seat to the road), the target size was assumed to be 30\textdegree (the part of the wind shield that shows the relevant part of the road). The resulting movement time was taken from (\cite{hoffmann2017head}). In this case Index of Difficulty was 2, and the resulting movement time 600ms. 
+Movement times were, as in ACT-R, calculated by Fitt's law. The Index of Difficulty for head movement was calculated with $ID = \log _2 \left( \frac{2A}{W} \right)$. The main movement was assumed to be 90\textdegree (from co-driver seat to the road), the target size was assumed to be 18\textdegree. This is the area of the visual field that is covered by the fovea. The resulting movement time was taken from (\cite{hoffmann2017head}). In this case Index of Difficulty was 2, and the resulting movement time 600ms.
+
+%The main movement was assumed to be 60\textdegree (from co-driver seat to the road), the target size was assumed to be 30\textdegree (the part of the wind shield that shows the relevant part of the road). The resulting movement time was taken from (\cite{hoffmann2017head}). In this case Index of Difficulty was 2, and the resulting movement time 600ms. 
 
 \subsubsection{Move Attention}
 see \ref{moveAttention} - maybe this one is too much?
@@ -101,11 +133,15 @@ As described in \cite{salvucci2001integrated}, every saccade is preceded by 135m
 As described in \cite{salvucci2001integrated}, every saccade consists of 50ms for non-labile programming (\cite{becker1979analysis}), 20ms for saccade execution, and 2ms are added for every degree of visual angle subtended by the saccade. For simplicity, I always assume 10 degrees, which results in a saccade time of 80ms. 
 
 \subsubsection{Encode Visual Object}\label{encode}
-With the equation given in \cite{salvucci2001integrated}, encoding time was calculated to be 135ms. This is based on the assumption that spatial frequency of the object is 0.5 and the visual angle 0 (the person already looks at the object). 
+
+With the equation given in \cite{salvucci2001integrated}, encoding time was calculated to be 85ms. This is based on the assumption that spatial frequency of the object is 0.2 and the visual angle 5\textdegree (the person nearly looks at the object already).
+
+%With the equation given in \cite{salvucci2001integrated}, encoding time was calculated to be 135ms. This is based on the assumption that spatial frequency of the object is 0.5 and the visual angle 0 (the person already looks at the object). 
 
 \subsection{Urgency}\label{prod}
-We assume that from now on, the driver has a rough understanding of how urgent the takeover is. This is mainly influenced by the takeover request, the time budget he is given to take over, but also by the amount of surrounding traffic. From this point on, a production rule will take 50ms if the takeover is perceived as urgent, and 100ms if the situation is not perceived as urgent. The background of this is the following:
+We assume that from now on, the driver has a rough understanding of how urgent the takeover is. This is mainly influenced by the takeover request, the time budget he is given to take over, but also by the amount of surrounding traffic. he also knows because it takes about 30ms to have a general understand of a situation; whether it is urgent, depending on scenario and traffic situation \cite{oliva2006building}.From this point on, a production rule will take 50ms if the takeover is perceived as urgent, and 100ms if the situation is not perceived as urgent. The background of this is the following:
 In ACT-R, each production rule has a utility value. This utility value is based on reinforcement learning and depends on its previous `usefulness' in the specific context (\cite{gunzelmann2011sleep}). 
+auch noch erwaehnen: from edges to blobs: man hat sofort ein grobes verstaendinis in welcher situation man sich befindet.
 
 \subsection{ Turn Body }
 if the body needs to be turned back to the road, the following tasks are added:
@@ -228,7 +264,7 @@ See \ref{ini}.
 We assume that the lever pull can be compared to a key press in ACT-R. It takes 100ms [\cite{bothell2004act}].
 
 \subsection{Takeover in a Critical Situation}
-In a critical situation, we assume that either the road is blocked, the car deviates from the lane due to a wind gust, the takeover is requested in a curve, or any other circumstances require more complex action. Thus, simply deactivating the automation is not sufficient. The driver most likely will check whether it is possible to change lanes in case of an obstacle, and needs to have knowledge of his surroundings for all of the critical cases. Thus, we model gazes to back mirror, side mirror and back to the road. We assume the `worst case' that swerving is not possible and reaction time plus brake time need to be over before reaching an obstacle. 
+In a critical situation, we assume that either the road is blocked, the car deviates from the lane due to a wind gust, the takeover is requested in a curve, or any other circumstances require more complex action. Thus, simply deactivating the automation is not sufficient. The driver most likely will check whether it is possible to change lanes in case of an obstacle, and needs to have knowledge of his surroundings for all of the critical cases. This is only the case if there is surrounding traffic. Then, we model gazes to back mirror, side mirror and back to the road. We assume the `worst case' that swerving is not possible and reaction time plus brake time need to be over before reaching an obstacle. If there is no traffic, we assume the driver to already know this from the first'gist' of the scene \cite{oliva2006building}. Then, the driver does not look into the mirro but only brakes as soon as he has noticed the curvature of the road.
 
 \subsubsection{Request Check Rearward Mirror}
 A production rule.
@@ -284,6 +320,11 @@ This is set to zero to compare the output time of the model with what is given a
 Fig.  shows the simplest takeover model in an uncritical situation:
 
 
+\subsection{Output}
+It draws from a weibull distribution with the mean we found and a bla...
+damit habe ich es wie in act-r auch stochastisch gemacht
+statt vorlauf bis feuern zu variierein durch utility ist bei mir einfach die länge des tasks unterschiedlich (task parameter) was ja aufs gleiche rauskommt
+mean is shape paraemter plus location parameter. Like in Reichle, I used a gaussian to draw the data. 3 als shape-parameter wie in \cite{derichs1998vergleich, whelan2008effective}.
 
 
 
@@ -307,11 +348,88 @@ Fig.  shows the simplest takeover model in an uncritical situation:
 
 \section{Results}
 
+\begin{figure}
+\centering
+\includegraphics[width = 0.5\textwidth]{Figures/36}
+\decoRule
+\caption{Model prediction in comparison to data.}
+\label{18}
+\end{figure}
 
-- problem vergleich mit literatur: die haben qulatität und zeit untershcielich gemessen  - in zeit sind übernahmen mit crash drin
+\begin{figure}
+\centering
+\includegraphics[width = 0.5\textwidth]{Figures/35}
+\decoRule
+\caption{Model prediction in comparison to our data.}
+\label{35}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.5\textwidth]{Figures/44}
+\decoRule
+\caption{Model prediction in comparison to literature data.}
+\label{44}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{1\textwidth}
+        \includegraphics[width=\textwidth]{Figures/37}
+        \caption{Part 1}
+        \label{fig:gull}
+    \end{subfigure}
+ 
+    \begin{subfigure}[b]{1\textwidth}
+        \includegraphics[width=\textwidth]{Figures/38}
+        \caption{Part 2}
+        \label{fig:tiger}
+    \end{subfigure}
+ 
+    \begin{subfigure}[b]{1\textwidth}
+        \includegraphics[width=\textwidth]{Figures/39}
+        \caption{Part 3}
+        \label{fig:mouse}
+    \end{subfigure}
+    \begin{subfigure}[b]{1\textwidth}
+        \includegraphics[width=\textwidth]{Figures/40}
+        \caption{Part 4}
+        \label{fig:gull}
+    \end{subfigure}
+    \caption{Jobshop Schedule of the takeover-tasks, part 1}
+    \end{figure}
+    
+    \begin{figure}
+    \begin{subfigure}[b]{1\textwidth}
+        \includegraphics[width=\textwidth]{Figures/41}
+        \caption{Part 5}
+        \label{fig:tiger}
+    \end{subfigure}
+ 
+    \begin{subfigure}[b]{1\textwidth}
+        \includegraphics[width=\textwidth]{Figures/42}
+        \caption{Part 6}
+        \label{fig:mouse}
+    \end{subfigure}
+    
+        \begin{subfigure}[b]{1\textwidth}
+        \includegraphics[width=\textwidth]{Figures/43}
+        \caption{Part 7}
+        \label{fig:gull}
+    \end{subfigure}
+    \caption{Jobshop Schedule of the takeover-tasks, part 2}\label{job}
+\end{figure}
 
 
 
+The mean predicted for the baseline condition is 2,61 seconds, for listening to an audiobook is 2,75s, playing tetris 2,51, reading a magazine 4,74 and searching something on the rear bench seat also 4,74. For gantt charts of each task with its input vector, see Figure ref . We compared the 34 results for all five conditions each with each predicted mean, see Fig. \ref{36}. This results in an $R^2$ of 0.217, which means that our model predicts 21.7\% of the variance in the data. The Mean Squared Error was 2.7. If we compare the means of the data with the predicted mean of the model,  $R^2$ is 0.96. If we draw from a Weibull-distribution for our prediction, the histograms of prediction and data can be found in \ref{35} (alte fig!).
+
+For literature, I can only compare means to means. I chose the papers of Befelein and Gold to compare to my model, because they both tested as much as possible the circumstances that we input in out model. the only difference is that they have critical scenarios, and that they use a driving simulator. The takeover times given in each condition of the paper compared to the model prediction can be found in table bla. Rsqzare is 0.64. In general, my model predict too long takeover times compared to literature. this is because literature counts the takeover that happened overhasty or even ended in a crash. since we want to model a normative model, this is not gewuenscht. in Fig. \ref{44} we can see the comparison of the means of the literature and the LEGO-model.
+
+\section{Discussion}
+
+- problem vergleich mit literatur: die haben qulatität und zeit untershcielich gemessen  - in zeit sind übernahmen mit crash drin.
+- wir bekommen rsquared schlehcter raus weil wir nur gegen ein und den gleichen mean vergleichen und rsquare auch die varianz vergleicht und wir keine haben; wenn ich allerdings gegen verteilung vergleiche wird es noch schlechter weil ja pro kondition ein größerer wert nichts zu sagen hat und nicht dadurch das vorhergesagte auch groeser wird; wenn ich means vergleiche bekomme ich rsquare von 96\% raus.
 
 
 
