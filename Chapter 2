@@ -33,6 +33,9 @@ Feet Module;
 Thorax Module
 \end{itemize}
 
+
+
+
 The input variables are:
 \\
 \begin{itemize}
@@ -41,25 +44,22 @@ Expert - differentiates between a novice that listens to the whole takeover requ
 \item
 Lockout - determines whether the secondary task is automatically ended by in-car entertainment;
 \item
-Declarative Memory;
+...;
 \item
-Visual Module;
-\end{itemize}
-Motor Modules:
-\begin{itemize}
+...;
 \item
-Aural module;
+...;
 \item 
-Head module; 
+...; 
 \item
-Eyes Module;
+...;
 \item
-Feet Module;
+...;
 \item
-Thorax Module
+...
 \end{itemize}
 
-Even though we are certain that extreme drowsiness has an influence on takeover time, we excluded it as an influencing variable. In that case, driving should not be allowed and the car should enter a minimal risk state rather than giving control to a drowsy driver. Also boredom was excluded, because its consequences can differentiate between a fast, overhasty takeover due to surprise, or a slow takeover. Cognitive demand is only asked as `yes' or `no' because it is hard to measure in more detail. Felt urgency of the situation is build upo by traffic, time budget and criticality of the scenario; but it is hard to measure. it would make the takeover faster...bei mehr traffic dauert es laenger!
+Even though we are certain that extreme drowsiness has an influence on takeover time, we excluded it as an influencing variable. In that case, driving should not be allowed and the car should enter a minimal risk state rather than giving control to a drowsy driver. Also boredom was excluded, because its consequences can differentiate between a fast, overhasty takeover due to surprise, or a slow takeover. Cognitive demand is only asked as `yes' or `no' because it is hard to measure in more detail. Felt urgency of the situation is build up by traffic, time budget and criticality of the scenario; but it is hard to measure. it would make the takeover faster...bei mehr traffic dauert es laenger!
 
 we want a normative `driving school' takeover. 
 
@@ -85,7 +85,7 @@ As the 'impulse generator', the procedural memory commands every move of attenti
 
 \begin{sidewaysfigure}
 \centering
-\includegraphics[width = 0.8\textwidth]{Figures/UntitledDiagram.pdf}
+\includegraphics[width = 1\textwidth]{Figures/UntitledDiagram.pdf}%groesser machen und zentrieren und schrift mehr direkt drunter (als jpg machen)
 \decoRule
 \caption{Decision tree of the model.}
 \label{tree}
@@ -124,7 +124,7 @@ Movement times were, as in ACT-R, calculated by Fitt's law. The Index of Difficu
 %The main movement was assumed to be 60\textdegree (from co-driver seat to the road), the target size was assumed to be 30\textdegree (the part of the wind shield that shows the relevant part of the road). The resulting movement time was taken from (\cite{hoffmann2017head}). In this case Index of Difficulty was 2, and the resulting movement time 600ms. 
 
 \subsubsection{Move Attention}
-see \ref{moveAttention} - maybe this one is too much?
+A production rule - see \ref{moveAttention}.
 
 \subsubsection{Eye Movement Preparation}\label{eyePrep}
 As described in \cite{salvucci2001integrated}, every saccade is preceded by 135ms motor preparation.
@@ -153,7 +153,7 @@ With the same reasoning as for \ref{prep}, this takes 250ms.
 With the same reasoning as for \ref{ini}, this takes 50ms. 
 
 \subsubsection{Thorax Turn}
-in cite Befelein, a takeover takes 1 second longer when the driver is turned away during the takeover request. In [\cite{hoffmann2015movement}], a thorax movement with 60cm amplitude takes 400ms. Considering that our case is more complicated than in the trial (turning in the car is not as easy, and usually subjects adjust their seating after turning), 1 second seems a suitable time. 
+in \cite{befelein2016}, a takeover takes 1 second longer when the driver is turned away during the takeover request. In [\cite{hoffmann2015movement}], a thorax movement with 60cm amplitude takes 400ms. Considering that our case is more complicated than in the trial (turning in the car is not as easy, and usually subjects adjust their seating after turning), 1 second seems a suitable time. 
 
 \subsection{Unoccupy Hands}
 In case the driver's hands are occupied, the item needs to be dropped (assumed on the co-driver seat) before the hands can be moved to the steering wheel. See \ref{prod}
@@ -286,7 +286,7 @@ See \ref{wm}
 A production rule.
 
 \subsubsection{Move Head To Side Mirror}
-Head movement was calculated to be 710ms with a 100\degree movement to the target and 10\degree target size. This was estimated by measures taken inside a car.
+Head movement was calculated to be 710ms with a 100\textdegree movement to the target and 10\textdegree target size. This was estimated by measures taken inside a car.
 
 \subsubsection{Saccade To Side Mirror}
 See \ref{saccade}.
@@ -317,7 +317,7 @@ A production rule.
 This is set to zero to compare the output time of the model with what is given as takeover time in literature and our own trials. When applied, the model should be changed to calculate brake time here (Velocity is already an input to the model; a commented line of code gives the equation for brake time). 
 
 \subsection{Example model}
-Fig.  shows the simplest takeover model in an uncritical situation:
+Fig.  shows the simplest takeover model in an uncritical situation.
 
 
 \subsection{Output}
@@ -350,7 +350,7 @@ mean is shape paraemter plus location parameter. Like in Reichle, I used a gauss
 
 \begin{figure}
 \centering
-\includegraphics[width = 0.5\textwidth]{Figures/36}
+\includegraphics[width = 0.7\textwidth]{Figures/36}
 \decoRule
 \caption{Model prediction in comparison to data.}
 \label{18}
@@ -358,7 +358,7 @@ mean is shape paraemter plus location parameter. Like in Reichle, I used a gauss
 
 \begin{figure}
 \centering
-\includegraphics[width = 0.5\textwidth]{Figures/35}
+\includegraphics[width = 0.7\textwidth]{Figures/35}
 \decoRule
 \caption{Model prediction in comparison to our data.}
 \label{35}
@@ -366,71 +366,34 @@ mean is shape paraemter plus location parameter. Like in Reichle, I used a gauss
 
 \begin{figure}
 \centering
-\includegraphics[width = 0.5\textwidth]{Figures/44}
+\includegraphics[width = 0.7\textwidth]{Figures/44}
 \decoRule
 \caption{Model prediction in comparison to literature data.}
 \label{44}
 \end{figure}
 
-\begin{figure}
-    \centering
-    \begin{subfigure}[b]{1\textwidth}
-        \includegraphics[width=\textwidth]{Figures/37}
-        \caption{Part 1}
-        \label{fig:gull}
-    \end{subfigure}
- 
-    \begin{subfigure}[b]{1\textwidth}
-        \includegraphics[width=\textwidth]{Figures/38}
-        \caption{Part 2}
-        \label{fig:tiger}
-    \end{subfigure}
- 
-    \begin{subfigure}[b]{1\textwidth}
-        \includegraphics[width=\textwidth]{Figures/39}
-        \caption{Part 3}
-        \label{fig:mouse}
-    \end{subfigure}
-    \begin{subfigure}[b]{1\textwidth}
-        \includegraphics[width=\textwidth]{Figures/40}
-        \caption{Part 4}
-        \label{fig:gull}
-    \end{subfigure}
-    \caption{Jobshop Schedule of the takeover-tasks, part 1}
-    \end{figure}
-    
-    \begin{figure}
-    \begin{subfigure}[b]{1\textwidth}
-        \includegraphics[width=\textwidth]{Figures/41}
-        \caption{Part 5}
-        \label{fig:tiger}
-    \end{subfigure}
- 
-    \begin{subfigure}[b]{1\textwidth}
-        \includegraphics[width=\textwidth]{Figures/42}
-        \caption{Part 6}
-        \label{fig:mouse}
-    \end{subfigure}
-    
-        \begin{subfigure}[b]{1\textwidth}
-        \includegraphics[width=\textwidth]{Figures/43}
-        \caption{Part 7}
-        \label{fig:gull}
-    \end{subfigure}
-    \caption{Jobshop Schedule of the takeover-tasks, part 2}\label{job}
-\end{figure}
+
+\begin{sidewaysfigure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/gantt.pdf}%groesser machen und zentrieren und schift direkt drunter (zum jpg machen)
+\decoRule
+\caption{Decision tree of the model.}
+\label{tree}
+\end{sidewaysfigure}
 
 
 
-The mean predicted for the baseline condition is 2,61 seconds, for listening to an audiobook is 2,75s, playing tetris 2,51, reading a magazine 4,74 and searching something on the rear bench seat also 4,74. For gantt charts of each task with its input vector, see Figure ref . We compared the 34 results for all five conditions each with each predicted mean, see Fig. \ref{36}. This results in an $R^2$ of 0.217, which means that our model predicts 21.7\% of the variance in the data. The Mean Squared Error was 2.7. If we compare the means of the data with the predicted mean of the model,  $R^2$ is 0.96. If we draw from a Weibull-distribution for our prediction, the histograms of prediction and data can be found in \ref{35} (alte fig!).
+The mean predicted for the baseline condition is 2,61 seconds, for listening to an audiobook is 2,75s, playing tetris 2,51, reading a magazine 4,74 and searching something on the rear bench seat also 4,74 (See Table  for 75 and 95 percentiles). For an example job-shop schedule of the baseline condition, see Figure \ref{gantt} . The input vectors to each of the conditions can be found in table  . We compared the 34 results for all five conditions each with each predicted mean, see Fig. \ref{36}. This results in an $R^2$ of 0.217, which means that our model predicts 21.7\% of the variance in the data. The Mean Squared Error was 2.7. If we compare the means of the data with the predicted mean of the model,  $R^2$ is 0.96. If we draw from a Weibull-distribution for our prediction, the histograms of prediction and data can be found in \ref{35} (alte fig!).
 
-For literature, I can only compare means to means. I chose the papers of Befelein and Gold to compare to my model, because they both tested as much as possible the circumstances that we input in out model. the only difference is that they have critical scenarios, and that they use a driving simulator. The takeover times given in each condition of the paper compared to the model prediction can be found in table bla. Rsqzare is 0.64. In general, my model predict too long takeover times compared to literature. this is because literature counts the takeover that happened overhasty or even ended in a crash. since we want to model a normative model, this is not gewuenscht. in Fig. \ref{44} we can see the comparison of the means of the literature and the LEGO-model.
+For literature, I can only compare means to means. I chose the papers of \cite{befelein2016} and \cite{gold2016taking} to compare to my model, because they both tested as much as possible the circumstances that we input in out model. One difference is that they have critical scenarios, and that they use a driving simulator. The takeover times given in each condition of the paper compared to the model prediction can be found in table bla. $R^2$ is 0.64. In general, my model predict too long takeover times compared to literature. This is because literature counts the takeover that happened overhasty or even ended in a crash. We, in contrast, would like to build a model for the normative takeover. In Fig. \ref{44} we can see the comparison of the means of the literature and the LEGO-model.
 
 \section{Discussion}
 
 - problem vergleich mit literatur: die haben qulatität und zeit untershcielich gemessen  - in zeit sind übernahmen mit crash drin.
 - wir bekommen rsquared schlehcter raus weil wir nur gegen ein und den gleichen mean vergleichen und rsquare auch die varianz vergleicht und wir keine haben; wenn ich allerdings gegen verteilung vergleiche wird es noch schlechter weil ja pro kondition ein größerer wert nichts zu sagen hat und nicht dadurch das vorhergesagte auch groeser wird; wenn ich means vergleiche bekomme ich rsquare von 96\% raus.
 
+
+an den takeover times sieht mann das meine voraussage ganz gut ist, aber die `zwischenschritte' passen noch nicht so ganz (wie zb haende am lenkrad etc, see table bla). man könnte als nochmal rein von der theorie her ein leicht veraendertes modell aufstellen, sodass auch zwischensdchritte besser passen. mein modell an gemessene zwischenritte anpassen zaehlt nicht.
 
 
 
