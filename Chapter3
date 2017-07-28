@@ -181,7 +181,7 @@ In Fig. \ref{3} it can be seen that constant, much traffic and criticality of th
 `Much traffic' and `Criticality of Situation' have an effect of similar strength, but in opposite directions. It makes sense that a person takes longer to prepare for the takeover if there is more traffic, and that one is faster if the situation is critical. The constant of 3,21 seconds suits to typical takeover times in literature. Those two factors having the biggest influence suits to the recently published dissertation by Christian Gold. He finds by regression analysis that Time Budget, Repetition (which we did not include as variable) and traffic density are the main predictors of takeover time [\cite{goldmodeling}]. `Time Budget' and `Criticality of the Situation' could be summarized as `urgency' of the takeover, and `traffic' is also what we find to be a relevant influencing factor. Thus, our model fits to Gold's findings. The insignificant variables of the first run of the regression should not be interpreted due to their insignificance and correlation with one another. Calculating the same regression in Matlab and Excel confirmed our results. 
 \\
 Also the Goodness of fit ($R^2$) of the whole model can be measured with SPSS (Fig. \ref{15}). As already mentioned, $R^2$ measures the amount of variability in takeover time that is explained by the model. The adjusted $R^2$ is corrected by the amount of independent variables. This is necessary because $R^2$ rises with the amount of independent variables, even if they do not add any information. The adjusted $R^2$ is reduced by the number of independent variables and increased by sample size. The achievable $R^2$ depends on the variance present in the data. Thus, also a model with a low  $R^2$ can be a good model, if there is a lot of `natural' variance in the data (like e.g. with humans) (\cite{goldmodeling}). In our case, 23,2\% of the variability of takeover time are explained by our two variables. A plot of the takeover time against the predicted takeover time can be found in Fig. \ref{16}. The significance of different studies can be compared by the effect size. The resulting effect size can be calculated by Cohen's d: $\sqrt{\frac{0.232}{1-0.232}} = 0.55$. This corresponds to a strong effect according to Cohen (\cite{cohen1992power}). 
-The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model, which is calculated to be significant. 
+The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model, which is calculated to be significant. Fig. \ref{16} shows a plot of measured against predicted takeover time. The four rows clearly represent the four predicted va´lues, for each of which several measured values exist. Thus, our model does not include all influencing variables yet.
 
 \begin{figure}
 \centering
@@ -424,15 +424,19 @@ The residuals should be normally distributed. This can be checked and confirmed 
 For explanation, see \ref{multi}. There is significant correlation between `Hands Occupied' and `Body Towards Road'. This can be seen in Fig. \ref{corr2} .This makes sense, because when the body is turned away, hands are always occupied due to the experimental setting. Still, the VIF is never higher than 10 (Fig. \ref{31}). Thus, we can assume that collinearity is under the typically accepted value. 
 
 \subsection{Results}\label{resData}
-Our multiple regression analysis shows that ride duration, hand occupancy and body position influence takeover time, $F(3,169) = 24,38, p = 0.000, n = 34$. While a longer previous ride duration prolongs takeover time by 0.56 seconds, occupied hands prolong it by 1.75 seconds. A body that is turned away from the road at the takeover request leads to a takeover that takes 0.96 seconds longer. 29.3\% of the variance of the data are explained by these three independent variables, which is a strong effect according to Cohen (\cite{cohen1992power}). A scatter plot of predicted against measured takeover time can be found in Fig. \ref{33}. Thus, while the biggest influence comes from the constant, also hand occupation has a relevant influence on takeover time. This, again, could be a representative of `motor' readiness, while `length of ride before TOR' could be a representative of the `cognitive' readiness. 
-For further explanation, see \ref{resLit}.
+Our model predicts eight values (see Table bla). In Fig. \ref{31} it can be seen that constant, `Hands Occupied' and `Body Turned To Road' are highly significant. `Ride Duration' also shows to be significant. This significance depends on 1) the magnitude of the effect, 2) the magnitude
+of the error variance, 3) the variance of the variable itself, 4) the amount of data, and
+5) the number of variables in the model. All five can be reasons that the other variables did
+not become significant (in the first run of the regression, see \ref{equdata}). 
+ If the driver's hands or body need to be placed in the right position for taking over, and also if the driver got strongly disengaged from the driving task by a long autonomous ride, takeover time increases. Thus, it makes sense that all coefficients are positive. With an adjusted $R^2$ of 29.3\%, the effect size of our regression model by Cohen's d is $\sqrt{\frac{0.293}{1-0.293}} = 0.64$. This corresponds to a strong effect according to Cohen (\cite{cohen1992power}). 
+The lower part of Fig. \ref{32} shows the ANOVA of the complete regression model, which is calculated to be significant. A scatter plot of predicted against measured takeover time can be found in Fig. \ref{33}. The two columns show that for two predicted values, there is a variety of actually measured values. Thus, our model does not capture all influencing variables yet.
 
 \begin{figure}
 \centering
 \includegraphics[width = 1\textwidth]{Figures/32}
 \decoRule
 \caption{Goodness of fit and ANOVA.$(R^2) = 0.22$.}
-\label{3}
+\label{32}
 \end{figure}
 
 \begin{figure}
@@ -443,11 +447,31 @@ For further explanation, see \ref{resLit}.
 \label{33}
 \end{figure}
 
-\subsection{Discussion and Outlook}
-From the primarily chosen influenicng variables, three out of seven became significant. 
+\subsection{Discussion}
+Our multiple regression analysis shows that ride duration, hand occupancy and body position influence takeover time, $F(3,169) = 24,38, p = 0.000, n = 34$. While a longer previous ride duration prolongs takeover time by 0.56 seconds, occupied hands prolong it by 1.75 seconds. A body that is turned away from the road at the takeover request leads to a takeover that takes 0.96 seconds longer. 29.3\% of the variance of the data are explained by these three independent variables, which is a strong effect according to Cohen (\cite{cohen1992power}). While `Hand Occupancy' and `Body Turned To Road' could be a representative of `motor' readiness, `length of ride before TOR' could be a representative of the `cognitive' readiness. 
 
-%stimmt nicht! ist noch das alte!
-In this regression, the linearity of the problem, the independence of the error term and a correlation between two factors (`hand position' and `gaze off road') are not perfectly given. If requirements of the multiple regression are not met, this decreases the power of the test and thus leads to high p-values. The dependence of the error term is rather small. Because the VIF indicates no multicollinearity, the correlation can most likely be neglected. To reach linearity of the problem, it might be interesting to transform the data. What needs to be kept in mind is that nothing about the regression model says that the explanatory variables actually explain the dependent variable. In addition, variables that `truly' come from the same underlying factor (see \ref{svd}) compete for explanatory power and maybe only one out of several becomes significant. Thus, it might well be that the `general' message of one cognitive influencing factor with smaller impact and one motor influencing factor with larger impact is true.
+\subsection{Outlook}
+Also in this case it would be interesting to see how well a nonlinear model or nonlinear coefficients predict the data. Furthermore, the prediction of the model is increased to an adjusted $R^2$ of 85\% by doing a Generalized Linear Mixed Model (personal communication with Christian Purucker, 2017). He included the Subject number as a blabla (in syntax nachschauen!). This means that the prediction can be increased from 29\% explanation of variance to 85\% by including per person the information of how long the previous takeover took, for example predicting the third takeover by saying `this subject was 0.05 seconds faster than the other subjects in the previous two takeovers'. Subsequently, for this subject the intercept is adjusted accordingly. Thus, it seems like there is a large individual factor that should be included in each prediction. A general reaction test, on the other hand, did not improve the fit of the model when used as a blabla(syntax nachschauen). 
 
 
-- erwaehnen dass ich diemsla viele inputs statt outputs habe (ich messe 10mal und habe eine länge des tisches). bei mir haengen unabhaengig faktoren irgendwo voneinander ab - das vernaschlaessige ich. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
