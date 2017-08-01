@@ -297,21 +297,99 @@ Interestingly, the fourth-most relevant factor is time pressure, which is also a
 The multiple linear regression in section \ref{regLit} resulted in `traffic' and `Criticality of the situation' having the strongest influence besides the constant. While both are cognitive factors, they have an opposing influence on takeover time: while traffic leads to a longer takeover time, a critical situation leads to a shorter takeover time. Thus, it is still import to differentiate between cognitive factors that have opposing influence. 
 \\
 
-\section{Factor Analysis - just notes}
+\section{Principal Component Analysis - just notes}
 - Ist Faktoranalyse wirklich geeignet, um verschiedene Studien zu vergleichen?Denn in meiner Matrix aus der die Korrelationsmatrix R berechnet wird stehen ja nicht Testergebnisse einer Person (wo der `Unterfaktor' Intelligenz oder sowas ist), sondern was in verschiedenen Studien gemessen wurde. Die Korrelation sagt also nur etwas darüber aus, welche Faktoren oft zusammen gemessen wurden. Wenn ich dann eine Faktoranalyse mache, kommt also raus, welche ‚Wolken‘ von gemeinsam gemessenen Faktoren es gibt. Will ich nicht aber eigentlich wissen, welche ‚Wolken‘ es im Kopf des Menschen gibt? 
 -auch in SVD herausheben dass das alles ist was ich mache!
 -collinearity not because they belong together but because they are  measured together; thus we get out as much independent info as possible out of all studies, but not what is most important.
+
+
 - to find out the real underlying variables
 - reduce a data set to a manageable size with retaining as much info as possible (e.g. if you have collinearity in a regression: factor analysis combines the variables that are collinear)
 -R-matrix is a correlation matrix between all variables
 - `By reducing a data set from a group of interrelated variables to a smaller set of factors, factor analysis achieves parsimony by explaining the maximum amount of common variance in a correlation matrix using the smallest number of explanatory constructs'
-- In factor analysis we strive to reduce this R-matrix down to its underlying dimensions by looking at which variables seem to cluster together in a meaningful way. This data reduction
-is achieved by looking for variables that correlate highly with a group of other variables, but do not correlate with variables outside of that group.
+- In factor analysis we strive to reduce this R-matrix down to its underlying dimensions by looking at which variables seem to cluster together in a meaningful way. This data reduction is achieved by looking for variables that correlate highly with a group of other variables, but do not correlate with variables outside of that group.
 - If each axis on the graph represents a factor, then the variables that go to make up a factor can be plotted according to the extent to which they relate to a given factor.
 - the coordinate of a variable along a classification axis is known as factor loading
 - the factor loading can be thought of as the pearson correlation between a factor and a variable
-- Kapitel 17 weiter anschauen (especially 17.3.3.1 und meine SVD formel besser erklaren); unterschiede SVD PCA Faktoranalysis erklaeren
--Quelle: Andy Field!!!!
+- 0. In an ideal world, variables would have very high b-values for one factor and very low b-values for all other factors. These factor loadings can be placed in a matrix in which the columns represent each factor and the rows represent the loadings of each variable onto each factor
+- Therefore, any further analysis can be carried out on the factor scores rather than the original data
+-A second use is in overcoming collinearity problems in regression. If, following a multiple regression analysis, we have identified sources of multicollinearity then the interpretation of the analysis is questioned (see section 7.6.2.3). In this situation, we can simply carry out a factor analysis on the predictor variables to reduce them down to a subset of uncorrelated factors. The variables causing the multicollinearity will combine to form a factor.If we then rerun the regression but using the factor scores as predictor variables then the problem of multicollinearity should vanish (because the variables are now combined into a single factor).
+- The total variance for a
+particular variable will have two components: some of it will be shared with other variables
+or measures (common variance) and some of it will be specific to that measure (unique
+variance)
+- The proportion of
+common variance present in a variable is known as the communality. As
+- In factor analysis we are interested in finding common underlying dimensions within
+the data and so we are primarily interested only in the common variance
+- Therefore, when
+we run a factor analysis it is fundamental that we know how much of the variance present
+in our data is common variance. This presents us with a logical impasse: to do the factor
+analysis we need to know the proportion of common variance present in the data, yet the
+only way to find out the extent of the common variance is by carrying out a factor analysis!
+There are two ways to approach this problem. The first is to assume that all of the variance
+is common variance. As such, we assume that the communality of every variable is 1. By
+making this assumption we merely transpose our original data into constituent linear components
+(known as principal component analysis).
+- Simplistically, though, factor analysis derives a mathematical
+model from which factors are estimated, whereas principal component analysis
+merely decomposes the original data into a set of linear variates
+- we do PCA because it is `a psychometrically sound procedure, it is conceptually less complex, and guada... concluded that the solutions generated from PCA only differ little from thos egenerated by factor analyis. diffrences can occur when using less than 20 variables (like in my case!)
+- That is, we take a correlation matrix and calculate the variates. There
+are no groups of observations, and so the number of variates calculated will always equal
+the number of variables measured (p). The variates are described, as for MANOVA, by the
+eigenvectors associated with the correlation matrix. The elements of the eigenvectors are
+the weights of each variable on the variate (see equation (16.5)). These values are the factor
+loadings described earlier. The largest eigenvalue associated with each of the eigenvectors
+provides a single indicator of the substantive importance of each variate (or component).
+The basic idea is that we retain factors with relatively large eigenvalues and ignore those
+with relatively small eigenvalues.
+In summary, component analysis works in a similar way to MANOVA. We begin with
+a matrix representing the relationships between variables. The linear components (also
+called variates, or factors) of that matrix are then calculated by determining the eigenvalues
+of the matrix. These eigenvalues are used to calculate eigenvectors, the elements of which
+provide the loading of a particular variable on a particular factor (i.e. they are the b-values
+in equation (17.1)). The eigenvalue is also a measure of the substantive importance of the
+eigenvector with which it is associated.
+- Once factors have been extracted, it is possible to calculate to what degree
+variables load onto these factors (i.e. calculate the loading of the variable on
+each factor). Generally, you will find that most variables have high loadings on
+the most important factor and small loadings on all other factors. This characteristic
+makes interpretation difficult, and so a technique called factor rotation is used to discriminate between factors. 2.
+By rotating the axes (dashed lines), we ensure that both clusters of variables are intersected by
+the factor to which they relate most. So, after rotation, the loadings of the variables are maximized
+onto one factor (the factor that intersects the cluster) and minimized on the remaining
+factor(s).
+- In
+any case, an oblique rotation should be used only if there are good reasons to suppose that
+the underlying factors could be related in theoretical terms
+- The mathematics behind factor rotation is complex (especially oblique rotation).
+However, in oblique rotation, because each factor can be rotated by different amounts
+a factor transformation matrix, Λ, is needed
+Therefore, you should think of this matrix as representing the angle through which the axes
+have been rotated, or the degree to which factors have been rotated. The angle of rotation
+necessary to optimize the factor solution is found in an iterative way (see SPSS Tip 8.1) and
+different methods can be used
+-Stevens (2002) recommends that for a sample size of 50 a loading of 0.722
+can be considered significant
+- The significance of a loading gives little indication of the substantive importance of
+a variable to a factor. This value can be found by squaring the factor loading to give an
+estimate of the amount of variance in a factor accounted for by a variable (like R2). In this
+respect Stevens (2002) recommends interpreting only factor loadings with an absolute
+value greater than 0.4 (which explain around 16\% of the variance in the variable).
+- There are essentially two potential problems: (1) correlations that are not
+high enough; and (2) correlations that are too high
+- for PCA only small correlations are a problem: test with Bartlett's test - if it's significant that's good (means that our matrix is significantly different from an identity matrix (only zeros only ones in the diagonal)
+- As well as looking for interrelations, you should ensure that variables have roughly normal
+distributions and are measured at an interval level (which Likert scales are, perhaps
+wrongly, assumed to be!). The assumption of normality is most important if you wish
+to generalize the results of your analysis beyond the sample collected. You can do factor
+analysis on non-continuous data; for example, if you had dichotomous variables, it’s possible
+(using syntax) to do the factor analysis direct from the correlation matrix, but you
+should construct the correlation matrix from tetrachoric correlation coefficients (http://
+ourworld.compuserve.com/homepages/jsuebersax/tetra.htm).
+- 
+
 
 
 %https://stats.stackexchange.com/questions/70899/what-correlation-makes-a-matrix-singular-and-what-are-implications-of-singularit?noredirect=1&lq=1
@@ -451,7 +529,10 @@ The lower part of Fig. \ref{32} shows the ANOVA of the complete regression model
 Our multiple regression analysis shows that ride duration, hand occupancy and body position influence takeover time, $F(3,169) = 24,38, p = 0.000, n = 34$. While a longer previous ride duration prolongs takeover time by 0.56 seconds, occupied hands prolong it by 1.75 seconds. A body that is turned away from the road at the takeover request leads to a takeover that takes 0.96 seconds longer. 29.3\% of the variance of the data are explained by these three independent variables, which is a strong effect according to Cohen (\cite{cohen1992power}). While `Hand Occupancy' and `Body Turned To Road' could be a representative of `motor' readiness, `length of ride before TOR' could be a representative of the `cognitive' readiness. 
 
 \subsection{Outlook}
-Also in this case it would be interesting to see how well a nonlinear model or nonlinear coefficients predict the data. Furthermore, the prediction of the model is increased to an adjusted $R^2$ of 85\% by doing a Generalized Linear Mixed Model (personal communication with Christian Purucker, 2017). He included the Subject number as a blabla (in syntax nachschauen!). This means that the prediction can be increased from 29\% explanation of variance to 85\% by including per person the information of how long the previous takeover took, for example predicting the third takeover by saying `this subject was 0.05 seconds faster than the other subjects in the previous two takeovers'. Subsequently, for this subject the intercept is adjusted accordingly. Thus, it seems like there is a large individual factor that should be included in each prediction. A general reaction test, on the other hand, did not improve the fit of the model when used as a blabla(syntax nachschauen). 
+Also in this case it would be interesting to see how well a nonlinear model or nonlinear coefficients predict the data. Furthermore, the prediction of the model is increased to an adjusted $R^2$ of 85\% by doing a Generalized Linear Mixed Model (personal communication with Christian Purucker, 2017). He included the subject number as a random effect, in addition to the same variables we used as fixed effects. This means that the prediction can be increased from 29\% explanation of variance to 85\% by including per person the information of how long the previous takeover took, for example predicting the third takeover by saying `this subject was 0.05 seconds faster than the other subjects in the previous two takeovers'. Subsequently, for this subject the intercept is adjusted accordingly. Thus, it seems like there is a large individual factor that should be included in each prediction. A general reaction time test, on the other hand, did not improve the fit of the model when used as a random effect. 
+
+
+
 
 
 
