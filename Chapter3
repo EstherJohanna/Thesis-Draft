@@ -209,93 +209,7 @@ If variables (including the constant) correlate, they partly explain each other 
 \subsection{Outlook}
 Since the linearity of the problem as well as the linearity of the coefficients could not be verified, a next step could be to try a nonlinear regression, or a linear regression with nonlinear coefficients. In case we chose a linear regression even though the correct model is not linear, the slope and intercept estimates and the fitted values from the linear regression will be biased [\cite{statsrequ}]. Due to several advantages when comparing studies, we propose to use a random-effect meta-regression. Other than a linear regression, the meta-regression takes into account the sampling variances of the observed outcomes or effect size estimates.   
 
-\section{Literature Data - Singular Value Decomposition} \label{svd}
-\subsection{Method}
-\begin{figure}
-\centering
-\includegraphics[width = 0.3\textwidth]{Figures/19}
-\decoRule
-\caption{Conceptual idea of the singular value decomposition}
-\label{19}
-\end{figure}
-besides predicing a takeoiver time, it is also intresting to know what boxes the yhave in mind that matter. stattdessen faktoranalyse?
 
-Another option to interpret the (previously called) design- and result matrix is Singular Value Decomposition (`SVD'). Its advantage is that it is not disturbed by multicollinearity in the design matrix, because it clusters variables that are collinear. While SVD can not be used to predict takeover time, it can be used to reduce the dimensionality of the problem (thus, the amount of influencing factors). This might be useful for other modeling approaches or future study design.  
-A more intuitive example to explain singular value decomposition is to explain principle component analysis (`PCA'), of which the core part is the SVD. In PCA, one tries to explain observations for many particular things in few general explanations. For example, if I have 100 CDs at home, when asked for my music preference, I will most likely not answer all 100 names of those CDs, but `I like Jazz'. Another example is handling the data of Magnetic Resonance Imaging: Instead of reporting all voxels of all subjects that were active for a certain task, I report `For all subjects, the motor cortex was active'. PCA tries to find those underlying features like `Jazz' and `motor cortex' in our examples. Graphically, this can be imagined as shown in Fig. \ref{19}. While factors 1 to n correspond to the many voxels with different activities, their change in activity can be traced back to a combination of activity in `motor cortex' and `visual cortex' , which are the `real' explanatory factors behind the differences in the result (h1 and h2). In mathematical terms, this is called dimensionality reduction. As an example, we will reduce a 3-dimensional matrix F to a 2-dimensional matrix. We plot the matrix in 3-D space and draw a 2-D plane into it. Subsequently, we project all data points on this 2-D plane. This projection is now our matrix with reduced dimensions. The plane should be drawn in a way that the projected distance is as short as possible. To do this by singular value decomposition, the first step is to perform a mean normalization and feature scaling on matrix F with size (n x p). Second, the covariance matrix $\Sigma$ is calculated for F. Subsequently, the singular value decomposition is computed on $\Sigma$ to obtain its eigenvectors. 
-
-As an equation:
-\begin{equation}
-\begin{split}
-[U, S, V] = SVD(\Sigma).
- \end{split}
-\end{equation}
-
-Now, U (n x p) are the eigenvectors of $\Sigma$ , which corresponds to the hyperplane in 2D in our example. S (p x p) is the diagonal matrix containing the singular values. They give the amount of variance retained by the reduction. V is an (p x p) matrix that transforms all correlated variables into uncorrelated ones. 
-Now, we are interested in the influence of these singular values on our result vector r (n x 1). It contains n takeover times in our case. Thus, we calculate:
-
-\begin{equation}
-\begin{split}
-\gamma = S^{-1} \cdot U' \cdot r
- \end{split}
-\end{equation}
-
-With the singular values it can be estimated which of the $\gamma$ have a relevant influence. For this, we choose the largest absolute values of $\gamma$ and examine which variables have the biggest influence on it. This will be the variables that explain most of the variance in the data [\cite{christensen2011plane}].
-
-\subsection{Results}
-The V resulting from the singular value decomposition of our matrix F looks the following: 
-\\
-$
- \begin{bmatrix}
- 
-   -0.4508 &   0.1918& \dots & 0.7490\\
-    0.1380  &  0.5067  &  \dots &   0.1988\\
-   -0.2275 &  -0.3458  &  \dots &  -0.0987\\
-    0.4385  & -0.1307&   \dots  &  0.3383\\
-    0.1087 &   0.5214 &   \dots &  -0.2056\\
-    0.1107 &  -0.2836&   \dots  &  0.0101\\
-    0.1041  & -0.3292&   \dots  &  0.0162\\
-   -0.4243 &   0.0783  &  \dots &  -0.1515\\
-    0.2907   & 0.0115 &   \dots  & -0.0567\\
-    0.2640  &  0.3001 &  \dots &  -0.2033\\
-    0.4051  & -0.1099  &  \dots &   0.4054\\
-   -0.0207 &   0.0269  & \dots &  -0.0296
-
-\end{bmatrix}
-$ 
-\\
-
-
-
-
-
-While the result of $\gamma = S^{-1} \cdot U' \cdot r$ is:
-\\
- $
- \begin{bmatrix}
-   -1.2660\\
-    0.4385\\
-   -0.2391\\
-    0.6188\\
-    0.0880\\
-    0.3699\\
-    0.1297\\
-   -0.0859\\
-    0.6744\\
-   -1.0122\\
-    0.9504\\
-    2.4003\\
-\end{bmatrix}
-$ 
-\\
-Of $\gamma$, the last value is by far the one with the highest absolute value. Thus, the last column of V is examined. Here, every row corresponds to a factor. The three variables that have the biggest influence on this gamma are the ones in row one, four and eleven. They correspond to the factors `constant', `body turned' and `long autonomous ride'. Thus, we can assume that those factors have the highest amount of independent impact on takeover time. 
-
-\subsection{Discussion}
-In short, what we try to do with the SVD is to find out the most important component of the matrix F and check which factors have the strongest influence on it. The most important factor in the most important component is the `most-most important' factor influencing takeover time. and those are the factors that are assumed to be the most important ones for takeover time. It makes sense that the constant has a high impact on takeover time, since a lot of things that take time have to happen in every takeover, no matter the influencing factors (notice request, motor preparation, move hands to steering wheel, mentally prepare etc.). It is also intuitive that it takes time until the body is turned back towards the road. Interestingly, one of the two factors (besides the constant) represents a motoric transition to driving, while the other represents the mental transition to driving. This perfectly fits with why we did the singular value decomposition: we wanted to find out all factors that have the most impact independent from the others. Thus, it can be assumed that the most crucial points to pay attention to in designing future driving studies are to have one task that is mainly motoric, and one that is mainly cognitive. This is in line with previous research assumptions of nearly all papers that examine takeover time. 
-\\
-Interestingly, the fourth-most relevant factor is time pressure, which is also a factor that Gold et al. find to have a large impact on resulting takeover time. 
-\\
-The multiple linear regression in section \ref{regLit} resulted in `traffic' and `Criticality of the situation' having the strongest influence besides the constant. While both are cognitive factors, they have an opposing influence on takeover time: while traffic leads to a longer takeover time, a critical situation leads to a shorter takeover time. Thus, it is still import to differentiate between cognitive factors that have opposing influence. 
-\\
 
 \section{Principal Component Analysis - just notes}
 - Ist Faktoranalyse wirklich geeignet, um verschiedene Studien zu vergleichen?Denn in meiner Matrix aus der die Korrelationsmatrix R berechnet wird stehen ja nicht Testergebnisse einer Person (wo der `Unterfaktor' Intelligenz oder sowas ist), sondern was in verschiedenen Studien gemessen wurde. Die Korrelation sagt also nur etwas darüber aus, welche Faktoren oft zusammen gemessen wurden. Wenn ich dann eine Faktoranalyse mache, kommt also raus, welche ‚Wolken‘ von gemeinsam gemessenen Faktoren es gibt. Will ich nicht aber eigentlich wissen, welche ‚Wolken‘ es im Kopf des Menschen gibt? 
@@ -365,7 +279,7 @@ any case, an oblique rotation should be used only if there are good reasons to s
 the underlying factors could be related in theoretical terms
 - The mathematics behind factor rotation is complex (especially oblique rotation).
 However, in oblique rotation, because each factor can be rotated by different amounts
-a factor transformation matrix, Λ, is needed
+a factor transformation matrix, Nur-Dach-Buchstabe, is needed
 Therefore, you should think of this matrix as representing the angle through which the axes
 have been rotated, or the degree to which factors have been rotated. The angle of rotation
 necessary to optimize the factor solution is found in an iterative way (see SPSS Tip 8.1) and
@@ -532,10 +446,108 @@ Our multiple regression analysis shows that ride duration, hand occupancy and bo
 Also in this case it would be interesting to see how well a nonlinear model or nonlinear coefficients predict the data. Furthermore, the prediction of the model is increased to an adjusted $R^2$ of 85\% by doing a Generalized Linear Mixed Model (personal communication with Christian Purucker, 2017). He included the subject number as a random effect, in addition to the same variables we used as fixed effects. This means that the prediction can be increased from 29\% explanation of variance to 85\% by including per person the information of how long the previous takeover took, for example predicting the third takeover by saying `this subject was 0.05 seconds faster than the other subjects in the previous two takeovers'. Subsequently, for this subject the intercept is adjusted accordingly. Thus, it seems like there is a large individual factor that should be included in each prediction. A general reaction time test, on the other hand, did not improve the fit of the model when used as a random effect. 
 
 
+\section{Experimental Data - Factor Analysis} \label{svd}
+\subsection{Introduction}
+\begin{figure}
+\centering
+\includegraphics[width = 0.3\textwidth]{Figures/19}
+\decoRule
+\caption{Conceptual idea of the singular value decomposition}
+\label{19}
+\end{figure}
+Another option to interpret the (previously called) design- and result matrix is by Factor Analysis. Its advantage is that it is not disturbed by multicollinearity in the design matrix, because it clusters variables that are collinear. While it can not be used to predict takeover time, it can be used to reduce the dimensionality of the problem (thus, the amount of relevant influencing factors). This might be useful for other modeling approaches or future study design. 
+explain SVD
+
+From the eleven variables that we included in our regression, some always were recorded together just by how they occur naturally. For example, if someone's hands are occupied, most likely his gaze will also be off road - looking at whatever is in one's hands. Thus, there is more information measured than might actually be needed - there might be `double information' in our variables. For future study design, it would be useful to know which, for example, three variables need to be measured to give independent information about driver state and takeover situation. To strip down the problem to what actually has independent influence on our data, one can conduct a factor analysis.
+To understand factor analysis, it is important to understand its core calculation, the principal component analysis (`PCA'):
+ \\
+In PCA, one tries to explain observations for many particular things in few general explanations. For example, if I have 100 CDs at home, when asked for my music preference, I will most likely not answer all 100 names of those CDs, but `I like Jazz'. Another example is handling the data of Magnetic Resonance Imaging: Instead of reporting all voxels of all subjects that were active for a certain task, I report `For all subjects, the motor cortex was active'. PCA tries to find those underlying features like `Jazz' and `motor cortex' in our examples. Graphically, this can be imagined as shown in Fig. \ref{19}. While factors 1 to n correspond to the many voxels with different activities, their change in activity can be traced back to a combination of activity in `motor cortex' and `visual cortex' , which are the `real' explanatory factors behind the differences in the result (h1 and h2). In mathematical terms, this is called dimensionality reduction. As an example, we will reduce a 3-dimensional matrix F to a 2-dimensional matrix. We plot the matrix in 3-D space and draw a 2-D plane into it. Subsequently, we project all data points on this 2-D plane. This projection is now our matrix with reduced dimensions. The plane should be drawn in a way that the projected distance is as short as possible. 
+\\
+The following explanations about factor analysis are based on (\cite{field2009discovering}). As it becomes clear already in the description of PCA, factor analysis is done to reduce the size of a data set while retaining as much information as possible. For this, I try to find underlying factors in my data by clustering variables that give similar information. To give Andy Field's example: I conduct a questionnaire that measures per person 1)social skills, 2)selfishness, 3)how interesting others find them, 4)how much time they talk about the other in a conversation 5) how much they talk about themselves in a conversation and 6) how often they lie to people (6 variables). When correlating all those variables with one another, one gets to the correlation matrix (R matrix). In the R matrix, one can see that the variables `social skills, talking about the other, and `how interesting they are found' correlate highly with one another. Also the variables `talking about oneself', `selfishness' and `liar' correlate highly. Thus, one could state that two main factors could explain the data: the first `variable-cloud' could be described as Sociability, the second as Consideration. When plotting the variables along the two `factor-axes', the first thus clusters around the axis for Sociability, the second along the axis for Consideration. The X and Y values of these variables describe how much a variable `loads' on that factor. Factor loading, thus, is the correlation of a variable with a factor. For example, `social skills' will load highly on the sociability factor, but low on the consideration factor. Ideally, every variable loads highly on one factor and low on another factor. Most often, I do not know previously by how many factors my variables can be described. For this, I first obtain the eigenvalues of the correlation matrix of my data. Subsequently, I look at a plot that shows, sorted by size, the eigenvalues against the factor with which they are associated. This is called Scree-Plot (see Fig. ref). This plot has a point of inflexion. Of course, I only want to keep the factors that explain most of my data (i.e. that have high eigenvalues (stimmt das?). Thus, I keep as many factors as I can find on the scree-plot before the point of inflexion. Other methods of factor extration are bla and bla (see \cite{field2009discovering} for more information). Now, I try to arrange these factors in a way that they explain as much of my data as possible. This can either be done by keeping the axes in 90\textdegree angle to each other (bla rotation), or in a way that the axes are laid through the factors to explain as much variance as possible (oblique rotation). While bla rotation leads to factors that are uncorrelated, factors can (and most likely will) still correlate in oblique rotation.  
+
+\subsection{Results}
+I should have done a correlation matrix for dichotome matrices but for simplicity will assume that SPSS handles this for me (which it doesnt). I use the same matrix as for the regression with the same seven variables. A correlation matrix can be found in Fig. \ref{45}. Factor extraction occurred on the basis of all eigenvalues greater than 1, which extracts two factors. This can be verified when examining the Scree-Plot (Fig. \ref{48}). These two factors explain 41.5\% of variance in the data (Fig. \ref{47}). The loading of the two factors can be found in Fig. \ref{49}. Since factor 1 has high absolute loadings on `Hands Occupied', `Body Towards Road' and `Gaze Off Road', it could be interpreted as `motor distraction'. The second factor has high loadings on `Ride Duration', `Age' and `Mental workload'. This factor could have to do something with cognitive distraction. 
+
+\subsection{Discussion}
+Knowing that all motor and all cognitive distractions can be clustered together, it might be enough to measure only one variable per factor to be informed about the current driver state. The variables load high on the one and low on the other factor very nicely. What first seems confusing is that `Hands Occupied' and `Gaze Off Road' correlate negatively. If one's hands are occupied, most likely one's gaze is also off road. But, it might well be that a subject has the eyes off road even though his hands are not occupied. Thus, in our data it seems like there are many of those cases, which explains the negative correlation. 
+
+\section{Singular Value Decomposition}
+While the factor analysis is suitable to see which factors need to be measured to infer the driver state, this says nothing on the factor's influence on takeover time yet. For this, we first (as also in factor analysis) do a singular value decomposition. The first step is to perform a mean normalization and feature scaling on matrix F with size (n x p). Second, the covariance matrix $\Sigma$ is calculated for F. Subsequently, the singular value decomposition is computed on $\Sigma$ to obtain its eigenvectors. 
+
+As an equation:
+\begin{equation}
+\begin{split}
+[U, S, V] = SVD(\Sigma).
+ \end{split}
+\end{equation}
+
+Now, U (n x p) are the eigenvectors of $\Sigma$ , which corresponds to the hyperplane in 2D in our example. S (p x p) is the diagonal matrix containing the singular values. They give the amount of variance retained by the reduction. V is an (p x p) matrix that transforms all correlated variables into uncorrelated ones. 
+Now, we are interested in the influence of these singular values on our result vector r (n x 1). It contains n takeover times in our case. $S^{-1} \cdot U'$ describe the principal components of our data. We want to know the influence of our principal components on takeover time. Thus, we calculate:
+
+\begin{equation}
+\begin{split}
+\gamma = S^{-1} \cdot U' \cdot r
+ \end{split}
+\end{equation}
+
+These $\gamma$ describe the principal components weighted by the takeover time. Thus, these are all seven factors that can be found, weighted by their influence on takeover time. Now, we need to check for the highest absolute values of gamma (thus, the factors that explain most of the takeover time) which variables load on them. This will be the variables that explain most of the variance in the data [\cite{christensen2011plane}].
+
+\subsection{Results}
+The V resulting from the singular value decomposition of our matrix F looks the following: 
+\\
+$
+ \begin{bmatrix}
+ 
+   -0.4508 &   0.1918& \dots & 0.7490\\
+    0.1380  &  0.5067  &  \dots &   0.1988\\
+   -0.2275 &  -0.3458  &  \dots &  -0.0987\\
+    0.4385  & -0.1307&   \dots  &  0.3383\\
+    0.1087 &   0.5214 &   \dots &  -0.2056\\
+    0.1107 &  -0.2836&   \dots  &  0.0101\\
+    0.1041  & -0.3292&   \dots  &  0.0162\\
+   -0.4243 &   0.0783  &  \dots &  -0.1515\\
+    0.2907   & 0.0115 &   \dots  & -0.0567\\
+    0.2640  &  0.3001 &  \dots &  -0.2033\\
+    0.4051  & -0.1099  &  \dots &   0.4054\\
+   -0.0207 &   0.0269  & \dots &  -0.0296
+
+\end{bmatrix}
+$ 
+\\
 
 
 
 
+
+While the result of $\gamma = S^{-1} \cdot U' \cdot r$ is:
+\\
+ $
+ \begin{bmatrix}
+   -1.2660\\
+    0.4385\\
+   -0.2391\\
+    0.6188\\
+    0.0880\\
+    0.3699\\
+    0.1297\\
+   -0.0859\\
+    0.6744\\
+   -1.0122\\
+    0.9504\\
+    2.4003\\
+\end{bmatrix}
+$ 
+\\
+Of $\gamma$, the last value is by far the one with the highest absolute value. Thus, the last column of V is examined. Here, every row corresponds to a factor. The three variables that have the biggest influence on this gamma are the ones in row one, four and eleven. They correspond to the factors `constant', `body turned' and `long autonomous ride'. Thus, we can assume that those factors have the highest amount of independent impact on takeover time. 
+
+\subsection{Discussion}
+In short, what we try to do with the SVD is to find out the most important component of the matrix F and check which factors have the strongest influence on it. The most important factor in the most important component is the `most-most important' factor influencing takeover time. and those are the factors that are assumed to be the most important ones for takeover time. It makes sense that the constant has a high impact on takeover time, since a lot of things that take time have to happen in every takeover, no matter the influencing factors (notice request, motor preparation, move hands to steering wheel, mentally prepare etc.). It is also intuitive that it takes time until the body is turned back towards the road. Interestingly, one of the two factors (besides the constant) represents a motoric transition to driving, while the other represents the mental transition to driving. This perfectly fits with why we did the singular value decomposition: we wanted to find out all factors that have the most impact independent from the others. Thus, it can be assumed that the most crucial points to pay attention to in designing future driving studies are to have one task that is mainly motoric, and one that is mainly cognitive. This is in line with previous research assumptions of nearly all papers that examine takeover time. 
+\\
+Interestingly, the fourth-most relevant factor is time pressure, which is also a factor that Gold et al. find to have a large impact on resulting takeover time. 
+\\
+The multiple linear regression in section \ref{regLit} resulted in `traffic' and `Criticality of the situation' having the strongest influence besides the constant. While both are cognitive factors, they have an opposing influence on takeover time: while traffic leads to a longer takeover time, a critical situation leads to a shorter takeover time. Thus, it is still import to differentiate between cognitive factors that have opposing influence. 
+Conducting a factor analysis on the literature is pointless because it will only desribe the rules by which I chose to set the variables - e.g. alway sin a ritical situationi we need a mirror check - those will come out as one factor, but it's just our own rule and nothing that tells us anything new. 
+\\
 
 
 
