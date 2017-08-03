@@ -3,21 +3,20 @@
 
 \section{Literature Data - Meta-analysis by regression}\label{regLit}
 
-Several studies have investigated on factors that influence takeover time. While it is impossible to study all influencing factors in one study, it is possible to compare the studies' results with each other. The aim of the following meta-analysis was to find across studies which influencing factors are the most crucial ones to consider in a takeover model. In addition, a regression equation that includes all influencing factors can be used to predict takeover time. 
+Several studies have investigated on factors that influence takeover time. While it is impossible to study all influencing factors in one study, it is possible to compare the studies' results with each other. The aim of the following meta-analysis was to find across studies which influencing factors are the most crucial ones to consider in a takeover model. In addition, a regression equation can be used to predict takeover time. 
 
 \subsection{Literature search}
-We found a broad width of studies through an existing database at Bosch. Furthermore, we chose papers with matching titles from a Google scholar search with the keywords `takeover time highly automated driving'. From both searches, further publications were found through the cited references. A sum of \~{} 100 papers was found. 
+We found a broad width of studies through an existing database at Bosch. Furthermore, we chose papers with matching titles from a Google scholar search with the keywords `takeover time highly automated driving'. From both searches, further publications were found through the cited references. 145 papers were found in total. 
 
 \subsection{Selection of Studies}
 Of those papers, all papers were chosen that were concerned with Highly Automated Driving (SAE Level 3). In addition, we had the following inclusion criteria:
 \begin{itemize}
-\item The subjects knew that a takeover would occur and were instructed on how to behave in that case (Excluded papers: ...);
-\item Takeover consists of a takeover request, time given for the takeover, and a full transfer of control after the driver indicates that he wants to take back control (Excluded papers: );
-\item studies that measured takeover time (excluded ..., because they gave 8 seconds time and measured how many mistakes were made)
-\item enough information about the study was given (Excluded : ...);
-\item they measured something that we expect to have an influence `on the road'; excluded ... because they test visual vs. visual-auditory takeover requests; we expect always visual-auditory to be used;
-\item about highly automated driving in a car, not platooning (excluded ...);
-\item where did they find a difference between the conditions; excluded ... because they showed that presenting the RtI on a cell phone vs. a display does not make a significant difference.
+\item The subjects knew that a takeover would occur and were instructed on how to behave in that case (Excluded papers: \cite{petermann2013lange, payre2016fully});
+\item Takeover consists of a takeover request, time given for the takeover, and a full transfer of control after the driver indicates that he wants to take back control (Excluded papers: \cite{larsson2014learning, strand2014semi} );
+\item studies that measured takeover time (excluded \cite{uebernahmeHAF})
+\item enough information about the study was given (Excluded : \cite{giesler2013});
+\item they measured something that we expect to have an influence `on the road'; excluded \cite{naujoks2014effect} because they test visual vs. visual-auditory takeover requests; we expect always visual-auditory to be used, because it is the most realistic HMI design;
+\item about highly automated driving in a car, not platooning or trucks (excluded \cite{willemsen2014transition, belderbos2015authority}).
 \end{itemize}
 By this, we have a selection of 19 papers to be compared in the meta-analysis. Those were \cite{unfallforschung, eriksson2016take, korber2016influence, gold2016taking, maas2016losungsansatze, zeeb2016take, bueno2016different, louw2015engaging, feldhutter2016duration, befelein2016, Gold2015, Zeeb2015, kerschbaum2015transforming, walch2015autonomous, Lorenz2014, radlmayr2014traffic, Gold2013, feldhuetterFahrer, Gold2016}.
 
@@ -44,12 +43,12 @@ The factors chosen because of their relevance were:
 \end{itemize}
 
 \subsection{Regression Equation}\label{equ}
-Studies report mean or median, and some standard deviation. Data on single subjects is not given. Therefore, one line in design- and result matrix does not (as usual) include one subject, but one condition in a study. For example, if \cite{unfallforschung} had one baseline condition that on average took 2,2 seconds for the takeover, the first number of the result vector was 2,2. For the Design matrix, we filled out every condition as `True', `Not True', or `Not Measured'. As an example, I show how the row of the design matrix for\cite{unfallforschung}'s baseline condition was filled out:
+Studies report mean or median, and some standard deviation. Data on single subjects is not given. Therefore, one line in design- and result matrix does not (as usual) include one subject, but one condition in a study. For example, if \cite{unfallforschung} had one baseline condition that on average took 2,2 seconds for the takeover, the first number of the result vector was 2,2. For the Design matrix, we filled out every condition as `True', `Not True', or `Not Measured'.  As an example, I show how the row of the design matrix for \cite{unfallforschung}'s baseline condition was filled out:
  Gaze Off Road (`Not True'), Mirror Check Necessary(`Not Measured'), Body Turned Away(`Not True'), Hands Occupied(`Not True'), Cognitive Distraction(`Not True'), Much Traffic(`Not Measured'), Criticality of Situation(`Not Measured'), Decision Necessary(`Not Measured'), Time Pressure(`True'), Long Autonomous Ride(`Not True'), Elderly Subject(`Not Measured'). From a `regression' point of view, it would have been ideal to have a series of homogeneous observations with identical boundary conditions that test all possible combinations of factors. This will be assumed for the rest of the analysis and should be kept in mind as a possible source of error for the discussion. 
  \\
- A complete version of design- and result matrix can be found in \ref{Appendix}. 
+ A complete version of design- and result matrix can be found in the Appendix. 
 \\
-While some of the factors are `naturally binary' (Gaze Off Road, Mirror Check Necessary, Body Turned, Hands Occupied and Decision Necessary), for others a threshold needed to be set. Elderly Subject, Long Autonomous Ride and Tiredness were binary because they were only investigated in one study each with a relevant difference. Only one study included subjects over 60 years old [\cite{korber2016influence}]; and only one study drives 20 minutes highly automated until they request to take over [\cite{feldhutter2016duration}]. Cognitive Distraction was rated as `High' when the subject played Tetris, solved the 20 question task, read an email, solved the difficult remote association test, calculated, did the 2-back task, did a cognitive-motoric task or had to do a fill-in-the-blanks text. It was rated low when the subjects did nothing, read newspaper, watched a video, solved the easy remote association task or the surrogate reference task. Reading emails was assumed to be cognitively more demanding than reading newspapers, because one has to come up with an answer to emails, but not to the newspaper. In \cite{feldhuetterFahrer} subjects could choose their activities which was rated as cognitively demanding, because we assume subjects to choose something that keeps them busy and not bored. For traffic, the threshold was chosen between no traffic at all and traffic existed on the road. This showed to induce a bigger difference than little and much traffic in \cite{gold2016taking}. A takeover situation was rated urgent when a collision had to be avoided, and as uncritical when a ride simply had to be continued on a straight road. Also `curve with wind gust' in \cite{Zeeb2015} was rated as urgent. For Time Pressure the threshold was set at 6 seconds, because Gold et al. find that at 5 seconds an overhasty takeover occurs, but not at 7 seconds [\cite{Gold2013}]. 
+While some of the factors are `naturally binary' (Gaze Off Road, Mirror Check Necessary, Body Turned, Hands Occupied and Decision Necessary), for others a threshold needed to be set. Elderly Subject, Long Autonomous Ride and Tiredness were binary because they were only investigated in one study each with a relevant difference. Only one study included subjects over 60 years old (\cite{korber2016influence}); and only one study drives 20 minutes highly automated until they request to take over (\cite{feldhutter2016duration}). Cognitive Distraction was rated as `High' when the subject played Tetris, solved the 20 question task, read an email, solved the difficult remote association test, calculated, did the 2-back task, did a cognitive-motoric task or had to do a fill-in-the-blanks text. It was rated low when the subjects did nothing, read newspaper, watched a video, solved the easy remote association task or the surrogate reference task. Reading emails was assumed to be cognitively more demanding than reading newspapers, because one has to come up with an answer to emails, but not to the newspaper. In \cite{feldhuetterFahrer} subjects could choose their activities which was rated as cognitively demanding, because we assume subjects to choose something that keeps them busy and not bored. For traffic, the threshold was chosen between no traffic at all and traffic existed on the road. This showed to induce a bigger difference than little and much traffic in \cite{gold2016taking}. A takeover situation was rated urgent when a collision had to be avoided, and as uncritical when a ride simply had to be continued on a straight road. Also `curve with wind gust' in \cite{Zeeb2015} was rated as urgent. For Time Pressure the threshold was set at 6 seconds, because Gold et al. find that at 5 seconds an overhasty takeover occurs, but not at 7 seconds (\cite{Gold2013}). 
 \\
 Thus, we postulate the following regression equation:
 \begin{equation}
@@ -62,7 +61,7 @@ TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Mirro
  \end{split}
 \end{equation} \label{equLit1}
 
-If participants have their gaze off road during the takeover request, it is expected that they take longer for the takeover because additional time is needed to direct the gaze towards the road. The same holds for a necessary mirror check, a turned away body , occupied hands, cognitive distraction and a decision that needs to be taken. If there is much traffic, we expect that it takes longer to build up situation awareness before the takeover, because the situation is more complex. The Criticality of the situation is supposed to speed up the takeover in case of an urgent situation (e.g. collision avoidance) and to slow down in the case of a not urgent scenario (e.g. simply continue to drive on a straight road). Under higher time pressure, the subject is also expected to take over faster than without time pressure. After a long autonomous ride, boredom and tiredness are expected to make the whole takeover slower. The effect of age is expected to be small, according to studies. 
+If participants have their gaze off road during the takeover request, it is expected that they take longer for the takeover because additional time is needed to direct the gaze towards the road. The same holds for a necessary mirror check, a turned away body , occupied hands, cognitive distraction and a decision that needs to be taken. If there is much traffic, we expect that it takes longer to build up situation awareness before the takeover, because the situation is more complex. The Criticality of the situation is supposed to speed up the takeover in case of an urgent situation (e.g. collision avoidance) and to slow down in the case of a not urgent scenario (e.g. simply continue to drive on a straight road). Under higher time pressure, the subject is also expected to take over faster than without time pressure. After a long autonomous ride, boredom and tiredness are expected to make the whole takeover slower. The effect of age is expected to be small, according to studies (\cite{korber2016influence}). 
 \\
 After doing a regression with equation \ref{equLit1}, we included the variables 'Traffic' and `Criticality of the Situation'. They were determined by the `enter' method, because the variables were chosen based on the a-priori hypothesis that all those variables have a relevant influence, based on literature. Equation \ref{equLit2} results from a regression with only those two variables:
 
@@ -76,27 +75,26 @@ TakeOverTime = 3,21 + 0.42 \cdot Traffic - 0.35 \cdot Criticality_Situation + \e
 This has been done after the manual on \cite{statsZuerich}.
 \\
 \subsubsection{Linearity of the problem}\label{req1}
-Since we postulated a linear model, we have to check whether all independent variables have a linear relationship with the dependent variable when controlled for the other factors. This can be done by looking at the partial regression diagrams (See Fig \ref{regdiag} ). On the Y axis this shows the residual that would result if the dependent variable would be regressed on all independent variables except the one written on X. On the X axis it shows the residual that would result if X would be regressed on all other variables.  Thus, the part of the variance that is not explained by all factors but X is plotted against the part of X that is independent of the other variables. If these scatterplots look linear, we can assume a linear relationship. 
+Since we postulated a linear model, we have to check whether all independent variables have a linear relationship with the dependent variable when controlled for the other factors. This can be done by looking at the partial regression diagrams (See Fig \ref{4} and \ref{5} ). On the Y axis this shows the residual that would result if the dependent variable would be regressed on all independent variables except the one written on X. On the X axis it shows the residual that would result if X would be regressed on all other variables.  Thus, the part of the variance that is not explained by all factors but X is plotted against the part of X that is independent of the other variables. If these scatterplots look linear, we can assume a linear relationship. 
 \\
-As can be seen in Fig. \ref{regdiag}, the nominal scaling of the variables makes it hard to see whether the relationship is linear or not. The four columns entstehen from blabla%%
-A slight upward trend can be seen for `traffic', which suits to the significant Pearson correlation of 0.44 between traffic and takeover time. A slight downward trend can be seen for the partial regression plot of `criticality of the situation', which also suits to the significant Pearson correlation between Takeover time and Criticality of Situation of -0.18. We will keep in mind that the linearity of the problem might not be given.
+As can be seen in Fig. \ref{4} and \ref{5}, the nominal scaling of the variables makes it hard to see whether the relationship is linear or not. The four columns most likely arise from the four possible combinations of the variables. A slight upward trend can be seen for `traffic', which suits to the significant Pearson correlation of 0.44 between traffic and takeover time. A slight downward trend can be seen for the partial regression plot of `criticality of the situation', which also suits to the significant Pearson correlation between Takeover time and Criticality of Situation of -0.18. We will keep in mind that the linearity of the problem might not be given.
 
 
 \begin{figure}
-    \centering
-    \begin{subfigure}[b]{0.8\textwidth}
-        \includegraphics[width=\textwidth]{Figures/4}
-        \caption{Traffic}
-        \label{fig:gull}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.8\textwidth}
-        \includegraphics[width=\textwidth]{Figures/5}
-        \caption{Criticality Situation}
-        \label{fig:tiger}
-    \end{subfigure}
-    \caption{Partial Regression Diagrams}\label{regdiag}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/4}
+\decoRule
+\caption{Partial Regression Diagram Traffic.}
+\label{4}
 \end{figure}
 
+\begin{figure}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/5}
+\decoRule
+\caption{Partial Regression Diagram Criticality Situation.}
+\label{5}
+\end{figure}
 
 \subsubsection{Linearity of the coefficients (Gauss-Markov-Theorem 1)}
 We assume that the postulated model (See equation \ref{equLit2}) is linear in its coefficients. 
@@ -137,9 +135,6 @@ The residuals should be normally distributed. This can be checked and confirmed 
 Table \ref{frequ} shows a frequency table of the design matrix. Traffic has been high in 32 cases, and none in 66 cases. A (driving simulator-) critical situation has been given in 100 cases, whereas only 7 conditions are given for uncritical takeover scenarios. Therefore, there will be a high correlation between the constant (a vector of ones) and criticality (nearly a vector of ones). While a correlation between takeover time and the variables is desired, correlations between variables are not. As can be seen in \ref{bla}, traffic and criticality of the situation have an insignificant correlation of 0.096. In addition, the measures of Tolerance Value and Variation Inflation Factor (`VIF', which is simply the inverse of the Tolerance Value) are typically examined. Those are measures of multicollinearity. While one can have multiple variables that do not correlate pairwise, there might still be significant multicollinearity between the set of all of them. The Tolerance Value is calculated by $T_{j} = 1- R^{2}$, where $R^{2}$ is the coefficient of Determination. $R^{2}$ measures how much of the variance of the dependent variable is explained by this independent variable. In other words, VIF and Tolerance Value measure how much larger the variance of the regression coefficient is than if the variable had been completely uncorrelated with other variables in the model. This Tolerance Value should, as a rule of thumb, not be smaller than 0.1. Including correlating variables in a model leads to p-values that are higher (=less significant) by a factor of the VIF than they would otherwise would be. 
 
 
-Here it has to be kept in mind that correlations between variables only indicate how often they were measured together in studies, and says nothing about a relationship between the variables themselves. A correlation between any variable with takeover time, on the other hand, does say something about the influence of this factor on takeover time. 
-If variables (including the constant) correlate, they partly explain each other and do not necessarily add completely new information. This can be compared to a matrix that does not have full rank because its rows are linearly dependent; it results in an ill-defined problem because we have more variables we want to find than equations that can independently explain those variables. Thus, using a design matrix with vectors that correlate leads to imprecise estimates of the regression parameters. 
-
 \begin{table}
  \centering
   \begin{tabular}{ l | c | c | c| r}
@@ -170,18 +165,32 @@ If variables (including the constant) correlate, they partly explain each other 
 \label{3}
 \end{figure}
 
-As can be seen in Fig. \ref{3}, none of the Tolerance Values are smaller than 0.1. While this first seems surprising due to the correlation between `criticality' and the constant, Belsley writes in his book on `Regression Diagnostics' that high correlations are not always problematic [\cite{belsley2005regression}]. Some authors even suggest correlations as high as 0.7 should not be considered severe [\cite{mason1991collinearity}]. Thus, we will continue our analysis while keeping the correlation between the two in mind for subsequent analysis. \\
+As can be seen in Fig. \ref{3}, none of the Tolerance Values are smaller than 0.1. While this first seems surprising due to the correlation between `criticality' and the constant, Belsley writes in his book on `Regression Diagnostics' that high correlations are not always problematic (\cite{belsley2005regression}). Some authors even suggest correlations as high as 0.7 should not be considered severe (\cite{mason1991collinearity}). Thus, we will continue our analysis while keeping the correlation between the two in mind for subsequent analysis. \\
 
 \subsection{Results}\label{resLit}
 
-our model predicts four values: 3.21 seconds for a takeover with no traffic and an uncritical scenario; 3.63 seconds for a takeover with traffic in an uncritical scenario; 2.86 seconds for a takeover without traffic in a critical scenario; and 3.28 seconds for a takeover with traffic in a critical scenario. (see table bla)
+Our model predicts four values: 3.21 seconds for a takeover with no traffic and an uncritical scenario; 3.63 seconds for a takeover with traffic in an uncritical scenario; 2.86 seconds for a takeover without traffic in a critical scenario; and 3.28 seconds for a takeover with traffic in a critical scenario (see Table. \ref{cases}).
+
+\begin{table}
+ \centering
+  \begin{tabular}{ l | c | r}
+    \hline
+    
+    & Critical Scenario & Uncritical Scenario\\ \hline
+     No Traffic & 2.86 & 3.21\\ \hline
+      Traffic & 3.28 & 3.63\\ \hline
+    \hline
+    
+  \end{tabular}
+ \caption{Predicted takeover times}
+\end{table}\label{cases}
 
 In Fig. \ref{3} it can be seen that constant, much traffic and criticality of the situation are highly significant. This significance depends on 1) the magnitude of the effect, 2) the magnitude of the error variance, 3) the variance of the variable itself, 4) the amount of data, and 5) the number of variables in the model. All five can be reasons that the other variables did not become significant (in the first run of the regression, see \ref{equLit1}). 
 
-`Much traffic' and `Criticality of Situation' have an effect of similar strength, but in opposite directions. It makes sense that a person takes longer to prepare for the takeover if there is more traffic, and that one is faster if the situation is critical. The constant of 3,21 seconds suits to typical takeover times in literature. Those two factors having the biggest influence suits to the recently published dissertation by Christian Gold. He finds by regression analysis that Time Budget, Repetition (which we did not include as variable) and traffic density are the main predictors of takeover time [\cite{goldmodeling}]. `Time Budget' and `Criticality of the Situation' could be summarized as `urgency' of the takeover, and `traffic' is also what we find to be a relevant influencing factor. Thus, our model fits to Gold's findings. The insignificant variables of the first run of the regression should not be interpreted due to their insignificance and correlation with one another. Calculating the same regression in Matlab and Excel confirmed our results. 
+`Much traffic' and `Criticality of Situation' have an effect of similar strength, but in opposite directions. It makes sense that a person takes longer to prepare for the takeover if there is more traffic, and that one is faster if the situation is critical. The constant of 3,21 seconds suits to typical takeover times in literature. Those two factors having the biggest influence suits to the recently published dissertation by Christian Gold. He finds by regression analysis that Time Budget, Repetition (which we did not include as variable) and traffic density are the main predictors of takeover time (\cite{goldmodeling}). `Time Budget' and `Criticality of the Situation' could be summarized as `urgency' of the takeover, and `traffic' is also what we find to be a relevant influencing factor. Thus, our model fits to Gold's findings. The insignificant variables of the first run of the regression should not be interpreted due to their insignificance and correlation with one another. Calculating the same regression in Matlab and Excel confirmed our results. 
 \\
 Also the Goodness of fit ($R^2$) of the whole model can be measured with SPSS (Fig. \ref{15}). As already mentioned, $R^2$ measures the amount of variability in takeover time that is explained by the model. The adjusted $R^2$ is corrected by the amount of independent variables. This is necessary because $R^2$ rises with the amount of independent variables, even if they do not add any information. The adjusted $R^2$ is reduced by the number of independent variables and increased by sample size. The achievable $R^2$ depends on the variance present in the data. Thus, also a model with a low  $R^2$ can be a good model, if there is a lot of `natural' variance in the data (like e.g. with humans) (\cite{goldmodeling}). In our case, 23,2\% of the variability of takeover time are explained by our two variables. A plot of the takeover time against the predicted takeover time can be found in Fig. \ref{16}. The significance of different studies can be compared by the effect size. The resulting effect size can be calculated by Cohen's d: $\sqrt{\frac{0.232}{1-0.232}} = 0.55$. This corresponds to a strong effect according to Cohen (\cite{cohen1992power}). 
-The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model, which is calculated to be significant. Fig. \ref{16} shows a plot of measured against predicted takeover time. The four rows clearly represent the four predicted va´lues, for each of which several measured values exist. Thus, our model does not include all influencing variables yet.
+The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model, which is calculated to be significant. Fig. \ref{16} shows a plot of measured against predicted takeover time. The four rows clearly represent the four predicted values, for each of which several measured values exist. Thus, our model does not include all influencing variables yet.
 
 \begin{figure}
 \centering
@@ -201,108 +210,13 @@ The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model
 
 \subsection{Discussion}
 
-Our model shows that traffic and criticality of the scenario have an influence on takeover time, $ F(2,112) = 17.89, p = 0.000, n = 113$. With traffic, takeover time increases by 0.42 seconds, and with criticality of the situation, takeover time decreases by 0.35 seconds. 23\% are explained by these two independent variables, which corresponds to a strong effect according to Cohen (\cite{cohen1992power}).
+Our model shows that traffic and criticality of the scenario have an influence on takeover time, $ F(2,112) = 17.89, p = 0.000, n = 113$. With traffic, takeover time increases by 0.42 seconds, and with criticality of the situation, takeover time decreases by 0.35 seconds. 23\% of the variance in our data are explained by these two independent variables, which corresponds to a strong effect according to Cohen (\cite{cohen1992power}).
 
 When including all firstly hypothesized variables in the multiple linear regression, variables highly correlate with each other. This is because they are only measured on a nominal level and correlate as soon as variables have been measured in the same combination in different studies. Here it has to be kept in mind that correlations between variables only indicate how often they were measured together in studies, and says nothing about a relationship between the variables themselves. A correlation between any variable with takeover time, on the other hand, does say something about the influence of this factor on takeover time. 
-If variables (including the constant) correlate, they partly explain each other and do not necessarily add completely new information. This can be compared to a matrix that does not have full rank because its rows are linearly dependent; it results in an ill-defined problem because we have more variables we want to find than equations that can independently explain those variables. Thus, using a design matrix with vectors that correlate leads to imprecise estimates of the regression parameters. As a consequence, variables compete for statistical power, and each single one only adds little explanatory value. This is most likely the reason why only two variables out of eleven became statistically significant. Even though the VIFs indicate that no multicollinearity exists, a high correlation between variables might still have an influence and lead to high p-values and high variability of estimated betas. When using the `forward' regression method, `criticality of the situation' and `traffic' are chosen as included variables. The `forward' method starts without any variables, and adds variables until adding another variable does not lead to a significant improvement of the fit anymore. Thus, it is not only due to the competition for explanatory power that only two variables are included in the model.  There certainly is another problem hidden in the design matrix: some studies that investigated the same factor conclude conflictive results. While for example most studies find that a gaze off road leads to longer takeover times, Louw et al. have a lower mean takeover time in the group that had the gaze off road [\cite{louw2015engaging}]. Excluding these conflictive studies, on the other hand, does not improve the fit of the model. Another problem might be that studies are less comparable than expected. Most likely, factors other than the ones included in our regression varied between studies. This might be little things: Differences in simulators, study setup, study subjects, etc. might be reasons that make studies incomparable. Also, a nominal scale has a low level of measurement. This can hardly be changed because most measures are nominal by how they were measured or reported in the given studies. Furthermore, in many studies takeover times were reported independent of takeover quality. Thus, if an overhasty takeover leading to high lane deviations and lateral accelerations occurred, takeover time was very short. Even if e.g. traffic would have had an influence on the takeover time, this would have been omitted by the fact that the takeover happened overhasty. Since we are modeling a normative (`driving school') takeover, we would be interested in any factor that influences takeover time in the case of a calm, planned takeover.
+If variables (including the constant) correlate, they partly explain each other and do not necessarily add completely new information. This can be compared to a matrix that does not have full rank because its rows are linearly dependent; it results in an ill-defined problem because we have more variables we want to find than equations that can independently explain those variables. Thus, using a design matrix with vectors that correlate leads to imprecise estimates of the regression parameters. As a consequence, variables compete for statistical power, and each single one only adds little explanatory value. This is most likely the reason why only two variables out of eleven became statistically significant. Even though the VIFs indicate that no multicollinearity exists, a high correlation between variables might still have an influence and lead to high p-values and high variability of estimated betas. When using the `forward' regression method, `criticality of the situation' and `traffic' are chosen as included variables. The `forward' method starts without any variables, and adds variables until adding another variable does not lead to a significant improvement of the fit anymore. Thus, it is not only due to the competition for explanatory power that only two variables are included in the model.  There certainly is another problem hidden in the design matrix: some studies that investigated the same factor conclude conflictive results. While for example most studies find that a gaze off road leads to longer takeover times, Louw et al. have a lower mean takeover time in the group that had the gaze off road (\cite{louw2015engaging}). Here, it should be mentioned that they do not use a driving simulator, but conduct the study in front of a computer screen. Excluding these conflictive studies, on the other hand, does not improve the fit of the model. Another problem might be that studies are less comparable than expected. Most likely, factors other than the ones included in our regression varied between studies. This might be little things: Differences in simulators, study setup, study subjects, etc. might be reasons that make studies incomparable. Also, a nominal scale has a low level of measurement. This can hardly be changed because most measures are nominal by how they were measured or reported in the given studies. Furthermore, in many studies takeover times were reported independent of takeover quality. Thus, if an overhasty takeover leading to high lane deviations and lateral accelerations occurred, takeover time was very short. Even if e.g. traffic would have had an influence on the takeover time, this would have been omitted by the fact that the takeover happened overhasty. Since we are modeling a normative (`driving school') takeover, we would be interested in any factor that influences takeover time in the case of a calm, planned takeover.
 
 \subsection{Outlook}
-Since the linearity of the problem as well as the linearity of the coefficients could not be verified, a next step could be to try a nonlinear regression, or a linear regression with nonlinear coefficients. In case we chose a linear regression even though the correct model is not linear, the slope and intercept estimates and the fitted values from the linear regression will be biased [\cite{statsrequ}]. Due to several advantages when comparing studies, we propose to use a random-effect meta-regression. Other than a linear regression, the meta-regression takes into account the sampling variances of the observed outcomes or effect size estimates.   
-
-
-
-\section{Principal Component Analysis - just notes}
-- Ist Faktoranalyse wirklich geeignet, um verschiedene Studien zu vergleichen?Denn in meiner Matrix aus der die Korrelationsmatrix R berechnet wird stehen ja nicht Testergebnisse einer Person (wo der `Unterfaktor' Intelligenz oder sowas ist), sondern was in verschiedenen Studien gemessen wurde. Die Korrelation sagt also nur etwas darüber aus, welche Faktoren oft zusammen gemessen wurden. Wenn ich dann eine Faktoranalyse mache, kommt also raus, welche ‚Wolken‘ von gemeinsam gemessenen Faktoren es gibt. Will ich nicht aber eigentlich wissen, welche ‚Wolken‘ es im Kopf des Menschen gibt? 
--auch in SVD herausheben dass das alles ist was ich mache!
--collinearity not because they belong together but because they are  measured together; thus we get out as much independent info as possible out of all studies, but not what is most important.
-
-
-- to find out the real underlying variables
-- reduce a data set to a manageable size with retaining as much info as possible (e.g. if you have collinearity in a regression: factor analysis combines the variables that are collinear)
--R-matrix is a correlation matrix between all variables
-- `By reducing a data set from a group of interrelated variables to a smaller set of factors, factor analysis achieves parsimony by explaining the maximum amount of common variance in a correlation matrix using the smallest number of explanatory constructs'
-- In factor analysis we strive to reduce this R-matrix down to its underlying dimensions by looking at which variables seem to cluster together in a meaningful way. This data reduction is achieved by looking for variables that correlate highly with a group of other variables, but do not correlate with variables outside of that group.
-- If each axis on the graph represents a factor, then the variables that go to make up a factor can be plotted according to the extent to which they relate to a given factor.
-- the coordinate of a variable along a classification axis is known as factor loading
-- the factor loading can be thought of as the pearson correlation between a factor and a variable
-- 0. In an ideal world, variables would have very high b-values for one factor and very low b-values for all other factors. These factor loadings can be placed in a matrix in which the columns represent each factor and the rows represent the loadings of each variable onto each factor
-- Therefore, any further analysis can be carried out on the factor scores rather than the original data
--A second use is in overcoming collinearity problems in regression. If, following a multiple regression analysis, we have identified sources of multicollinearity then the interpretation of the analysis is questioned (see section 7.6.2.3). In this situation, we can simply carry out a factor analysis on the predictor variables to reduce them down to a subset of uncorrelated factors. The variables causing the multicollinearity will combine to form a factor.If we then rerun the regression but using the factor scores as predictor variables then the problem of multicollinearity should vanish (because the variables are now combined into a single factor).
-- The total variance for a
-particular variable will have two components: some of it will be shared with other variables
-or measures (common variance) and some of it will be specific to that measure (unique
-variance)
-- The proportion of
-common variance present in a variable is known as the communality. As
-- In factor analysis we are interested in finding common underlying dimensions within
-the data and so we are primarily interested only in the common variance
-- Therefore, when
-we run a factor analysis it is fundamental that we know how much of the variance present
-in our data is common variance. This presents us with a logical impasse: to do the factor
-analysis we need to know the proportion of common variance present in the data, yet the
-only way to find out the extent of the common variance is by carrying out a factor analysis!
-There are two ways to approach this problem. The first is to assume that all of the variance
-is common variance. As such, we assume that the communality of every variable is 1. By
-making this assumption we merely transpose our original data into constituent linear components
-(known as principal component analysis).
-- Simplistically, though, factor analysis derives a mathematical
-model from which factors are estimated, whereas principal component analysis
-merely decomposes the original data into a set of linear variates
-- we do PCA because it is `a psychometrically sound procedure, it is conceptually less complex, and guada... concluded that the solutions generated from PCA only differ little from thos egenerated by factor analyis. diffrences can occur when using less than 20 variables (like in my case!)
-- That is, we take a correlation matrix and calculate the variates. There
-are no groups of observations, and so the number of variates calculated will always equal
-the number of variables measured (p). The variates are described, as for MANOVA, by the
-eigenvectors associated with the correlation matrix. The elements of the eigenvectors are
-the weights of each variable on the variate (see equation (16.5)). These values are the factor
-loadings described earlier. The largest eigenvalue associated with each of the eigenvectors
-provides a single indicator of the substantive importance of each variate (or component).
-The basic idea is that we retain factors with relatively large eigenvalues and ignore those
-with relatively small eigenvalues.
-In summary, component analysis works in a similar way to MANOVA. We begin with
-a matrix representing the relationships between variables. The linear components (also
-called variates, or factors) of that matrix are then calculated by determining the eigenvalues
-of the matrix. These eigenvalues are used to calculate eigenvectors, the elements of which
-provide the loading of a particular variable on a particular factor (i.e. they are the b-values
-in equation (17.1)). The eigenvalue is also a measure of the substantive importance of the
-eigenvector with which it is associated.
-- Once factors have been extracted, it is possible to calculate to what degree
-variables load onto these factors (i.e. calculate the loading of the variable on
-each factor). Generally, you will find that most variables have high loadings on
-the most important factor and small loadings on all other factors. This characteristic
-makes interpretation difficult, and so a technique called factor rotation is used to discriminate between factors. 2.
-By rotating the axes (dashed lines), we ensure that both clusters of variables are intersected by
-the factor to which they relate most. So, after rotation, the loadings of the variables are maximized
-onto one factor (the factor that intersects the cluster) and minimized on the remaining
-factor(s).
-- In
-any case, an oblique rotation should be used only if there are good reasons to suppose that
-the underlying factors could be related in theoretical terms
-- The mathematics behind factor rotation is complex (especially oblique rotation).
-However, in oblique rotation, because each factor can be rotated by different amounts
-a factor transformation matrix, Nur-Dach-Buchstabe, is needed
-Therefore, you should think of this matrix as representing the angle through which the axes
-have been rotated, or the degree to which factors have been rotated. The angle of rotation
-necessary to optimize the factor solution is found in an iterative way (see SPSS Tip 8.1) and
-different methods can be used
--Stevens (2002) recommends that for a sample size of 50 a loading of 0.722
-can be considered significant
-- The significance of a loading gives little indication of the substantive importance of
-a variable to a factor. This value can be found by squaring the factor loading to give an
-estimate of the amount of variance in a factor accounted for by a variable (like R2). In this
-respect Stevens (2002) recommends interpreting only factor loadings with an absolute
-value greater than 0.4 (which explain around 16\% of the variance in the variable).
-- There are essentially two potential problems: (1) correlations that are not
-high enough; and (2) correlations that are too high
-- for PCA only small correlations are a problem: test with Bartlett's test - if it's significant that's good (means that our matrix is significantly different from an identity matrix (only zeros only ones in the diagonal)
-- As well as looking for interrelations, you should ensure that variables have roughly normal
-distributions and are measured at an interval level (which Likert scales are, perhaps
-wrongly, assumed to be!). The assumption of normality is most important if you wish
-to generalize the results of your analysis beyond the sample collected. You can do factor
-analysis on non-continuous data; for example, if you had dichotomous variables, it’s possible
-(using syntax) to do the factor analysis direct from the correlation matrix, but you
-should construct the correlation matrix from tetrachoric correlation coefficients (http://
-ourworld.compuserve.com/homepages/jsuebersax/tetra.htm).
-- 
+Since the linearity of the problem as well as the linearity of the coefficients could not be verified, a next step could be to try a nonlinear regression, or a linear regression with nonlinear coefficients. In case we chose a linear regression even though the correct model is not linear, the slope and intercept estimates and the fitted values from the linear regression will be biased (\cite{statsrequ}). Due to several advantages when comparing studies, we propose to use a random-effect meta-regression. Other than a linear regression, the meta-regression takes into account the sampling variances of the observed outcomes or effect size estimates.   
 
 
 
@@ -339,27 +253,30 @@ TakeOverTime = 2,98 + 0.56 \cdot Ride Duration + 1.75 \cdot Hands Occupied + 0.9
 \subsubsection{Linearity of the problem}
 For a description, please refer to \ref{req1}. 
 
+
 \begin{figure}
-    \centering
-    \begin{subfigure}[b]{0.8\textwidth}
-        \includegraphics[width=\textwidth]{Figures/20}
-        \caption{Ride Duration}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.8\textwidth}
-        \includegraphics[width=\textwidth]{Figures/21}
-        \caption{Hands Occupied}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-    %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.8\textwidth}
-        \includegraphics[width=\textwidth]{Figures/22}
-        \caption{Body Towards Road}
-    \end{subfigure}
-    \caption{Partial Regression Diagrams}\label{regdiag2}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/20}
+\decoRule
+\caption{Partial Regression Diagram Ride Duration.}
+\label{16}
 \end{figure}
 
+\begin{figure}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/21}
+\decoRule
+\caption{Partial Regression Diagram Hands Occupied.}
+\label{16}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/22}
+\decoRule
+\caption{Partial Regression Diagram Body Towards Road.}
+\label{16}
+\end{figure}
 
 \subsubsection{Linearity of the coefficients (Gauss-Markov-Theorem 1)}
 We assume that the postulated model \ref{equdata2} is linear in the coefficients.
@@ -368,7 +285,7 @@ We assume that the postulated model \ref{equdata2} is linear in the coefficients
 See \ref{req3}.
 
 \subsubsection{Strict Exogeneity (Gauss-Markov-Theorem 3)}
-See \ref{req4} and Figure \ref{28}. It can be said that roughly, the mean error is zero. In case it is not, this would imply the existence of an implicit X. This means that a variable that influences takeover time in all experiments is not included in the regression equation. This would lead to biased fitted estimates for the slope and intercept. Another option in case of linear dependency in the plot of residuals against fitted values is an implicit block effect. This can be detected by performing an analysis of covariance. This divides the data into different regression lines. If there is a significant difference between the slopes, the linear relationship between X and Y varies with the value of the blocking factor [\cite{statsrequ}]. For simplicity, we will assume strict exogeneity. 
+See \ref{req4} and Figure \ref{28}. It can be said that roughly, the mean error is zero. In case it is not, this would imply the existence of an implicit X. This means that a variable that influences takeover time in all experiments is not included in the regression equation. This would lead to biased fitted estimates for the slope and intercept. Another option in case of linear dependency in the plot of residuals against fitted values is an implicit block effect. This can be detected by performing an analysis of covariance. This divides the data into different regression lines. If there is a significant difference between the slopes, the linear relationship between X and Y varies with the value of the blocking factor (\cite{statsrequ}). For simplicity, we will assume strict exogeneity. 
 
 \begin{figure}
 \centering
@@ -439,11 +356,20 @@ The lower part of Fig. \ref{32} shows the ANOVA of the complete regression model
 \label{33}
 \end{figure}
 
+\begin{figure}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/52}
+\decoRule
+\caption{Predicted against measured takeover time.}
+\label{33}
+\end{figure}
+
 \subsection{Discussion}
 Our multiple regression analysis shows that ride duration, hand occupancy and body position influence takeover time, $F(3,169) = 24,38, p = 0.000, n = 34$. While a longer previous ride duration prolongs takeover time by 0.56 seconds, occupied hands prolong it by 1.75 seconds. A body that is turned away from the road at the takeover request leads to a takeover that takes 0.96 seconds longer. 29.3\% of the variance of the data are explained by these three independent variables, which is a strong effect according to Cohen (\cite{cohen1992power}). While `Hand Occupancy' and `Body Turned To Road' could be a representative of `motor' readiness, `length of ride before TOR' could be a representative of the `cognitive' readiness. 
 
+
 \subsection{Outlook}
-Also in this case it would be interesting to see how well a nonlinear model or nonlinear coefficients predict the data. Furthermore, the prediction of the model is increased to an adjusted $R^2$ of 85\% by doing a Generalized Linear Mixed Model (personal communication with Christian Purucker, 2017). He included the subject number as a random effect, in addition to the same variables we used as fixed effects. This means that the prediction can be increased from 29\% explanation of variance to 85\% by including per person the information of how long the previous takeover took, for example predicting the third takeover by saying `this subject was 0.05 seconds faster than the other subjects in the previous two takeovers'. Subsequently, for this subject the intercept is adjusted accordingly. Thus, it seems like there is a large individual factor that should be included in each prediction. A general reaction time test, on the other hand, did not improve the fit of the model when used as a random effect. 
+Also in this case it would be interesting to see how well a nonlinear model or nonlinear coefficients predict the data. Furthermore, the prediction of the model is increased to an adjusted $R^2$ of 85\% by doing a Generalized Linear Mixed Model (personal communication with Christian Purucker, 2017). He included the subject number as a random effect, in addition to the same variables we used as fixed effects. This means that the prediction can be increased from 29\% explanation of variance to 85\% by including per person the information of how long the previous takeover took, for example predicting the third takeover by saying `this subject was 0.05 seconds faster than the other subjects in the previous two takeovers'. Subsequently, for this subject the intercept is adjusted accordingly. When using only the person as a independent variable, already 54\% of the variance in the data could be explained. This can be confirmed when examining Fig. \ref{52}. If all participants would take roughly the same time for the same condition, the bar plots would be on a similar height and would have similar distributions. This is not the case. It seems more like some people take generally more time, and some generally less time. The ones that react fast are fast independent of outer circumstances. For the slower subjects the condition does seem to have an influence on takeover time, considering the larger spread of the higher takeover times. Thus, it seems like there is a large individual factor that should be included in each prediction. A general reaction time test, on the other hand, did not improve the fit of the model when used as a random effect. 
 
 
 \section{Experimental Data - Factor Analysis} \label{svd}
@@ -452,28 +378,69 @@ Also in this case it would be interesting to see how well a nonlinear model or n
 \centering
 \includegraphics[width = 0.3\textwidth]{Figures/19}
 \decoRule
-\caption{Conceptual idea of the singular value decomposition}
+\caption{Conceptual idea of the principal component analysis}
 \label{19}
 \end{figure}
 Another option to interpret the (previously called) design- and result matrix is by Factor Analysis. Its advantage is that it is not disturbed by multicollinearity in the design matrix, because it clusters variables that are collinear. While it can not be used to predict takeover time, it can be used to reduce the dimensionality of the problem (thus, the amount of relevant influencing factors). This might be useful for other modeling approaches or future study design. 
-explain SVD
 
-From the eleven variables that we included in our regression, some always were recorded together just by how they occur naturally. For example, if someone's hands are occupied, most likely his gaze will also be off road - looking at whatever is in one's hands. Thus, there is more information measured than might actually be needed - there might be `double information' in our variables. For future study design, it would be useful to know which, for example, three variables need to be measured to give independent information about driver state and takeover situation. To strip down the problem to what actually has independent influence on our data, one can conduct a factor analysis.
+From the seven variables that we included in our regression, some always were recorded together just by how they occur naturally. For example, if someone's hands are occupied, most likely his gaze will also be off road - looking at whatever is in one's hands. Thus, there is more information measured than might actually be needed - there might be `double information' in our variables. For future study design, it would be useful to know which, for example, three variables need to be measured to give independent information about driver state and takeover situation. To strip down the problem to what actually has independent influence on our data, one can conduct a factor analysis.
 To understand factor analysis, it is important to understand its core calculation, the principal component analysis (`PCA'):
  \\
 In PCA, one tries to explain observations for many particular things in few general explanations. For example, if I have 100 CDs at home, when asked for my music preference, I will most likely not answer all 100 names of those CDs, but `I like Jazz'. Another example is handling the data of Magnetic Resonance Imaging: Instead of reporting all voxels of all subjects that were active for a certain task, I report `For all subjects, the motor cortex was active'. PCA tries to find those underlying features like `Jazz' and `motor cortex' in our examples. Graphically, this can be imagined as shown in Fig. \ref{19}. While factors 1 to n correspond to the many voxels with different activities, their change in activity can be traced back to a combination of activity in `motor cortex' and `visual cortex' , which are the `real' explanatory factors behind the differences in the result (h1 and h2). In mathematical terms, this is called dimensionality reduction. As an example, we will reduce a 3-dimensional matrix F to a 2-dimensional matrix. We plot the matrix in 3-D space and draw a 2-D plane into it. Subsequently, we project all data points on this 2-D plane. This projection is now our matrix with reduced dimensions. The plane should be drawn in a way that the projected distance is as short as possible. 
 \\
-The following explanations about factor analysis are based on (\cite{field2009discovering}). As it becomes clear already in the description of PCA, factor analysis is done to reduce the size of a data set while retaining as much information as possible. For this, I try to find underlying factors in my data by clustering variables that give similar information. To give Andy Field's example: I conduct a questionnaire that measures per person 1)social skills, 2)selfishness, 3)how interesting others find them, 4)how much time they talk about the other in a conversation 5) how much they talk about themselves in a conversation and 6) how often they lie to people (6 variables). When correlating all those variables with one another, one gets to the correlation matrix (R matrix). In the R matrix, one can see that the variables `social skills, talking about the other, and `how interesting they are found' correlate highly with one another. Also the variables `talking about oneself', `selfishness' and `liar' correlate highly. Thus, one could state that two main factors could explain the data: the first `variable-cloud' could be described as Sociability, the second as Consideration. When plotting the variables along the two `factor-axes', the first thus clusters around the axis for Sociability, the second along the axis for Consideration. The X and Y values of these variables describe how much a variable `loads' on that factor. Factor loading, thus, is the correlation of a variable with a factor. For example, `social skills' will load highly on the sociability factor, but low on the consideration factor. Ideally, every variable loads highly on one factor and low on another factor. Most often, I do not know previously by how many factors my variables can be described. For this, I first obtain the eigenvalues of the correlation matrix of my data. Subsequently, I look at a plot that shows, sorted by size, the eigenvalues against the factor with which they are associated. This is called Scree-Plot (see Fig. ref). This plot has a point of inflexion. Of course, I only want to keep the factors that explain most of my data (i.e. that have high eigenvalues (stimmt das?). Thus, I keep as many factors as I can find on the scree-plot before the point of inflexion. Other methods of factor extration are bla and bla (see \cite{field2009discovering} for more information). Now, I try to arrange these factors in a way that they explain as much of my data as possible. This can either be done by keeping the axes in 90\textdegree angle to each other (bla rotation), or in a way that the axes are laid through the factors to explain as much variance as possible (oblique rotation). While bla rotation leads to factors that are uncorrelated, factors can (and most likely will) still correlate in oblique rotation.  
+The following explanations about factor analysis are based on (\cite{field2009discovering}). As it becomes clear already in the description of PCA, factor analysis is done to reduce the size of a data set while retaining as much information as possible. For this, I try to find underlying factors in my data by clustering variables that correlate highly (thus, give similar information). To give Andy Field's example: I conduct a questionnaire that measures per person 1)social skills, 2)selfishness, 3)how interesting others find them, 4)how much time they talk about the other in a conversation 5) how much they talk about themselves in a conversation and 6) how often they lie to people (6 variables). When correlating all those variables with one another, one gets to the correlation matrix (R matrix). In the R matrix, one can see that the variables `social skills, talking about the other, and `how interesting they are found' correlate highly with one another. Also the variables `talking about oneself', `selfishness' and `liar' correlate highly. Thus, one could state that two main factors could explain the data: the first `variable-cloud' could be described as Sociability, the second as Consideration. When plotting the variables along the two `factor-axes', the first thus clusters around the axis for Sociability, the second along the axis for Consideration. The X and Y values of these variables describe how much a variable `loads' on that factor, and correspond to the elements of the factor's eigenvectors. Factor loading, thus, is the correlation of a variable with a factor. For example, `social skills' will load highly on the sociability factor, but low on the consideration factor. Ideally, every variable loads highly on one factor and low on another factor. Most often, I do not know previously by how many factors my variables can be described. For this, I first obtain the eigenvalues of the correlation matrix of my data. Subsequently, I look at a plot that shows, sorted by size, the eigenvalues against the factor with which they are associated. This is called Scree-Plot (see Fig. \ref{48}). This plot has a point of inflexion. To reduce dimensions, I only want to keep the factors that explain most of my data (i.e. that have high eigenvalues). Thus, I keep as many factors as I can find on the scree-plot before the point of inflexion. Other methods of factor extraction are Kaiser's criterion and Jolliffe's method (see \cite{field2009discovering}, Chapter 17.4.5 for more information). Now, I try to arrange these factors in a way that variables load highly on only one factor and low on the other. This can either be done by keeping the axes in 90\textdegree angle to each other (orthogonal rotation), or in a way that the axes are laid through the variables as closely as possible (oblique rotation). While orthogonal rotation leads to factors that are uncorrelated, factors can (and most likely will) still correlate in oblique rotation.  
 
 \subsection{Results}
-I should have done a correlation matrix for dichotome matrices but for simplicity will assume that SPSS handles this for me (which it doesnt). I use the same matrix as for the regression with the same seven variables. A correlation matrix can be found in Fig. \ref{45}. Factor extraction occurred on the basis of all eigenvalues greater than 1, which extracts two factors. This can be verified when examining the Scree-Plot (Fig. \ref{48}). These two factors explain 41.5\% of variance in the data (Fig. \ref{47}). The loading of the two factors can be found in Fig. \ref{49}. Since factor 1 has high absolute loadings on `Hands Occupied', `Body Towards Road' and `Gaze Off Road', it could be interpreted as `motor distraction'. The second factor has high loadings on `Ride Duration', `Age' and `Mental workload'. 
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/47}
+\decoRule
+\caption{Variance explained by the two factors}
+\label{47}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.6\textwidth]{Figures/48}
+\decoRule
+\caption{Scree-Plot: X-Axis Component Number, Y-Axis Eigenvalues}
+\label{48}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.4\textwidth]{Figures/49}
+\decoRule
+\caption{Factor Loadings}
+\label{49}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/50}
+\decoRule
+\caption{Factor Loadings as 2D Plot}
+\label{50}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/51}
+\decoRule
+\caption{Bartlett's Test}
+\label{51}
+\end{figure}
+
+I use the same matrix as for the regression with the same seven variables. A correlation matrix can be found in Fig. \ref{45}. Bartlett's test shows that our matrix is significantly different from an identity matrix, which is a requirement for conducting the PCA. If it would be too similar to an identity matrix, this would mean our correlations are too low to conduct a PCA. Factor extraction occurred on the basis of all eigenvalues greater than 1 (Kaiser's criterion), which extracts two factors. This can be verified when examining the Scree-Plot (Fig. \ref{48}). These two factors explain 41.5\% of variance in the data (Fig. \ref{47}). To ensure that no collinearity exists between factors, we used orthogonal rotation (`varimax' in SPSS). The loading of the two factors can be found in Fig. \ref{49}, and as a plot in Fig. \ref{50}. Since factor 1 has high absolute loadings on `Hands Occupied', `Body Towards Road' and `Gaze Off Road', it could be interpreted as `motor distraction'. The second factor has high loadings on `Ride Duration', `Age' and `Mental workload'. 
 
 \subsection{Discussion}
-While it makes sense that motor distraction can be clustered, Ride duration, age and mental workload most likely do not have any influence on one another - at least not in how much they occur together. Knowing that all motor, it might be enough to measure only one variable per factor to be informed about the current driver state. The variables load high on the one and low on the other factor very nicely. What first seems confusing is that `Hands Occupied' and `Gaze Off Road' correlate negatively. If one's hands are occupied, most likely one's gaze is also off road. But, it might well be that a subject has the eyes off road even though his hands are not occupied. Thus, in our data it seems like there are many of those cases, which explains the negative correlation. 
+While it makes sense that motor distraction can be clustered, Ride duration, age and mental workload most likely do not have any influence on one another - at least not in how much they occur together. Knowing that all motor distraction can be clustered, it might be enough to measure only one variable per factor to be informed about the current driver state. The variables load high on the one and low on the other factor very nicely. What first seems confusing is that `Hands Occupied' and `Gaze Off Road' correlate negatively. If one's hands are occupied, most likely one's gaze is also off road. But, it might well be that a subject has the eyes off road even though his hands are not occupied. Thus, in our data it seems like there are many of those cases, which explains the negative correlation. 
+\\
+Strictly speaking, principal component analysis and factor analysis are two different things. Principal component analysis only decomposes our data into several linear factors, and assumes that all the variance between the variables is common variance (variance that is shared with other variables, in opposite to unique variance). In factor analysis, a mathematical model is derived from which factors are estimated. We conducted a PCA because it is `conceptually less complex' (\cite{field2009discovering}) and \cite{guadagnoli1988relation} find that its results do not differ too much from factor analysis.
 
 \section{Singular Value Decomposition}
 \subsection{Introduction}
-While the factor analysis is suitable to see which factors need to be measured to infer the driver state, this says nothing on the factor's influence on takeover time yet. For this, we first (as also in factor analysis) do a singular value decomposition. 
+While the factor analysis is suitable to see which factors need to be measured to infer the driver state, this says nothing on the factor's influence on takeover time yet. For this, we again do a singular value decomposition, followed by a weighting by takeover time. 
 
 \subsection{Method}
 The first step is to perform a mean normalization and feature scaling on matrix F with size (n x p). Second, the covariance matrix $\Sigma$ is calculated for F. Subsequently, the singular value decomposition is computed on $\Sigma$ to obtain its eigenvectors. 
@@ -481,12 +448,11 @@ The first step is to perform a mean normalization and feature scaling on matrix 
 As an equation:
 \begin{equation}
 \begin{split}
-[U, S, V] = SVD(\Sigma).
+(U, S, V) = SVD(\Sigma).
  \end{split}
 \end{equation}
 
-Now, U (n x p) are the eigenvectors of $\Sigma$ , which corresponds to the hyperplane in 2D in our example. S (p x p) is the diagonal matrix containing the singular values. They give the amount of variance retained by the reduction. V is an (p x p) matrix that transforms all correlated variables into uncorrelated ones. 
-Now, we are interested in the influence of these singular values on our result vector r (n x 1). It contains n takeover times in our case. $S^{-1} \cdot U'$ describe the principal components of our data. We want to know the influence of our principal components on takeover time. Thus, we calculate:
+Now, U (n x p) is a unitary matrix, S (p x p) is the diagonal matrix containing the singular values. They give the amount of variance retained by the reduction. V (p x p) are the eigenvectors ( = loading of the variable onto the factors) of $\Sigma$ , which corresponds to the hyperplane in 2D in our previously mentioned example. Now, we are interested in the influence of these singular values on our result vector r (n x 1). It contains n takeover times in our case. $S^{-1} \cdot U'$ describe the principal components of our data. We want to know the influence of our principal components on takeover time. Thus, we calculate:
 
 \begin{equation}
 \begin{split}
@@ -494,7 +460,7 @@ Now, we are interested in the influence of these singular values on our result v
  \end{split}
 \end{equation}
 
-These $\gamma$ describe the principal components weighted by the takeover time. Thus, these are all seven factors that can be found, weighted by their influence on takeover time. Now, we need to check for the highest absolute values of gamma (thus, the factors that explain most of the takeover time) which variables load on them. This will be the variables that explain most of the variance in the data [\cite{christensen2011plane}].
+These $\gamma$ describe the principal components weighted by the takeover time. Thus, these are all seven factors that can be found, weighted by their influence on takeover time. Now, we need to check for the highest absolute values of gamma (thus, the factors that explain most of the takeover time) which variables load on them. This will be the variables that explain most of the variance in the data (\cite{christensen2011plane}).
 
 \subsection{Results}
 The V resulting from the singular value decomposition (`svd()' function in Matlab) of our matrix F looks the following: 
@@ -533,12 +499,8 @@ $
 Apparently, factors two and three are the most important ones when weighted by takeover time (see $\gamma$). Thus, we now identify which variables load the most on factor two and three. These correspond to columns two and three in matrix V. While mainly `age' loads on Factor two, Factor three is loaded by `Gaze Off Road', `Hands Occupied' and `Body turned'.   
 
 \subsection{Discussion}
-These two factors are very similar to the two factors we already found when not weighting by takeover time: One factor is loaded highly by motor distraction tasks (factor three) and one by age (factor two). In this case only `age' had a high loading, but also the loadings for Traffic and Mental Workload are at -0.21 and 0.21, respectively. Now, clustering for cognitive distraction makes sense - because age, mental workload and traffic all most likely influence takeover time by cognitively challenging the driver.  Thus, it can be assumed that the most crucial points to pay attention to in designing future driving studies are to have one task that is mainly motoric, and one that is mainly cognitive. This is in line with previous research assumptions of nearly all papers that examine takeover time.
-
- 
-\\
+These two factors are very similar to the two factors we already found when not weighting by takeover time: One factor is loaded highly by motor distraction tasks (factor three) and one by age (factor two). In this case only `age' had a high loading, but also the loadings for Traffic and Mental Workload are at -0.21 and 0.21, respectively. Now, clustering for cognitive distraction makes sense - because age, mental workload and traffic all most likely influence takeover time by cognitively challenging the driver. These two factors have no multicollinearity and thus independently influence takeover time. Thus, it can be assumed that the most crucial points to pay attention to in designing future driving studies are to have one task that is mainly motoric, and one that is mainly cognitive. This is in line with previous research assumptions of nearly all papers that examine takeover time.
 The multiple linear regression in section \ref{regData} resulted in `Ride Duration', `Hands Occupied' and `Body Turned' having the strongest influence besides the constant. This, again, supports that one motor and one cognitive variable should always be included. All three were variables we also found to be important in the factor analysis and the singular value decomposition. 
-\\
 
 
 
