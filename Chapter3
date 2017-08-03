@@ -466,13 +466,17 @@ In PCA, one tries to explain observations for many particular things in few gene
 The following explanations about factor analysis are based on (\cite{field2009discovering}). As it becomes clear already in the description of PCA, factor analysis is done to reduce the size of a data set while retaining as much information as possible. For this, I try to find underlying factors in my data by clustering variables that give similar information. To give Andy Field's example: I conduct a questionnaire that measures per person 1)social skills, 2)selfishness, 3)how interesting others find them, 4)how much time they talk about the other in a conversation 5) how much they talk about themselves in a conversation and 6) how often they lie to people (6 variables). When correlating all those variables with one another, one gets to the correlation matrix (R matrix). In the R matrix, one can see that the variables `social skills, talking about the other, and `how interesting they are found' correlate highly with one another. Also the variables `talking about oneself', `selfishness' and `liar' correlate highly. Thus, one could state that two main factors could explain the data: the first `variable-cloud' could be described as Sociability, the second as Consideration. When plotting the variables along the two `factor-axes', the first thus clusters around the axis for Sociability, the second along the axis for Consideration. The X and Y values of these variables describe how much a variable `loads' on that factor. Factor loading, thus, is the correlation of a variable with a factor. For example, `social skills' will load highly on the sociability factor, but low on the consideration factor. Ideally, every variable loads highly on one factor and low on another factor. Most often, I do not know previously by how many factors my variables can be described. For this, I first obtain the eigenvalues of the correlation matrix of my data. Subsequently, I look at a plot that shows, sorted by size, the eigenvalues against the factor with which they are associated. This is called Scree-Plot (see Fig. ref). This plot has a point of inflexion. Of course, I only want to keep the factors that explain most of my data (i.e. that have high eigenvalues (stimmt das?). Thus, I keep as many factors as I can find on the scree-plot before the point of inflexion. Other methods of factor extration are bla and bla (see \cite{field2009discovering} for more information). Now, I try to arrange these factors in a way that they explain as much of my data as possible. This can either be done by keeping the axes in 90\textdegree angle to each other (bla rotation), or in a way that the axes are laid through the factors to explain as much variance as possible (oblique rotation). While bla rotation leads to factors that are uncorrelated, factors can (and most likely will) still correlate in oblique rotation.  
 
 \subsection{Results}
-I should have done a correlation matrix for dichotome matrices but for simplicity will assume that SPSS handles this for me (which it doesnt). I use the same matrix as for the regression with the same seven variables. A correlation matrix can be found in Fig. \ref{45}. Factor extraction occurred on the basis of all eigenvalues greater than 1, which extracts two factors. This can be verified when examining the Scree-Plot (Fig. \ref{48}). These two factors explain 41.5\% of variance in the data (Fig. \ref{47}). The loading of the two factors can be found in Fig. \ref{49}. Since factor 1 has high absolute loadings on `Hands Occupied', `Body Towards Road' and `Gaze Off Road', it could be interpreted as `motor distraction'. The second factor has high loadings on `Ride Duration', `Age' and `Mental workload'. This factor could have to do something with cognitive distraction. 
+I should have done a correlation matrix for dichotome matrices but for simplicity will assume that SPSS handles this for me (which it doesnt). I use the same matrix as for the regression with the same seven variables. A correlation matrix can be found in Fig. \ref{45}. Factor extraction occurred on the basis of all eigenvalues greater than 1, which extracts two factors. This can be verified when examining the Scree-Plot (Fig. \ref{48}). These two factors explain 41.5\% of variance in the data (Fig. \ref{47}). The loading of the two factors can be found in Fig. \ref{49}. Since factor 1 has high absolute loadings on `Hands Occupied', `Body Towards Road' and `Gaze Off Road', it could be interpreted as `motor distraction'. The second factor has high loadings on `Ride Duration', `Age' and `Mental workload'. 
 
 \subsection{Discussion}
-Knowing that all motor and all cognitive distractions can be clustered together, it might be enough to measure only one variable per factor to be informed about the current driver state. The variables load high on the one and low on the other factor very nicely. What first seems confusing is that `Hands Occupied' and `Gaze Off Road' correlate negatively. If one's hands are occupied, most likely one's gaze is also off road. But, it might well be that a subject has the eyes off road even though his hands are not occupied. Thus, in our data it seems like there are many of those cases, which explains the negative correlation. 
+While it makes sense that motor distraction can be clustered, Ride duration, age and mental workload most likely do not have any influence on one another - at least not in how much they occur together. Knowing that all motor, it might be enough to measure only one variable per factor to be informed about the current driver state. The variables load high on the one and low on the other factor very nicely. What first seems confusing is that `Hands Occupied' and `Gaze Off Road' correlate negatively. If one's hands are occupied, most likely one's gaze is also off road. But, it might well be that a subject has the eyes off road even though his hands are not occupied. Thus, in our data it seems like there are many of those cases, which explains the negative correlation. 
 
 \section{Singular Value Decomposition}
-While the factor analysis is suitable to see which factors need to be measured to infer the driver state, this says nothing on the factor's influence on takeover time yet. For this, we first (as also in factor analysis) do a singular value decomposition. The first step is to perform a mean normalization and feature scaling on matrix F with size (n x p). Second, the covariance matrix $\Sigma$ is calculated for F. Subsequently, the singular value decomposition is computed on $\Sigma$ to obtain its eigenvectors. 
+\subsection{Introduction}
+While the factor analysis is suitable to see which factors need to be measured to infer the driver state, this says nothing on the factor's influence on takeover time yet. For this, we first (as also in factor analysis) do a singular value decomposition. 
+
+\subsection{Method}
+The first step is to perform a mean normalization and feature scaling on matrix F with size (n x p). Second, the covariance matrix $\Sigma$ is calculated for F. Subsequently, the singular value decomposition is computed on $\Sigma$ to obtain its eigenvectors. 
 
 As an equation:
 \begin{equation}
@@ -493,61 +497,49 @@ Now, we are interested in the influence of these singular values on our result v
 These $\gamma$ describe the principal components weighted by the takeover time. Thus, these are all seven factors that can be found, weighted by their influence on takeover time. Now, we need to check for the highest absolute values of gamma (thus, the factors that explain most of the takeover time) which variables load on them. This will be the variables that explain most of the variance in the data [\cite{christensen2011plane}].
 
 \subsection{Results}
-The V resulting from the singular value decomposition of our matrix F looks the following: 
+The V resulting from the singular value decomposition (`svd()' function in Matlab) of our matrix F looks the following: 
 \\
 $
- \begin{bmatrix}
+ \begin{bmatrix} \label{V}
  
-   -0.4508 &   0.1918& \dots & 0.7490\\
-    0.1380  &  0.5067  &  \dots &   0.1988\\
-   -0.2275 &  -0.3458  &  \dots &  -0.0987\\
-    0.4385  & -0.1307&   \dots  &  0.3383\\
-    0.1087 &   0.5214 &   \dots &  -0.2056\\
-    0.1107 &  -0.2836&   \dots  &  0.0101\\
-    0.1041  & -0.3292&   \dots  &  0.0162\\
-   -0.4243 &   0.0783  &  \dots &  -0.1515\\
-    0.2907   & 0.0115 &   \dots  & -0.0567\\
-    0.2640  &  0.3001 &  \dots &  -0.2033\\
-    0.4051  & -0.1099  &  \dots &   0.4054\\
-   -0.0207 &   0.0269  & \dots &  -0.0296
+   Variable & Factor 1 & Factor 2 & Factor 3 & Factor 4 & Factor 5 & Factor 6 &Factor 7\\
+  Age &  -0.19 &   -0.9& 0.08 & -0.25 & 0.13 & 0.18 & 0.2 \\
+  Long Ride &   -0.06  &  -0.17  &  0.21 & 0.93 & 0.24 & 0.03 & 0.05\\
+  Gaze Off Road& -0.04 &  -0.25  & 0.68 & 0.1 & 0.19 & 0.4 & -0.52 \\
+  Hands Occupied &  -0.04  & -0.11&  0.59 & -0.1 & -0.06 & -0.77 & -0.16 \\
+  Body Turned&  -0.02 &   -0.05 & 0.35 & -0.04 & -0.1 & 0.46 & -0.81  \\
+  Traffic &  -0.03 &  -0.21& -0.15 & 0.24 & -0.93 & -0.04 & 0.03  \\
+  Mental Workload& -0.98  & 0.21& -0.03 & -0.02 & -0.01 &  0 & 0  \\
+   
 
 \end{bmatrix}
 $ 
 \\
-
-
-
-
 
 While the result of $\gamma = S^{-1} \cdot U' \cdot r$ is:
 \\
  $
- \begin{bmatrix}
-   -1.2660\\
-    0.4385\\
-   -0.2391\\
-    0.6188\\
-    0.0880\\
-    0.3699\\
-    0.1297\\
-   -0.0859\\
-    0.6744\\
-   -1.0122\\
-    0.9504\\
-    2.4003\\
+ \begin{bmatrix} \label{gamma}
+   Factor 1 & -0.46\\
+   Factor 2 & -1.6\\
+   Factor3 &  1.72\\
+  Factor 4 &   0.1\\
+  Factor 5 &   0.32\\
+  Factor 6 &  -0.49\\
+  Factor 7 &  -0.67\\
 \end{bmatrix}
 $ 
 \\
-Of $\gamma$, the last value is by far the one with the highest absolute value. Thus, the last column of V is examined. Here, every row corresponds to a factor. The three variables that have the biggest influence on this gamma are the ones in row one, four and eleven. They correspond to the factors `constant', `body turned' and `long autonomous ride'. Thus, we can assume that those factors have the highest amount of independent impact on takeover time. 
+Apparently, factors two and three are the most important ones when weighted by takeover time (see $\gamma$). Thus, we now identify which variables load the most on factor two and three. These correspond to columns two and three in matrix V. While mainly `age' loads on Factor two, Factor three is loaded by `Gaze Off Road', `Hands Occupied' and `Body turned'.   
 
 \subsection{Discussion}
-In short, what we try to do with the SVD is to find out the most important component of the matrix F and check which factors have the strongest influence on it. The most important factor in the most important component is the `most-most important' factor influencing takeover time. and those are the factors that are assumed to be the most important ones for takeover time. It makes sense that the constant has a high impact on takeover time, since a lot of things that take time have to happen in every takeover, no matter the influencing factors (notice request, motor preparation, move hands to steering wheel, mentally prepare etc.). It is also intuitive that it takes time until the body is turned back towards the road. Interestingly, one of the two factors (besides the constant) represents a motoric transition to driving, while the other represents the mental transition to driving. This perfectly fits with why we did the singular value decomposition: we wanted to find out all factors that have the most impact independent from the others. Thus, it can be assumed that the most crucial points to pay attention to in designing future driving studies are to have one task that is mainly motoric, and one that is mainly cognitive. This is in line with previous research assumptions of nearly all papers that examine takeover time. 
+These two factors are very similar to the two factors we already found when not weighting by takeover time: One factor is loaded highly by motor distraction tasks (factor three) and one by age (factor two). In this case only `age' had a high loading, but also the loadings for Traffic and Mental Workload are at -0.21 and 0.21, respectively. Now, clustering for cognitive distraction makes sense - because age, mental workload and traffic all most likely influence takeover time by cognitively challenging the driver.  Thus, it can be assumed that the most crucial points to pay attention to in designing future driving studies are to have one task that is mainly motoric, and one that is mainly cognitive. This is in line with previous research assumptions of nearly all papers that examine takeover time.
+
+ 
 \\
-Interestingly, the fourth-most relevant factor is time pressure, which is also a factor that Gold et al. find to have a large impact on resulting takeover time. 
+The multiple linear regression in section \ref{regData} resulted in `Ride Duration', `Hands Occupied' and `Body Turned' having the strongest influence besides the constant. This, again, supports that one motor and one cognitive variable should always be included. All three were variables we also found to be important in the factor analysis and the singular value decomposition. 
 \\
-The multiple linear regression in section \ref{regLit} resulted in `traffic' and `Criticality of the situation' having the strongest influence besides the constant. While both are cognitive factors, they have an opposing influence on takeover time: while traffic leads to a longer takeover time, a critical situation leads to a shorter takeover time. Thus, it is still import to differentiate between cognitive factors that have opposing influence. 
-Conducting a factor analysis on the literature is pointless because it will only desribe the rules by which I chose to set the variables - e.g. alway sin a ritical situationi we need a mirror check - those will come out as one factor, but it's just our own rule and nothing that tells us anything new. 
-\\
+
 
 
 
