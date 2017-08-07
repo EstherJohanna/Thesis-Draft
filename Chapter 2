@@ -1,10 +1,14 @@
-\chapter{A Cognitive-Motor LEGO Model} 
+\chapter{A Cognitive-Motor Driver Model} 
 
 \label{Chapter2} 
 
-\section{Model}
+\section{Introduction}
 
-In \ref{Chapter1}, an overview about cognitive modeling and job job scheduling (and pyschedule) has been given. blabla that's how I combined the two and why. ACT-R long time to learn and for `simple' reaction time laboratory experiments. also for driving but only a very special case. downside: it cannot learn. fine for us because we assume drivers have learnt already. Kritik an ACT-R: schwer zu lernen, `when trying to model more complex tasks, such as driving, the serial processor of ACT-R causes bottlenekcs coincerning the speed of calulation (Marina). in Marina's diss anforderungen: 1)employs knowledge of detailed cognitive structure but simulate performance on higher level 2) with if-then rules 3)modular (easy to add and change) 4)normative and naturalistic driver behavior.  thats what were interested in.Actions of one module (=resource) can only happen successively, all actions of different modules can happen simultaneously. The procedural memory is the 'impulse generator' that orchestrates the actions of the other modules by production rule firing. Fig. \ref{tree} shows the following decision tree more graphically. It is important to note that the added tasks have nothing temporal about them; they only decide which `LEGO-packages' are added to the big LEGO-box out of which in the end the fastest possible solution is built.
+In  Chapter \ref{Chapter1}, an overview about cognitive modeling and job shop scheduling has been given. While ACT-R works great to realistically model experiments that occur in an experimental setup, it is rarely used to model complex human behavior. While this is possible (see \cite{salvucci2006modeling}, learning and correctly coding complex behavior in ACT-R takes years. Other critics about ACT-R is its slow speed of calculation for complex task (\cite{plavvsic2010analysis}).  In her dissertation, Marina Plav{\v{s}}ic sets several requirements for modeling driver behavior: it should 1) employ knowledge of detailed cognitive structure but simulate performance on higher level 2) run with if-then rules 3) be modular (easy to add and change) and 4) reflect normative and naturalistic driver behavior (\cite{plavvsic2010analysis}). We met those requirements and overcame problems of programming difficulties and long running time by combining the theoretical background of ACT-R with job shop scheduling. This was done by using ACT-R's modules as `resources' in Pyschedule, and all of ACT-R's actions of the different modules as `tasks'. As for the order constraints in Pyschedule, we set as many as necessary and as little as possible constraints regarding task order for modeling a realistic takeover. In principle, this model thus works very similar to an ACT-R model. The difference is that it can not learn. For our use case, this is fine because we assume to model a takeover-trained driver. 
+\\
+As in every Pyschedule and ACT-R program, actions of one module (=resource) can only happen successively, while all actions of different modules can happen simultaneously. The procedural memory is the 'impulse generator' that orchestrates the actions of the other modules by production rule firing. Fig. \ref{tree} shows the following decision tree more graphically.  It is important to note that the added tasks have nothing temporal about them; they only decide which `LEGO-packages' are added to the big LEGO-box out of which in the end the fastest possible solution is built. An example of the simplest possible takeover model can be found in Fig. \ref{gantt}.
+
+\section{Method}
 
 The following modules (resources) are available:
 \\
@@ -30,38 +34,40 @@ Eyes Module;
 \item
 Feet Module;
 \item
-Thorax Module
+Thorax Module\\
 \end{itemize}
-
-
-
-
 The input variables are:
 \\
 \begin{itemize}
 \item
 Expert - differentiates between a novice that listens to the whole takeover request before taking over, and someone who recognizes right after the first tone that he should take over;
 \item
+Gaze Off - whether the driver looks towards the street or elsewhere at the takeover request;
+\item
+Long Gaze - whether off road or on road gaze were off or on road for a long time already. If the driver just looked away from the road, he does not need to build up situation awareness anymore; 
+\item
+Body Turned - whether the driver has his body turned away from the steering wheel or not; 
+\item
 Lockout - determines whether the secondary task is automatically ended by in-car entertainment;
 \item
-...;
+Hands Occupied - whether the driver's hands are occupied;
 \item
-...;
+Distance Hands - how far the hands are away from the steering wheel;
 \item
-...;
+Feet on Pedals - whether the feet are on gas pedal and clutch;
 \item 
-...; 
+Dangerous Scenario - whether the situation in which the driver needs to take over is dangerous / critical or not; 
 \item
-...;
+Driving Speed - this is only needed for calculating the brake time in case of a dangerous scenario;
 \item
-...;
+Low Time Budget - whether the driver has only little time to take over control;
 \item
-...
+Mental Workload - whether the driver was mentally distracted during the takeover request;
+\item
+Traffic - whether there was traffic around or not.
 \end{itemize}
 
-Even though we are certain that extreme drowsiness has an influence on takeover time, we excluded it as an influencing variable. In that case, driving should not be allowed and the car should enter a minimal risk state rather than giving control to a drowsy driver. Also boredom was excluded, because its consequences can differentiate between a fast, overhasty takeover due to surprise, or a slow takeover. Cognitive demand is only asked as `yes' or `no' because it is hard to measure in more detail. Felt urgency of the situation is build up by traffic, time budget and criticality of the scenario; but it is hard to measure. it would make the takeover faster...bei mehr traffic dauert es laenger!
-
-we want a normative `driving school' takeover. 
+Even though we are certain that extreme drowsiness has an influence on takeover time, we excluded it as an influencing variable. In that case, driving should not be allowed and the car should enter a minimal risk state rather than giving control to a drowsy driver. Also boredom was excluded, because its consequences can differentiate between a fast, overhasty takeover due to surprise, or a slow takeover. Cognitive demand is only asked as `yes' or `no' because it is hard to measure in more detail. We will model a normative `driving school' takeover. 
 
 The basic tasks of every take-over are described in the following. 
 
@@ -78,15 +84,15 @@ Is done by the procedural memory. It takes 100ms. This is derived from the 50ms 
 \subsubsection{Change Goal}
 This production rule commands a change of the goal buffer in ACT-R. A goal buffer representation did not seem to be helpful in my case (the goal would just be 'take over' during the whole takeover), but the time-consuming production rule was implemented.
 
-\subsubsection{move Attention}
+\subsubsection{Move Attention}
 As the 'impulse generator', the procedural memory commands every move of attention (see \cite{salvucci2009toward, salvucci2008threaded} for examples). This happened already in the 'attend aural' command. It also precedes every saccade. In this case, it is requested that attention is moved to the road.
 \label{moveAttention}
 
 
 \begin{sidewaysfigure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/UntitledDiagram.pdf}%groesser machen und zentrieren und schrift mehr direkt drunter (als jpg machen)
-\decoRule
+\includegraphics[width = 1\textwidth]{Figures/UntitledDiagram.jpg}%groesser machen und zentrieren und schrift mehr direkt drunter (als jpg machen)
+%\decoRule
 \caption{Decision tree of the model.}
 \label{tree}
 \end{sidewaysfigure}
@@ -97,9 +103,9 @@ In case the driver is not ready to take over, the following inputs can model the
 
 
 \subsection{Lockout}
-It has been observed that subjects take longer to disengage from a secondary task if the secondary task is not automatically quit by the in-car entertainment (\cite{}). 
+It has been observed that subjects take longer to disengage from a secondary task if the secondary task is not automatically quit by the in-car entertainment (\cite{opel}). 
 \subsubsection{Quit Non-driving related task}
-Therefore, another production rule that commands the disengagement from the non-driving related task. Opel finds 200ms longer of one has to manually end the NDRT? referenz?
+Therefore, another production rule that commands the disengagement from the non-driving related task.
 
 \subsection{Expert}
 Depending on whether the person that takes over is novice or expert, the task 'encode sound' has a different length. 
@@ -139,12 +145,11 @@ With the equation given in \cite{salvucci2001integrated}, encoding time was calc
 %With the equation given in \cite{salvucci2001integrated}, encoding time was calculated to be 135ms. This is based on the assumption that spatial frequency of the object is 0.5 and the visual angle 0 (the person already looks at the object). 
 
 \subsection{Urgency}\label{prod}
-We assume that from now on, the driver has a rough understanding of how urgent the takeover is. This is mainly influenced by the takeover request, the time budget he is given to take over, but also by the amount of surrounding traffic. he also knows because it takes about 30ms to have a general understand of a situation; whether it is urgent, depending on scenario and traffic situation \cite{oliva2006building}.From this point on, a production rule will take 50ms if the takeover is perceived as urgent, and 100ms if the situation is not perceived as urgent. The background of this is the following:
-In ACT-R, each production rule has a utility value. This utility value is based on reinforcement learning and depends on its previous `usefulness' in the specific context (\cite{gunzelmann2011sleep}). 
-auch noch erwaehnen: from edges to blobs: man hat sofort ein grobes verstaendinis in welcher situation man sich befindet.
+We assume that from now on, the driver has a rough understanding of how urgent the takeover is. This is mainly influenced by the takeover request, the time budget he is given to take over, and the amount of surrounding traffic. Additionally, it takes 30 ms to have a general understanding of a scene, according to \cite{thorpe1996speed}. From this point on, a production rule will take 50ms if the takeover is perceived as urgent, and 100ms if the situation is not perceived as urgent. The background of this is the following:
+In ACT-R, each production rule has a utility value. This utility value is based on reinforcement learning and depends on its previous `usefulness' in the specific context (\cite{gunzelmann2011sleep}). In case there are several production rules that fit the current model state, the production rule with the highest utility value gets to fire. In general, only production rules with a utility higher than a certain threshold can fire. This threshold depends on a person's motivation. Thus, if the motivation to take over is low (the takeover is not urgent), the utility threshold is high and it takes longer until a production rule is selected. If a person rushes, the selection threshold is low and production rules are selected faster (and more likely erroneously). 
 
 \subsection{ Turn Body }
-if the body needs to be turned back to the road, the following tasks are added:
+If the body needs to be turned back to the road, the following tasks are added:
 
 \subsubsection{Thorax Motor Preparation}
 With the same reasoning as for \ref{prep}, this takes 250ms. 
@@ -153,10 +158,10 @@ With the same reasoning as for \ref{prep}, this takes 250ms.
 With the same reasoning as for \ref{ini}, this takes 50ms. 
 
 \subsubsection{Thorax Turn}
-in \cite{befelein2016}, a takeover takes 1 second longer when the driver is turned away during the takeover request. In [\cite{hoffmann2015movement}], a thorax movement with 60cm amplitude takes 400ms. Considering that our case is more complicated than in the trial (turning in the car is not as easy, and usually subjects adjust their seating after turning), 1 second seems a suitable time. 
+In \cite{befelein2016}, a takeover takes 1 second longer when the driver is turned away during the takeover request. In \cite{hoffmann2015movement}, a thorax movement with 60cm amplitude takes 400ms. Considering that our case is more complicated than in the trial (turning in the car is not as easy, and usually subjects adjust their seating after turning), 1 second seems a suitable time. 
 
 \subsection{Unoccupy Hands}
-In case the driver's hands are occupied, the item needs to be dropped (assumed on the co-driver seat) before the hands can be moved to the steering wheel. See \ref{prod}
+In case the driver's hands are occupied, the item needs to be dropped (assumed on the co-driver seat) before the hands can be moved to the steering wheel. See section \ref{prod}
 
 \subsubsection{Request Unoccupy Hands}
 A production rule that requests the shift of attention to dropping whatever is in the driver's hand to the co-driver seat. 
@@ -177,7 +182,7 @@ See \ref{saccade}.
 See \ref{encode}.
 
 \subsubsection{Drop Item}
-With the distance of the Hands, it is calculated with Fitt's law for Hand movement how long the movement will take. The same equation as in ACT-R is used: $MovementTime = 100 \cdot \log_2 \left( \frac{(DistanceHands)}{TargetSize} + 0.5\right)$ [\cite{bothell2004act}]. If the takeover scenario is critical, the target size (=area where the item is dropped) is 40cm, because the driver is assumed to drop the item just anywhere as fast as possible. In an uncritical scenario, the target area is 20cm, because the driver is assumed to put the item to a certain place (e.g. a newspaper to the box(Fach?) in the side door). 
+With the distance of the Hands, it is calculated with Fitt's law for Hand movement how long the movement will take. The same equation as in ACT-R is used: $MovementTime = 100 \cdot \log_2 \left( \frac{(DistanceHands)}{TargetSize} + 0.5\right)$ (\cite{bothell2004act}). If the takeover scenario is critical, the target size (=area where the item is dropped) is 40cm, because the driver is assumed to drop the item just anywhere as fast as possible. In an uncritical scenario, the target area is 20cm, because the driver is assumed to put the item to a certain place (e.g. a newspaper to the box in the side door). 
 
 \subsubsection{Move Attention}
 A production rule that requests head, hand and eye movement back to the street.
@@ -197,7 +202,7 @@ See \ref{encode}.
 \subsection{Hands To Wheel}
 
 \subsubsection{Request Hands to Wheel}
-A production rule that requests the shift of attention to moving the hands to the wheel. See [\ref{prod}].
+A production rule that requests the shift of attention to moving the hands to the wheel. See \ref{prod}.
 
 \subsubsection{Hands Motor Preparation}
 See \ref{prep}.
@@ -220,13 +225,13 @@ See \ref{prep}.
 See \ref{ini}.
 
 \subsubsection{Move Feet}
-The time for foot movement is 180ms, as in[\cite{morrison1986movement}]. 
+The time for foot movement is 180ms, as in \cite{morrison1986movement}. 
 
 \subsection{Check Road}
 This part happens for every takeover, independent of input parameters.
 
 \subsubsection{Check Near Point}
-Production rule that requests to check the `near point' of the road. This concept is taken from Salvucci's driver model [\cite{salvucci2006modeling}].
+A production rule that requests to check the `near point' of the road. This concept is taken from Salvucci's driver model (\cite{salvucci2006modeling}).
 
 \subsubsection{Saccade to Near Point}
 See \ref{saccade}.
@@ -236,7 +241,7 @@ See \ref{encode}.
 
 
 \subsubsection{Check Far Point}
-Production rule that requests to check the `far point' of the road. This concept is taken from Salvucci's driver model [\cite{salvucci2006modeling}].
+Production rule that requests to check the `far point' of the road. This concept is taken from Salvucci's driver model (\cite{salvucci2006modeling}).
 
 \subsubsection{Saccade to Far Point}
 See \ref{saccade}.
@@ -245,7 +250,7 @@ See \ref{saccade}.
 See \ref{encode}.
 
 \subsubsection{Remember Curvature}\label{wm}
-From the information of near and far point, the model knows the curvature of the road. If the far point is straight over the near point, the curvature is zero. This information is stored in the working memory module. The default time for building such a representation (thus, before the chunk is built and put into working memory) is 200ms in ACT-R [\cite{bothell2016tut}]. 
+From the information of near and far point, the model knows the curvature of the road. If the far point is straight over the near point, the curvature is zero. This information is stored in the working memory module. The default time for building such a representation (thus, before the chunk is built and put into working memory) is 200ms in ACT-R (\cite{bothell2016tut}). 
 
 
 \subsection{Takeover In Noncritical Situation}
@@ -261,10 +266,10 @@ See \ref{prep}.
 See \ref{ini}.
 
 \subsubsection{Pull Lever}
-We assume that the lever pull can be compared to a key press in ACT-R. It takes 100ms [\cite{bothell2004act}].
+We assume that the lever pull can be compared to a key press in ACT-R. It takes 100ms (\cite{bothell2004act}).
 
 \subsection{Takeover in a Critical Situation}
-In a critical situation, we assume that either the road is blocked, the car deviates from the lane due to a wind gust, the takeover is requested in a curve, or any other circumstances require more complex action. Thus, simply deactivating the automation is not sufficient. The driver most likely will check whether it is possible to change lanes in case of an obstacle, and needs to have knowledge of his surroundings for all of the critical cases. This is only the case if there is surrounding traffic. Then, we model gazes to back mirror, side mirror and back to the road. We assume the `worst case' that swerving is not possible and reaction time plus brake time need to be over before reaching an obstacle. If there is no traffic, we assume the driver to already know this from the first'gist' of the scene \cite{oliva2006building}. Then, the driver does not look into the mirro but only brakes as soon as he has noticed the curvature of the road.
+In a critical situation, we assume that either the road is blocked, the car deviates from the lane due to a wind gust, the takeover is requested in a curve, or any other circumstances require more complex action. Thus, simply deactivating the automation is not sufficient. The driver most likely will check whether it is possible to change lanes in case of an obstacle, and needs to have knowledge of his surroundings. This is only the case if there is surrounding traffic. In that case, we model gazes to back mirror, side mirror and back to the road. We assume the `worst case' that swerving is not possible and reaction time plus brake time need to be over before reaching an obstacle. If there is no traffic, we assume the driver to already know this from the first 'gist' of the scene \cite{oliva2006building}. Then, the driver does not look into the mirror but only brakes as soon as he has noticed the curvature of the road.
 
 \subsubsection{Request Check Rearward Mirror}
 A production rule.
@@ -302,7 +307,7 @@ See \ref{wm}
 A production rule.
 
 \subsubsection{Move Head Back To Road}
-Head movement was calculated to be 580ms with a 40\degree movement to the target and 10\degree target size. This was estimated by measures taken inside a car. 
+Head movement was calculated to be 580ms with a 40\textdegree movement to the target and 10\textdegree target size. This was estimated by measures taken inside a car. 
 
 \subsubsection{Saccade Back To Road}
 See \ref{saccade}.
@@ -317,14 +322,14 @@ A production rule.
 This is set to zero to compare the output time of the model with what is given as takeover time in literature and our own trials. When applied, the model should be changed to calculate brake time here (Velocity is already an input to the model; a commented line of code gives the equation for brake time). 
 
 \subsection{Example model}
-Fig.  shows the simplest takeover model in an uncritical situation.
+Fig. \ref{gantt} shows the simplest takeover model in an uncritical situation.
 
 
 \subsection{Output}
-It draws from a weibull distribution with the mean we found and a bla...
-damit habe ich es wie in act-r auch stochastisch gemacht
-statt vorlauf bis feuern zu variierein durch utility ist bei mir einfach die länge des tasks unterschiedlich (task parameter) was ja aufs gleiche rauskommt
-mean is shape paraemter plus location parameter. Like in Reichle, I used a gaussian to draw the data. 3 als shape-parameter wie in \cite{derichs1998vergleich, whelan2008effective}.
+With these tasks, pyschedule then organizes the tasks in a way that the they are done as fast as possible while fulfilling the constraints of order and one task per module. Thus, for every takeover situation (=combination of input variables), pyschedule outputs exactly the same time. This is not yet realistic, because some people take longer and some shorter for taking over. Typically, reaction times are distributed in a Weibull-distribution: There is one threshold under which it is impossible to react, most people take slightly longer than that threshold, and some are much slower. In ACT-R, this stochasticity is realized by different utilities for tasks. The higher the utility, the faster the rule is chosen to fire. In our model, we reach stochasticity by setting pyschedule's output as mean of a Weibull distribution. The distribution's shape parameter was set to 3. This has been found to be a typical reaction time distribution shape (\cite{derichs1998vergleich, whelan2008effective}).
+%wäre es nicht richtiger unser output als minimum zu setzen??
+
+
 
 
 
@@ -353,12 +358,12 @@ mean is shape paraemter plus location parameter. Like in Reichle, I used a gauss
 \includegraphics[width = 0.7\textwidth]{Figures/36}
 \decoRule
 \caption{Model prediction in comparison to data.}
-\label{18}
+\label{36}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width = 0.7\textwidth]{Figures/35}
+\includegraphics[width = 0.7\textwidth]{Figures/63}
 \decoRule
 \caption{Model prediction in comparison to our data.}
 \label{35}
@@ -375,31 +380,166 @@ mean is shape paraemter plus location parameter. Like in Reichle, I used a gauss
 
 \begin{sidewaysfigure}
 \centering
-\includegraphics[width = 1\textwidth]{Figures/gantt.pdf}%groesser machen und zentrieren und schift direkt drunter (zum jpg machen)
-\decoRule
+\includegraphics[width = 1\textwidth]{Figures/gantt.jpg}%groesser machen und zentrieren und schift direkt drunter (zum jpg machen)
+%\decoRule
 \caption{Decision tree of the model.}
-\label{tree}
+\label{gantt}
 \end{sidewaysfigure}
 
+\begin{table}
+ \centering
+  \begin{tabular}{ c | c | c | c | c | c | c }
+    \hline
+    
+     &                        Reference & &        Audiobook &  &       Searching Task & \\ \hline
+      &                        Data & Prediction & Data & Prediction & Data & Prediction \\ \hline
+      Median              & 2.71 & 2.56&        3.1 &    2.82 &         4.9 & 4.85 \\ \hline
+      75\% percentile & 3.33 & 3.44 &       3.91 &   3.72 &        6.4 & 5.73\\ \hline
+      95\% percentile & 4.4 & 5.8 &          6.59 & 6       &         8.9 & 8 \\ \hline
+       & & & & & & \\ \hline
+       & Read & & Tetris \\ \hline
+      &Data & Prediction & Data & Prediction\\ \hline
+     Median& 4.76 & 4.85& 3.1 & 3.56 \\ \hline
+     75\% percentile & 6.5 & 5.7 &4.1 & 4.38  \\ \hline
+     95\% percentile & 9.4 & 8.26 & 7.19 & 6.83   \\ \hline
+    
+  \end{tabular}
+ \caption{Predicted takeover times}
+\end{table}\label{cases}
 
+\begin{table}
+ \centering
+  \begin{tabular}{ c | c | c | c | c | c }
+    \hline
+    
+    Input & Baseline & Audiobook & Tetris & Reading & Searching Task \\ \hline
+     Expert&0&0&1&1&1 \\ \hline
+     Gaze Off& 1&1&1&1&1\\ \hline
+     Long Gaze& 1&1&1&1&1\\ \hline
+     Body Turned&0 &0&0&0&1\\ \hline
+     Lockout&1&1&0&0&0 \\ \hline
+     Hands Occupied&0&0&0&1&1 \\ \hline
+     Distance Hands&30&30&30&60&60\\ \hline
+     Feet On Pedals&0&0&0&0&0  \\ \hline
+     Dangerous Scenario&0&0&0&0&0 \\ \hline
+     Driving Speed&120&120&120&120&120 \\ \hline
+     Perceived Urgency&0&0&0&0&0\\ \hline
+     Mental Workload&0&1&1&1&1\\ \hline
+     Traffic&1&1&1&1&1\\ \hline
+    
+  \end{tabular}
+ \caption{Input for each condition}
+\end{table}\label{input}
 
-The mean predicted for the baseline condition is 2,61 seconds, for listening to an audiobook is 2,75s, playing tetris 2,51, reading a magazine 4,74 and searching something on the rear bench seat also 4,74 (See Table  for 75 and 95 percentiles). For an example job-shop schedule of the baseline condition, see Figure \ref{gantt} . The input vectors to each of the conditions can be found in table  . We compared the 34 results for all five conditions each with each predicted mean, see Fig. \ref{36}. This results in an $R^2$ of 0.217, which means that our model predicts 21.7\% of the variance in the data. The Mean Squared Error was 2.7. If we compare the means of the data with the predicted mean of the model,  $R^2$ is 0.96. If we draw from a Weibull-distribution for our prediction, the histograms of prediction and data can be found in \ref{35} (alte fig!).
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{55.jpg}
+        \caption{Data}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{58.png}
+        \caption{Model}
+    \end{subfigure}
+    \caption{Baseline}\label{55}
+\end{figure}
 
-For literature, I can only compare means to means. I chose the papers of \cite{befelein2016} and \cite{gold2016taking} to compare to my model, because they both tested as much as possible the circumstances that we input in out model. One difference is that they have critical scenarios, and that they use a driving simulator. The takeover times given in each condition of the paper compared to the model prediction can be found in table bla. $R^2$ is 0.64. In general, my model predict too long takeover times compared to literature. This is because literature counts the takeover that happened overhasty or even ended in a crash. We, in contrast, would like to build a model for the normative takeover. In Fig. \ref{44} we can see the comparison of the means of the literature and the LEGO-model.
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{56.jpg}
+        \caption{Data}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{61.png}
+        \caption{Model}
+    \end{subfigure}
+    \caption{Reading}\label{56}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{57.jpg}
+        \caption{Data}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{60.png}
+        \caption{Model}
+    \end{subfigure}
+    \caption{Tetris}\label{57}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{53.jpg}
+        \caption{Data}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{59.png}
+        \caption{Model}
+    \end{subfigure}
+    \caption{Audiobook}\label{58}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{54.jpg}
+        \caption{Data}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{62.png}
+        \caption{Model}
+    \end{subfigure}
+    \caption{Searching}\label{59}
+\end{figure}
+
+The mean predicted for the baseline condition is 2,61 seconds, for listening to an audiobook is 2,75s, playing tetris 2,51, reading a magazine 4,74 and searching something on the rear bench seat also 4,74 (see Table \ref{cases} for 75 and 95 percentiles). For an example job-shop schedule of the baseline condition, see Figure \ref{gantt} . The input vectors to each of the conditions can be found in Table \ref{input} . We compared the 34 results for all five conditions with each predicted mean, see Fig. \ref{36}. This results in an $R^2$ of 0.217, which means that our model predicts 21.7\% of the variance in the data. The Mean Squared Error was 2.7. If we compare the means of the data with the predicted mean of the model,  $R^2$ is 0.96. If we draw from a Weibull-distribution for our prediction, the histograms of prediction and data can be found in \ref{35}, \ref{55},\ref{56},\ref{57},\ref{58},\ref{59}. This results in an $R^2$ of 0.36.
+
+For literature, I can only compare means to means. I chose the papers of \cite{befelein2016} and \cite{gold2016taking} to compare to my model, because they both tested roughly the circumstances that we input in our model. One difference is that they have critical scenarios, and that they use a driving simulator. The takeover times given in each condition of the paper compared to the model prediction can be found in Table \ref{comlit}. $R^2$ is 0.64.  In Fig. \ref{44} we can see the comparison of the means of the literature and the Driver model.
 
 \section{Discussion}
-
-- problem vergleich mit literatur: die haben qulatität und zeit untershcielich gemessen  - in zeit sind übernahmen mit crash drin.
-- wir bekommen rsquared schlehcter raus weil wir nur gegen ein und den gleichen mean vergleichen und rsquare auch die varianz vergleicht und wir keine haben; wenn ich allerdings gegen verteilung vergleiche wird es noch schlechter weil ja pro kondition ein größerer wert nichts zu sagen hat und nicht dadurch das vorhergesagte auch groeser wird; wenn ich means vergleiche bekomme ich rsquare von 96\% raus.
-
-
-an den takeover times sieht mann das meine voraussage ganz gut ist, aber die `zwischenschritte' passen noch nicht so ganz (wie zb haende am lenkrad etc, see table bla). man könnte als nochmal rein von der theorie her ein leicht veraendertes modell aufstellen, sodass auch zwischensdchritte besser passen. mein modell an gemessene zwischenritte anpassen zaehlt nicht.
+In general, my model predicts too long takeover times compared to literature. This is because literature counts the takeover that happened overhasty or even ended in a crash. We, in contrast, would like to build a model for the normative takeover.
+\\ It is no surprise that comparing experimental data to the predicted mean results in a low $R^2$ - $R^2$ is a measure for mean and variance, and there is no variance in our mean. Comparison with the $R^2$ of the statistical analysis is hard, because the regression analysis trains and reports the $R^2$ on the same data, while the Driver Model is completely based on theoretical background and then compared to experimental data. 
 
 
+\section{Outlook}
+While we want to keep our model purely theoretical, it of course is possible to fit it to the experimental and literature data. This could not only improve the fit to the takeover time data, but also the fit to the substeps of the takeover (Hands on wheel etc.). 
 
 
 
 
+\begin{table}
+ \centering
+  \begin{tabular}{ c | c | c | c | c | c }
+    \hline
+    
+     & Data & Model \\ \hline
+     Befelein - Baseline & 2.4 & 3.55 \\ \hline
+     Befelein - calculate &3.8 & 3.7\\ \hline
+     Befelein - search & 3.5 & 5.72\\ \hline
+     Befelein - watch Video&4&5.7\\ \hline
+     Befelein - Tetris& 4.7&5.7 \\ \hline
+     Gold - Baseline &2.49&2.77\\ \hline
+     Gold - Traffic&3.46 & 4.36\\ \hline
+     Gold - Mental Workload & 2.69 & 2.92  \\ \hline
+     Gold - Mental Workload and Traffic & 3.61 & 4.51\\ \hline
+    
+  \end{tabular}
+ \caption{Comparison with Literature}
+\end{table}\label{comlit}
 
 
 
