@@ -1,8 +1,6 @@
-% Chapter 1
+\chapter{Introduction} 
 
-\chapter{Introduction} % Main chapter title
-
-\label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
+\label{Chapter1} 
 
 %----------------------------------------------------------------------------------------
 
@@ -15,30 +13,43 @@
 
 %----------------------------------------------------------------------------------------
 
-\section{Introduction}
+\section{Take Over!}
 
-imagine your normal morning routine: brushing your teeth while reading the news, or checking the latest facebook-messages. suddenly TOR comes because you re actually not home but in a car. would you be ready for driving now? and if yes, how long would it take?
-even though a sink will probably not soon be included in cars, the rest of the scenario will be a realistic situation within a few year  s time. bosch and daimler promised to get highly automated driving cars on the road by 2020 (?). compared to completely autonomous cars, highly automated cars have one relevant difference: there will be situations coming up that require a human driver to take over the driving task. The reason for issuing this   Take-over-request   (or   request to intervene  ) can be simply the end of the automation scenario, if the automation mode is only made for driving on highways, for example. Another reason can be that the car notices a mismatch between redundant sensor information, or failure of sensors for other reasons. A third cause for a request to intervene would be a situation that the car does not know how to handle, and requires   a human  s decision. The last reason we would expect to diminish as the development of autonomous driving continues. 
+While holding a cup of coffee and her cell phone in the one hand, Alice is trying to put back on her son's sock with the other. Struggling with his stubborn resistance, she is looking for a place to put down the cup of coffee, when suddenly a loud sound brings her back to reality: `Please take over driving!', a friendly voice requests. While Alice is hectically trying to find a place for her coffee cup, the noise becomes louder and more urgent. Her son starts crying, and when Alice looks out of the windshield she sees that her car is rapidly approaching road works blocking the street in front of her...
+\\
+Is Alice ready to take over driving now? And if no, how long does it take until she is?
+\\
+This scenario could be a realistic situation within a few year's time. Bosch and Daimler promised to get highly automated driving cars on the road by 2020 (\cite{}). Compared to completely autonomous cars, highly automated cars (SAE and BASt Level 3, see Fig. \ref{64}) have one relevant difference: there will be situations coming up that require a human driver to take over the driving task. Highly automated driving on SAE Level three will allow the driver to completely disengage from the driving task for certain periods of times. During these, the driver will be allowed to occupy with any task he likes to. These tasks are only limited by that the driver has to be able to perceive the takeover request. Most likely, he will also have to stay seated in the driver seat. These activities can range from doing nothing to the above-mentioned example - and everything in between. At any moment, there are options for a takeover to become necessary. One is that the car's sensors fail, another that unexpected situations (like a road block) occur, amongst others. For these cases, the human driver is needed as a fall-back option. Depending on his current state, the driver will take longer or shorter until he is ready to take over manual driving. For every driver state, it needs to be clear how long he would need to be ready. In case that a critical scenario will be reached before the driver is ready, the car enters a minimal-risk state like parking on the hard shoulder. On the other hand, it is not desirable to have a long row of parked cars in front of any road block. Therefore, if the driver is estimated to be ready to take over in time, he should be requested to take over. For this, it is essential to estimate driver readiness appropriately. 
 
-Why worry about highly automated driving when completely autonomous cars are already on the way, one might wonder? tesla and google cars. first, laws will easier be changed so that they allow HAD and then some people even think completely autonomous driving will never be accepted by the people. 
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/64}
+\decoRule
+\caption{SAE and BASt levels of automation. From cyberlaw.stanford.edu/loda.}
+\label{64}
+\end{figure}
 
-As fascinating as this whole autonomous driving is from AI perspective, the relevant factor that in the end decides whether this invention will spread or not is the human. therefore, it is essential to keep him in mind when designing solutions on HAD. During the required takeover, one wants that takeover to go comfortable as well as safe. For this, several factors have to be taken into account (see section bla for a more elaborate literature review). For example, a takeover will take longer when the driver is tired, extremely distracted by a secondary task, or positioned in a way that will make it time-intensive to turn back to the steering wheel. Therefore, the car needs to notice this difference and take it into account by warning the driver earlier ath he will have to take over the driving task. that way, depending on the situation , the driver will be requested to take over at a time that, depending on driver state and given situation, warns early enough to make a comfortable and safe takeover possible, but does not leave enough time in between to get bored. 
 
+Why worry about highly automated driving when completely autonomous cars are already on the way, one might wonder? Tesla and Google are driving on US roads completely automated - only for trials, until now. But Tesla's CEO Elon Musk announces first fully autonomous cars to be publicly available by 2019 \cite{}. What makes highly automated driving relevant are user acceptance and law adaptation. Cars will drive automated only on highways in the coming years. Law changes for that case are much easier than for fully autonomous cars. Algorithms for highways do not have to take into account the danger of surrounding pedestrians, bikes, crossroads etc. This means there will always be a moment in which the highway exit approaches - and the human driver needs to take back control.  Blabla even says that fully autonomous cars will be accepted or allowed in Europe \cite{FAZ Artikel}.  
+
+What in the end decides whether highly automated driving will sell or not is user acceptance. Therefore, it is essential to keep the human in mind when designing solutions on HAD. The transition from automated to manual driving should not only be safe, but also comfortable. For this, several factors have to be taken into account. For example, a takeover will take longer when the driver is tired, extremely distracted by a secondary task, or positioned in a way that will make it time-intensive to turn back to the steering wheel. The car needs to notice this difference and take it into account by warning the driver earlier. That way, the driver will be requested to take over at a time that, depending on driver state and given situation, warns early enough to make a comfortable and safe takeover possible. 
 %----------------------------------------------------------------------------------------
 
 \section{Related Work}
 \subsection{Taking Over Control in Highly Automated Driving}
 
-all the blabla about takeover studies (literature table!)
-auf jeden fall referenz Mioch und Zeeb.
+all the blabla about takeover studies (literature table machen!)
+auf jeden fall referenz Mioch und Zeeb.(plot of takeover times of different studies?).
 
-Since SEA (which paper was that again?) formulated as one of the requirements for SAE Level 3 that the   driver, given enough time, can take over   (nachgucken!), numerous studies have tried to determine experimentally how much time to give the driver in to ensure a safe and comfortable takeover. The two most important measures during those studies are takeover time and takeover quality. Takeover time can (obviously) easily be measured in seconds, but one has to take into account that its definition varies in publications. While for most the takeover time is the time from the takeover request to the first steering, braking, acceleration or a button press, for others it is bla. Also, it differs whether the drivers were able to   accidentally   see the obstacle before the takeover request, or whether it appeared together with the request. In this thesis, takeover time will refer only to the time from takeover request to braking steering, acceleration or button press when the obstavle was not visible before. Everything else wil be explicitly mentioned. Takeover quality has been measured in several ways, some of them being bla , bla and bla. 
-In 2012, Damböck et al. started off with giving the driver a time budget (time from request to obstacle or end of scenario) of 4, 6 or 8 seconds and evaluating how many mistakes the driver made, and whether he made it in time \cite{}. He found that while most people would have crashed into the obstacle at a four second time budget, they made it with 6 seconds while making many mistakes, and mostly were fine with an 8 second time budget. Gold et al. from the same group then conducted a study measuring takeover time and quality, depending on the time budget of 5 or 7 seconds. (plot of takeover times of different studies?). He found that it takes 2.06 second in the 5 second time budget condition, and 3.1 seconds in the 7 second time budget condition from take-over request to braking. Thus, we assume that with a shorter time budget, the driver  s urgency feeling (?) increases his reaction time in taking over. Still, Gold did find that takeover quality decreases with a shorter time budget. Petermann-Stock et al. find takeover times with a mean of 2.3 seconds and a maximum of 8 seconds depending on age and non-driving related tasks, but he was not further included in out considerations because participants were not informed about possible takeover requests. This might lead to confusion and additional takeover time very different from what we test, since out aim is to predict takeover times for drivers that are well informed/instructed and have experienced at least 1-2 takeover during a training session, which we find the most likely situation when HAD gets realized on the road. 
-Naujoks et al. showed that participants react faster to visual-auditory than only visual take-over request, with take-over times (request to hands on steering wheel)of 6.9 and 2.3 seconds, respectively. This again was not considered further because we have a visual-audory takeover request implemented in our car and again also expect this to be a standard on real-road cars. 
-Radlmayr et al. find times from takeover request to steering or braking of 1.55 to 2.92 seconds, with a maximum of 4.55 seconds, while  testing different traffic densities and non-driving related tasks (how in the world is it that low??). They find a significant difference for traffic density, but not NDTR. This might be because. Gold et al. one year later (looking at other tasks or why?) does find a significant influence of non-driving related tasks, with a takeover time of 1.3 seconds without a task, and 2.2 seconds in the most demanding (MT) task. Another study investigating the influenc eof nondriving elated tasks was Befelein et al, who tested four nondriving related tasks and found takeover times between 2.4 to 4.8 seconds. By far the longest takeover times were found by Eriksson et al., who investigated noncritical takeover situations and nondriving related tasks. He found takeover times between 2 to 25.6 seconds. Also Vollrath et al. investigate secondary tasks, finding that for drivers who played tetris it took 11.2 seconds until all drivers had taken over; for reading drivers it took 9 seconds and surveilling 7 seconds before everyone had taken over. 
-Lorentz et al. show a mean takeover time while being unerstützt through augmented reality of 2.91, which only very slightly differ between a   positive   (where to go) and   negative   (where not to go) assisting augmented reality as well as the control condition without support. 
-mention larsson 2014  and strand 2014 which was also not included? and why it was not included?
-Whether the modality and presentation of the TOR make a difference was tested in Melcher 2015, who found takeover times of 3.42 to 3.77 seconds but no significant difference between the tested conditions. also belderbos checking for the influence of different human machine interfaces with a mean takeover time of 5.9 seconds did not find an influence of his conditions. Contrary to that, Kerschbaum et al. do find an influence of a transformable steering wheel with mean takeover times from 2.22 to 3.09 seconds. 
+The Society of Automotive Engineers (SEA) formulated as one of the requirements for SAE Level 3 that it is expected that `the human driver will respond appropriately to a request to intervene'. Since that, numerous studies have tried to determine experimentally how much time the driver needs in order to ensure this `appropriate response'. The two most important measures during those studies are takeover time and takeover quality. This thesis will focus on takeover time, which is usually defined as the time from a request to intervene (=takeover request) to either braking, steering or a button press.
+
+%The definition of takeover time varies between publications. While for most the takeover time is the time from the takeover request to the first steering, braking, acceleration or a button press, for others it is bla. Also, it differs whether the drivers were able to   accidentally   see the obstacle before the takeover request, or whether it appeared together with the request. In this thesis, takeover time will refer only to the time from takeover request to braking steering, acceleration or button press when the obstacle was not visible before. Everything else will be explicitly mentioned. Takeover quality has been measured in several ways, some of them being bla , bla and bla. 
+
+The time budget is the time from takeover request to an obstacle or the end of scenario. In 2012, Damböck et al. started off with giving the driver a time budget of 4, 6 or 8 seconds and evaluating how many mistakes (lane deviation, crash into obstacle, ...) the driver made (\cite{uebernahmeHAF}). He found that while most people would have crashed into the obstacle at a four second time budget, they made it with 6 seconds while making many mistakes, and mostly were fine with an 8 second time budget. Gold et al. then conducted a study measuring takeover time and quality, depending on the time budget of 5 or 7 seconds (\cite{Gold2013}). He found that from take-over request to braking it takes on average 2.06 second in the 5 second time budget condition, and 3.1 seconds in the 7 second time budget condition. Thus, we assume that with a shorter time budget, the driver's perception of urgency decreases his reaction time. On the other hand, Gold found that takeover quality decreases with a shorter time budget. Petermann-Stock et al. find takeover times with a mean of 2.3 seconds and a maximum of 8 seconds depending on age and non-driving related tasks (\cite{petermann2013lange}). Naujoks et al. showed that participants react faster to visual-auditory than only visual take-over request, with average take-over times of 6.9 and 2.3 seconds, respectively (\cite{naujoks2014effect}). Radlmayr et al. test different traffic densities and non-driving related tasks. They find times from takeover request to steering or braking of 1.55 to 2.92 seconds on average, with a maximum of 4.55 seconds. They find a significant difference for traffic density, but not NDTR. Gold et al. one year later does find a significant influence of non-driving related tasks, with a takeover time of 1.3 seconds without a task, and 2.2 seconds in the most demanding (`motor-cognitive') task (\cite{Gold2015}). Another study investigating the influence of non-driving elated tasks was Befelein et al, who tested four non-driving related tasks and found takeover times between 2.4 to 4.8 seconds (\cite{befelein2016}). By far the longest takeover times were found by Eriksson et al., who investigated noncritical takeover situations and non-driving related tasks (\cite{eriksson2016take}). He found takeover times between 2 to 25.6 seconds. Also Vollrath et al. investigate secondary tasks, finding that for drivers who played tetris it took 11.2 seconds until all drivers had taken over; for reading drivers it took 9 seconds and observing drivers 7 seconds before everyone had taken over (\cite{unfallforschung}). 
+Lorenz et al. show a mean takeover time of 2.91 with augmented reality support (\cite{Lorenz2014}). This time only very slightly differs between a positive   (where to go) , a negative (where not to go) assisting augmented reality and the control condition without support. Strand et al. test how long subjects need to take over in case of automation failure and finds mean takeover times from 1.85 to 2.57 seconds in the highly automated condition. These times are not fully comparable because no request to intervene was issued and conditions differed in the level of failure between moderate, severe or complete (\cite{strand2014semi}). Whether the modality and presentation of the TOR make a difference was tested in Melcher 2015, who found takeover times of 3.42 to 3.77 seconds but no significant difference between the tested conditions (\cite{melcher2015take}). Also Belderbos et al. checking for the influence of different human machine interfaces with a mean takeover time of 5.9 seconds did not find an influence of his conditions (\cite{belderbos2015authority}). Contrary to that, Kerschbaum et al. do find an influence of a transformable steering wheel with mean takeover times from 2.22 to 3.09 seconds (\cite{kerschbaum2015transforming}). 
+
+
+
 walch 2015? check what he did in other table
 Zeeb et al. classify drivers into high-, medium- and low risk gaze behavior types which take 2.31, 1.86 and 1.63 seconds for taking over, respectively. She concludes that gaze behavior predicts cognitive, but not motor readiness. While he finds that a subject  s previously measured multitasking ability predicts their takeover time, Körber et al. showed the obstacle before the takeover time, which lead to times of 600ms, 20ms, -800ms, -500ms and -1800ms. The negative number indicates that the subject took over before the takeover request. 
 for louw 2015 also check other table
@@ -71,6 +82,10 @@ that  s how it works
 
 \subsection{Cognitive Architectures}
 
+Cognitive Architectures are Artificial Intelligence that does not try to be perfect, but exactly like a human. They can model human behavior on different levels: While some model on the low level at the basis of neuronal firing (Nengo, cite bla), others model on task (ACT-R cite bla) or even multiple task level (PRIMs cite bla). Because we were interested in high-level behavior modeling, the subsequent introduction will outline the basics of ACT-R. 
+
+Of cognitive architectures, ACT-R is the best known (and therefore best described) one. Adavantages over other cognitive architectures is that it ... . 
+
 everything about ACT-R - from the ppt about the spring school, and salvuccis driver papers and how he did it
 also compare it to PRIMs and others
 
@@ -81,4 +96,32 @@ also compare it to PRIMs and others
 taking all this together I will only concentrate on takeover TIME because blabla. I will use ACT-R and not PRIMs because Mac and existing model and bigger community. and not others because they  re either shitty or not publicly available. 
 
 which factors we got as important out of the papers and which ones we in the end greyed out because theyre ifficult to measure etc. got the most influenctial factors from regression analysis. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
