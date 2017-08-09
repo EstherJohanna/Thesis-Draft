@@ -45,33 +45,50 @@ The Society of Automotive Engineers (SEA) formulated as one of the requirements 
 
 %The definition of takeover time varies between publications. While for most the takeover time is the time from the takeover request to the first steering, braking, acceleration or a button press, for others it is bla. Also, it differs whether the drivers were able to   accidentally   see the obstacle before the takeover request, or whether it appeared together with the request. In this thesis, takeover time will refer only to the time from takeover request to braking steering, acceleration or button press when the obstacle was not visible before. Everything else will be explicitly mentioned. Takeover quality has been measured in several ways, some of them being bla , bla and bla. 
 
-The time budget is the time from takeover request to an obstacle or the end of scenario. All of the following studies were conducted in a driving simulator. An overview can be found in Table \ref{litOverview}. In 2012, Damböck et al. started off with giving the driver a time budget of 4, 6 or 8 seconds and evaluating how many mistakes (lane deviation, crash into obstacle, ...) the driver made (\cite{uebernahmeHAF}). He found that while most people would have crashed into the obstacle at a four second time budget, they made it with 6 seconds while making many mistakes, and mostly were fine with an 8 second time budget. Gold et al. then conducted a study measuring takeover time and quality, depending on the time budget of 5 or 7 seconds (\cite{Gold2013}). He found that from take-over request to braking it takes on average 2.06 second in the 5 second time budget condition, and 3.1 seconds in the 7 second time budget condition. Thus, we assume that with a shorter time budget, the driver's perception of urgency decreases his reaction time. On the other hand, Gold found that takeover quality decreases with a shorter time budget. Petermann-Stock et al. find takeover times with a mean of 2.3 seconds and a maximum of 8 seconds depending on age and non-driving related tasks (\cite{petermann2013lange}). Naujoks et al. showed that participants react faster to visual-auditory than only visual take-over request, with average take-over times of 6.9 and 2.3 seconds, respectively (\cite{naujoks2014effect}). Radlmayr et al. test different traffic densities and non-driving related tasks. They find times from takeover request to steering or braking of 1.55 to 2.92 seconds on average, with a maximum of 4.55 seconds. They find a significant difference for traffic density, but not NDTR. Gold et al. one year later does find a significant influence of non-driving related tasks, with a takeover time of 1.3 seconds without a task, and 2.2 seconds in the most demanding (`motor-cognitive') task (\cite{Gold2015}). Another study investigating the influence of non-driving elated tasks was Befelein et al, who tested four non-driving related tasks and found takeover times between 2.4 to 4.8 seconds (\cite{befelein2016}). By far the longest takeover times were found by Eriksson et al., who investigated noncritical takeover situations and non-driving related tasks (\cite{eriksson2016take}). He found takeover times between 2 to 25.6 seconds. Also Vollrath et al. investigate secondary tasks, finding that for drivers who played tetris it took 11.2 seconds until all drivers had taken over; for reading drivers it took 9 seconds and observing drivers 7 seconds before everyone had taken over (\cite{unfallforschung}). 
+The time budget is the time from takeover request to an obstacle or the end of scenario. All of the following studies were conducted in a driving simulator. An overview can be found in Table \ref{litOverview}. In 2012, Damböck et al. started off with giving the driver a time budget of 4, 6 or 8 seconds and evaluating how many mistakes (lane deviation, crash into obstacle, ...) the driver made (\cite{uebernahmeHAF}). He found that while most people would have crashed into the obstacle at a four second time budget, they made it with 6 seconds while making many mistakes, and mostly were fine with an 8 second time budget. Gold et al. then conducted a study measuring takeover time and quality, depending on the time budget of 5 or 7 seconds (\cite{Gold2013}). He found that from take-over request to braking it takes on average 2.06 second in the 5 second time budget condition, and 3.1 seconds in the 7 second time budget condition. Thus, we assume that with a shorter time budget, the driver's perception of urgency decreases his reaction time. On the other hand, Gold found that takeover quality decreases with a shorter time budget. Petermann-Stock et al. find takeover times with a mean of 2.3 seconds and a maximum of 8 seconds depending on age and non-driving related tasks (\cite{petermann2013lange}). Naujoks et al. showed that participants react faster to visual-auditory than only visual take-over request, with average take-over times of 6.9 and 2.3 seconds, respectively (\cite{naujoks2014effect}). Radlmayr et al. test different traffic densities and non-driving related tasks. They find times from takeover request to steering or braking of 1.55 to 2.92 seconds on average, with a maximum of 4.55 seconds (\cite{radlmayr2014traffic}). They find a significant difference for traffic density, but not NDTR. Gold et al. one year later does find a significant influence of non-driving related tasks, with a takeover time of 1.3 seconds without a task, and 2.2 seconds in the most demanding (`motor-cognitive') task (\cite{Gold2015}). Another study investigating the influence of non-driving elated tasks was Befelein et al, who tested four non-driving related tasks and found takeover times between 2.4 to 4.8 seconds (\cite{befelein2016}). By far the longest takeover times were found by Eriksson et al., who investigated noncritical takeover situations and non-driving related tasks (\cite{eriksson2016take}). He found takeover times between 2 to 25.6 seconds. Also Vollrath et al. investigate secondary tasks, finding that for drivers who played tetris it took 11.2 seconds until all drivers had taken over; for reading drivers it took 9 seconds and observing drivers 7 seconds before everyone had taken over (\cite{unfallforschung}). Larsson et al. find takeover times from 1.04 to 4.08 seconds. His findings are not completely comparable to the rest because subjects kept their hands on the steering wheel, and no takeover-request was issued. 
 Lorenz et al. show a mean takeover time of 2.91 with augmented reality support (\cite{Lorenz2014}). This time only very slightly differs between a positive   (where to go) , a negative (where not to go) assisting augmented reality and the control condition without support. Strand et al. test how long subjects need to take over in case of automation failure and finds mean takeover times from 1.85 to 2.57 seconds in the highly automated condition. These times are not fully comparable because no request to intervene was issued and conditions differed in the level of failure between moderate, severe or complete (\cite{strand2014semi}). Whether the modality and presentation of the TOR make a difference was tested in Melcher 2015, who found takeover times of 3.42 to 3.77 seconds but no significant difference between the tested conditions (\cite{melcher2015take}). Also Belderbos et al. checking for the influence of different human machine interfaces with a mean takeover time of 5.9 seconds did not find an influence of his conditions (\cite{belderbos2015authority}). Contrary to that, Kerschbaum et al. do find an influence of a transformable steering wheel with mean takeover times from 2.22 to 3.09 seconds (\cite{kerschbaum2015transforming}). Walch et al. investigate time budgets of four and six seconds, with and without alert about fog coming up. They find takeover times from 1.8 seconds with 6 seconds time budget and an obstacle blocking the road, to 2,75 seconds when there is no road block and the driver is even alerted before the takeover request (\cite{walch2015autonomous}). Interestingly, people here take significantly longer for the takeover if an alert has been issued before the takeover request. They are faster at taking over if there is a road block that needs to be avoided. Zeeb et al. classify drivers into high-, medium- and low risk gaze behavior types which take 2.31, 1.86 and 1.63 seconds for taking over, respectively (\cite{Zeeb2015}). She concludes that gaze behavior predicts cognitive, but not motor readiness. Körber et al. find that a subject's previously measured multitasking ability predicts their takeover time (\cite{Koerber2015}). Here, it should be considered that he showed the obstacle before the takeover request, which lead to times of 600ms, 20ms, -800ms, -500ms and -1800ms. The negative number indicates that the subject took over before the takeover request. Louw et al. conduct their experiments on a computer screen (\cite{louw2015engaging}). They find takeover times from 1.7 to 2.5 seconds, and tested manual against automated driving and automated distracted driving. Additionally, drivers had to evade to the left or right depending on the color of the broken down vehicle. Payre et al. tested for the influence of trust and practice finding takeover times of 2 to 15 seconds (\cite{payre2016fully}). It should be mentioned that they did not warn participants that a takeover request would occur. Feldhuetter et al. found means of 1.88 to 2.24 seconds when making a takeover request after either 5 or 20 minutes of driving (\cite{feldhutter2016duration}). This was no significant difference. Körber et al. found no influence of age on takeover time, which had means of 2.4 to 3.6 seconds (\cite{korber2016influence}). Another study by Gold found a relevant influence of traffic density, but not the secondary task of 20 questions (means from 2.5 to 3.6) (\cite{gold2016taking}). Maas found an influence of information presentation (camera vs. abstract cue) and means from 1.9 to 3 seconds (\cite{maas2016losungsansatze}). Zeeb finds no influence of nondriving related tasks and means from 2.4 to 3.5 seconds in her next study (\cite{zeeb2016take}). In his 2016 study, Bueno finds means of around 3.6 seconds in both of his conditions for mental workload (\cite{bueno2016different}). 
 \\
 Of course, it can be questioned how well these studies reflect actual takeover times in `real life'. One problem is that they were all conducted in simulators, which only limitedly imitates real road conditions, and especially the urgency of the situation is different than on a real road. People might react completely different when confronted with the same situation in real life. Another problem are the short times between takeover requests: Studies request to take over every minute to five minutes. Much longer takeover times would be impossible to measure in a realistic experimental setup. On the contrary, drivers will have breaks of hours, days or even months between takeover requests when used in real cars. Regular trainings, similar to how it is already done in aviation, should ensure that drivers still safely know how to drive when manually driving.  
 
 Still, these studies give a good estimate of how much time the human should be given in case he needs to take back control. Therefore, we will discuss different models for predicting takeover time in the following (?). 
 
-\begin{table}
+\begin{landscape}
  \centering
-  \begin{tabular}{ c | c | c | c | c | c }
+  \begin{tabular}{ c | c | c | c }
     \hline
     
-     & Data & Model \\ \hline
-     Befelein - Baseline & 2.4 & 3.55 \\ \hline
-     Befelein - calculate &3.8 & 3.7\\ \hline
-     Befelein - search & 3.5 & 5.72\\ \hline
-     Befelein - watch Video&4&5.7\\ \hline
-     Befelein - Tetris& 4.7&5.7 \\ \hline
-     Gold - Baseline &2.49&2.77\\ \hline
-     Gold - Traffic&3.46 & 4.36\\ \hline
-     Gold - Mental Workload & 2.69 & 2.92  \\ \hline
-     Gold - Mental Workload and Traffic & 3.61 & 4.51\\ \hline
+    \thead{Paper}                                & \thead{ Tested Influencing Variables }          &\thead{Take-over Time (sec)}       & \thead{Comments}                                    \\ \hline
+    \cite{uebernahmeHAF}			& Time Budget (=TB)					 &not measured		 & measures how many mistakes are made with 4, 6 or 8 seconds time budget\\ \hline
+    \cite{Gold2013}				&Time Budget					&2.06 with 5seconds TB and 3.1 for 7seconds TB		&    \\ \hline
+    \cite{petermann2013lange}		&Non-driving-related task, Age		&mean 2.3, max. 8.8		& subjects not informed that takeover-request would come\\ \hline
+    \cite{naujoks2014effect}			&\makecell{Visual vs. visual-auditory \\ takeover request} & \makecell{6.91 (from 1-17) for visual \\ and 2.29 (from 1-3) for visual-auditory} &  \\ \hline
+    \cite{radlmayr2014traffic}		&\makecell{traffic situation and \\ non-driving related task} & 1.55-2.92		& \\ \hline
+    \cite{Gold2015}				&non-driving related task				& baseline 1.3, MT task 2.2 & \\ \hline
+    \cite{befelein2016}				&non-driving related task				& 2-4 - 4.8 & \\ \hline
+    \cite{eriksson2016take}			&non-driving related task				 &1.97 - 25.75			 & only one who tested a non-critical takeover situation\\ \hline
+    \cite{unfallforschung}			&non-driving related task, scenario		 &max. 12 for playing; 9 for reading and baseline 7 & \\ \hline
+    \cite{Lorenz2014}				&augmented reality support				 &AR red: 2.86; AR green:2.91; baseline:3.03 & \\ \hline
+    \cite{strand2014semi}			&automation and failure level			 &for HAD means from 1.85 to 2.57 & here, the automation fails without warning\\ \hline
+    \cite{melcher2015take}			&\makecell{TOR presentation and \\ modality (brake jerk yes or no)} & 3.42 - 3.77& \\ \hline
+    \cite{belderbos2015authority}		&concept vs. baseline HMI				 &mean 5.86 & for trucks; found no difference \\ \hline
+    \cite{kerschbaum2015transforming}&concept vs. baseline steering wheel		 &means from 2.22 to 3.09  & \\ \hline
+    \cite{walch2015autonomous}		&handover implementation strategies		 &\makecell{1.76 for hazard and 6 seconds TB; \\ 1.8 - 2.75 for no hazard, warning and 6 sec TB} & \\ \hline
+    \cite{Zeeb2015}				&gaze behavior `high','medium' and `low' risk &high:2.31;medium:1.86; low: 1.63 & \\ \hline
+    \cite{Koerber2015}				&multitasking ability					 &-1.8 to 0.6 & road block could be seen before TOR \\ \hline
+    \cite{louw2015engaging}		&automation and workload				 &means from 2.2 to 2.5 & only on a computer screen\\ \hline 
+    \cite{payre2016fully}			&trust and practice					 &2 to 15.2 & subjects not informed that takeover-request would come\\ \hline
+    \cite{feldhutter2016duration}		&TOR after 5 vs. 20 minutes			&mean of 1.88 to 2.44 & \\ \hline
+    \cite{korber2016influence}		&age								 &mean 2.41 to 3.66 & \\ \hline
+    \cite{gold2016taking}			&traffic density, mental workload			 & mean from 2.49 to 3.61 & \\ \hline
+    \cite{maas2016losungsansatze}	&information presentation				 & means from 1.9 to 3  & \\ \hline
+    \cite{zeeb2016take}			&non-driving related tasks				 &means from 2.42 to 3.16 & \\ \hline
+    \cite{bueno2016different}		&mental workload					 &means 3.58 and 3.66  & \\ \hline
     
   \end{tabular}
- \caption{Overview of literature about takeover time.}
-\end{table}\label{litOverview}
+ %\caption{Overview of literature about takeover time.}
+\end{landscape}\label{litOverview}
 
+%nochmal ausführliche tabelle checken ob infos hier drin fehlen!
 
 \subsection{Driver Modeling}
 
@@ -124,6 +141,20 @@ In this thesis, the python job shop schedule implementation `Pyschedule' by Tim 
 
 \section{Aim of the thesis}
 This thesis suggests, implements and validates two options to model takeover time. While one option is purely theoretical (Cognitive-Motor Driver Model), the other data-driven (Regression Analysis). In the end, both methods are compared with current literature and one another.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
