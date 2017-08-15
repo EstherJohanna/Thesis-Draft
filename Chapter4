@@ -19,24 +19,48 @@ While the result from the experimental regression fits to the SVD results becaus
 
 This finding is contrary to previous studies which have suggested that different motor or cognitive tasks relevantly change takeover time. We find that it is not necessary to include and measure several motor and cognitive variables. One each should be enough to be able to predict with high accuracy, when combined with information on the specific subject. This could explain why studies on that field differ: \cite{Zeeb} and \cite{befelein} report that cognitive variables mainly influence takeover time (to the longer). \cite{gold2015} conclude that cognitive tasks influence cognitively demanding takeovers, but only motor tasks influence easy and well-practiced takeovers. In \cite{gold2016taking} and \cite{louw} it is observed that cognitive distraction only has a minor effect on takeover time. \cite{feldhuetter} even finds faster takeover times for subjects that were cognitively distracted.  
 \\
-The large influence of inter-individual differences might also explain the various outcomes of studies: Louw find that a gaze off road fastens takeover time, while all other studies find the opposite. Within the study of \cite{koerber}, elderly subjects take longer than younger ones in some conditions and shorter in other conditions. Non-urgent takeovers are faster in \cite{zeeb} and slower in \cite{eriksson} and \cite{walch}. \cite{Gold2015} finds the fastest takeover times for the cognitively very demanding 2-back task, medium takeover times for reading (which is mostly motorically demanding compared to the two other tasks), and the longest times for the again cognitively demanding surrogate reference task. All in all, it can be summarized that studies do not come to clear, coherent solutions. The cause of this might be the great influence of inter-individual differences. 
-
-With respect to the second aim of the thesis, a motor-cognitive takeover model was presented. It successfully considers the influencing variables ‘’, ‘’, ‘’, … . When considering the outcome of the statistical chapter, it should additionally include the variable ‘individual subject fastness’. This could lead to a draw from the upper or lower part of the Weibull-distribution and would lead to a goodness of fit of 0.36. When compared to the means of our data, our means predict 96\% of the variance of the data. When compared to literature means, $R^2$ is 0.64.  All in all, this model can be seen as an ‘allround-tool’ that works for any driver state and takeover situation. 
-
-When using Chritsian Gold’s equation to predict our experimental data, R^2 is bla. It is striking that when varying takeover time, Gold’s equation predicts takeover times of a wide variety, but when changing any of the other variables, the model’s prediction changes in a millisecond-range(?). In general, our results are consistent with the data obtained by Gold. He finds bla and bla and bla to be relevant, of which relay relevant is only time budget. Even though we find bla to be important, the general suggestion that one motoric and one cigni is important uebereinstimmen.  
-A note of caution is due here since the output of my model should be the start(?) of the Weibull distribution and not its mean. (‘es waere eigentlich richtiger mein modell-ergebnis als min und nict mean zu nehmen; das sollte mit den normative-daten abgeglichen warden; die momentanen daten passen eher dazu dass ich den mean voraussage.
-These results are in agreement to those obtained by Gold, …
- sificance is not causality
+The large influence of inter-individual differences might also explain the various outcomes of studies: \cite{Louw} find that a gaze off road fastens takeover time, while all other studies find the opposite. Within the study of \cite{koerber}, elderly subjects take longer than younger ones in some conditions and shorter in other conditions. Non-urgent takeovers are faster in \cite{zeeb} and slower in \cite{eriksson} and \cite{walch}. \cite{Gold2015} finds the fastest takeover times for the cognitively very demanding 2-back task, medium takeover times for reading (which is mostly motorically demanding compared to the two other tasks), and the longest times for the again cognitively demanding surrogate reference task. All in all, it can be summarized that studies do not come to clear, coherent solutions. The cause of this might be the great influence of inter-individual differences. 
+\\
+With respect to the second aim of the thesis, a motor-cognitive takeover model was presented. It successfully considers the influencing variables ‘Expert’, ‘Gaze Off Road’, ‘Long Gaze’, `Body Turned', `Lockout', `Hands Occupied', `Distance Hands', `Feet on Pedals', `Dangerous Scenario', `Time Budget', `Mental Workload', and `Traffic' . When considering the outcome of the statistical chapter, it should additionally include the variable ‘individual subject fastness’. This could lead to a draw from the upper or lower part of the Weibull-distribution and would lead to a goodness of fit of 0.36. When compared to the means of our data, our means predict 96\% of the variance of the data. When compared to literature means, $R^2$ is 0.64.  All in all, this model can be seen as an ‘allround-tool’ that works for any driver state and takeover situation. 
+\\
+When using Gold’s equation to predict our experimental data, $R^2$ is ?. It is striking that when varying time budget, Gold’s equation predicts takeover times of a wide variety, but when changing any of the other variables, the model's prediction changes in a millisecond-range(?). This outcome is contrary to that of our experiments. He includes the variables `Traffic', `Time Budget', `Lane', `Traffic Density', `Repetition' and `Age', which might be summarized as variables that influence perceived urgency as well as cognitive challenge of the takeover. Motor variables are missing in his equation, which is something that we find to have a relevant influence. Thus might be due to the fact the he does not concentrate on including demanding motor tasks in his experiments.
+\\
+In the end, it is important to remember that significance does not mean causality. A correlation between variables and takeover time are an indicator for causality, but do not prove that these variables are the cause for changes in takeover time. 
  
  
 \section{Outlook}
-To develop a full picture of individual takeover time differences, additional studies will be needed that find predictors that evaluate the driver’s ‘personal’ takeover-speed. Research questions that could be asked include ‘What exactly determine those individual differences?’ and ‘How can we measure something that successfully predicts someone’s general takeover speed?’ Additionally, further research should be undertaken to investigate ‘normative’ takeover time and compare it to the model’s output. Also data on how humans react when a real critical situation emerges would be needed. Further trials should assess the impact of using real cars on a real road, instead of a driving simulator. Moreover, considerably more work will need to be done to determine takeover times after longer times of driving. It would be interesting to do a study design in which the design matrix contains all combinations of variables, which leads to optimal regression results. This research should be repeated at a time that humans are not very used to driving anymore, and being out of practice will reduce their ability to react accordingly. 
+To develop a full picture of individual takeover time differences, additional studies will be needed that find predictors that evaluate the driver’s ‘personal’ takeover-speed. Research questions that could be asked include ‘What exactly determine those individual differences?’ and ‘How can we measure something that successfully predicts someone’s general takeover speed?’ 
+\\
+Additionally, further research should be undertaken to investigate ‘normative’ takeover time and compare it to the model’s output. At the moment, the model's output is considered to be the mean of the Weibull-distribution. This can easily be changed to taking the model's output as location parameter (=threshold above which the distribution starts). This, in a strict sense, would make more sense when considering that substep-times are taken from the times an action takes in ACT-R, and time variance in ACT-R is achieved by preceding this action time by time it takes to choose a production rule based on its utility. Consequently, our outcome should represent a minimum time. We chose to set it as mean time because that induced a better fit to our data. This should be checked by more data on normative takeovers and possibly adjusted accordingly.
+\\
+There are still unanswered questions about NDRT that will be chosen by drivers voluntarily. Except for \cite{feldhuetter2016}, current studies force secondary tasks onto participants, which might have influence on intensity of distraction and mental involvement.
+\\
+At this moment, the steps the cognitive-motor model goes through are purely theoretical. The results for the single substeps, which are not (and hardly can be) verified by experimental data need to be interpreted with caution.
+\\
+Also data on how humans react when a real critical situation emerges would be needed. Further trials should assess the impact of using real cars on a real road, instead of a driving simulator. Moreover, considerably more work will need to be done to determine takeover times after longer times of driving. It would be interesting to do a study design in which the design matrix contains all combinations of variables, which leads to optimal regression results. This research should be repeated at a time that humans are not very used to driving anymore, and being out of practice will reduce their ability to react accordingly. 
+\\
+In future investigations, it might be possible to find further variables that influence takeover time that have been overseen thus far.
 
-act-r steps are not verified
-short time between takeovers. they were forced to do NDRT, what if they choose freely
- participants from Bosch
- depednenceis among predictor variables, only for certain scenario
- vielleicht haben wir variablen vergessen
+
+
+\section{Summary}
+
+This thesis has presented statistical evidence for including 1)a cognitive variable 2) a motor variable 3) an individual factor per subject in any model that predicts takeover time. Furthermore, a cognitive-motor model of a broad width of driver state and takeover situation has been reported.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
