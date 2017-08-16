@@ -4,11 +4,11 @@
 
 \section{Introduction}
 
-While ACT-R works great to realistically model experiments that occur in an experimental setup, it is rarely used to model complex human behavior. A noteworthy example is \cite{salvucci2006modeling}. Unfortunately, learning and correctly coding complex behavior in ACT-R takes is meticulous work and certainly takes longer than six months. Another reported problem about ACT-R is its slow speed of calculation for complex task. \cite{plavvsic2010analysis} sets several requirements for modeling driver behavior: it should 1) employ knowledge of detailed cognitive structure but simulate performance on higher level 2) run with if-then rules 3) be modular (easy to add and change) and 4) reflect normative and naturalistic driver behavior . We met those requirements and overcame problems of programming difficulties and long running time by combining the theoretical background of ACT-R with job shop scheduling. This was done by using ACT-R's modules as `resources' in Pyschedule, and all of ACT-R's actions of the different modules as `tasks'. As for the order constraints in Pyschedule, we set as many as necessary and as little as possible constraints regarding task order for modeling a realistic takeover. In principle, this model thus works very similar to an ACT-R model. One important difference is that it cannot model learning. For our use case, this is acceptable because we assume to model a takeover-trained driver. 
+While ACT-R works great to realistically model experiments that occur in an experimental setup, it is rarely used to model complex human behavior. A noteworthy example is \cite{salvucci2006modeling}. Unfortunately, learning and correctly coding complex behavior in ACT-R takes is meticulous work and certainly takes longer than six months. Another reported problem about ACT-R is its slow speed of calculation for complex tasks. We overcame problems of programming difficulties and long running time by combining the theoretical background of ACT-R with job shop scheduling. In job shop scheduling, certain tasks need to be done by resources . If necessary, order constraints can be set. Python's job shop scheduling implementation `Pyschedule' then chooses the order of tasks that leads to the fastest completion of the whole task set. The two methods of job shop scheduling and ACT-R were combined by using ACT-R's modules as `resources' in Pyschedule, and all of ACT-R's actions as `tasks'. Order constraints were set as few as possible for modeling a realistic takeover. In principle, the model resulting from this approach is very similar to an ACT-R model. One important difference is that it cannot model learning. For our use case, this is acceptable because we assume to model a takeover-trained driver. 
 \\
-As in every Pyschedule and ACT-R program, actions of one module can only happen successively, while all actions of different modules can happen simultaneously. The procedural memory is the 'impulse generator' that orchestrates the actions of the other modules by production rule firing. For every takeover situation, it needs to be decided which actions are included into the model and which ones are not. For example, when modeling a takeover where the subject has his gaze on the road already, a head movement towards the road does not need to be modeled anymore. Fig. \ref{tree} shows the following decision tree more graphically.  It is important to note that the added actions have nothing temporal about them; they only decide which actions are added to the collection of actions out of which in the end the fastest possible solution is built. An example of the simplest possible takeover model can be found in Fig. \ref{gantt}.
+As in every Pyschedule and ACT-R program, actions of one module can only happen successively, while all actions of different modules can happen simultaneously. The procedural memory is the 'impulse generator' that orchestrates the actions of the other modules by production rule firing. For every takeover situation, it needs to be decided which actions are included into the model and which ones are not. For example, when modeling a takeover where the subject has his gaze on the road already, a head movement towards the road does not need to be modeled anymore. Fig. \ref{tree} shows the resulting decision tree more graphically.  It is important to note that the added actions have nothing temporal about them; they only decide which actions are added to the collection of actions out of which in the end the fastest possible solution is built. An example of the simplest possible takeover model can be found in Fig. \ref{gantt}.
 
-\section{Method}
+\section{Model}
 
 Inspired by the modules that are typically postulated within ACT-R, the following modules are considered important for modeling a takeover-scenario:
 \\
@@ -68,26 +68,94 @@ Traffic (yes/no) - whether there was traffic around or not
 \end{itemize}
 
 Even though we are certain that extreme drowsiness has an influence on takeover time, we excluded it as an influencing variable. In that case, driving should not be allowed and the car should enter a minimal risk state rather than giving control to a drowsy driver. Also boredom was excluded, because its consequences can vary between a fast, overhasty takeover due to surprise, or a slow takeover. Cognitive demand is only asked as `yes' or `no' because it is hard to measure in more detail.  
+\\
+In the following, all actions are described. By combining these depending on the input variables, we will model a normative `driving school' takeover. 
+\\
+\subsection{Attend Aural}
+Description: The takeover begins with a production rule. It commands the Aural module to encode the sound that is heard, see \ref{encodesound}. 
+\\
+Resource: Procedural memory
+\\
+Time:A production rule always takes 50 ms in ACT-R, which we adopted for our model (\cite{bothell2004act, anderson2009can}). 
+\\
+Dependency: This is the first action.
+\\
+Time is modulated by input variable: - 
+\\
+Added when the following input variable is true: Always included.
 
-\subsection{Basic Takeover}
-We will model a normative `driving school' takeover. 
+\subsection{Encode Sound}
 
-The basic tasks of every take-over are described in the following.
-\subsubsection{Attend Aural}\label{prod}
-The takeover begins with a production rule that commands the Aural module to encode the sound that is heard, see \ref{encodesound}. A production rule always takes 50ms in ACT-R, which we adopted for our model (\cite{bothell2004act, anderson2009can}).
+Description: A novice or someone who has not taken over for a very long time always listens to the whole output which takes five seconds. Thus, 'encode sound' takes five seconds. Someone who has experienced several Requests to Intervene (RtI) recently, 'encode sound' takes 1000ms. Thus, the warning tone for a critical scenario (e.g. avoidance of a crash) has to be different than the warning tone for an uncritical takeover (e.g. simply continuing to drive on a straight road). 
+\label{encodesound} 
+\\
+Resource: Aural Module
+\\
+Time: 1000 ms / 5000 ms
+\\
+Dependency: After `Attend Aural'.
+\\
+Time is modulated by input variable: `Expert' 
+\\
+Added when the following input variable is true: Always included.
 
-\subsubsection{Request Meaning Sound}
-After the sound has been encoded, another production rule commands the procedural memory to retrieve the meaning of the sound from declarative memory. This is different than in e.g. (\cite{anderson2009can}), where the sound is only encoded and 'immediately' understood. Whereas the model by Anderson models behavior in a simple reaction time experiment, the complexity of the options what the sound could mean here requires the driver to remember what the sound means. In some cases, it will be a very long time ago that the driver was last requested to take over. 
+\subsection{Request Meaning Sound}
 
-\subsubsection{Meaning Sound}
-Is done by the procedural memory. It takes 100ms. This is derived from the 50ms which a request takes if only one matching chunk is present in declarative memory \cite{bothell2016tut}. Another 50ms are added to choose the right chunk from several matching ones, because the sound will most likely not be the only possible sound with which the car requests some action from the driver. For simplicity, it is assumed that the driver always chooses the right chunk. Such a severe misunderstanding at the very beginning of the takeover would lead to the car entering a 'minimal risk state' (such as stopping the car on the hard shoulder), which makes modeling of driver behavior unnecessary.
+Description: After the sound has been encoded, another production rule commands the procedural memory to retrieve the meaning of the sound from declarative memory. This is different than in e.g. (\cite{anderson2009can}), where the sound is only encoded and 'immediately' understood. The model by Anderson models behavior in a simple reaction time experiment. Whereas the driver is assumed to be familiar with the takeover request, he has to remember in a first instance that this sound is the request to take over. Other than in reaction time experiments, drivers 1) might be surprised to be requested to take over 2) have to realize that this sound means a takeover request (and not e.g. an empty tank). Therefore, he is required to remember what the sound means. In some cases, it will be a very long time ago that the driver was last requested to take over. 
+\\
+Resource: Procedural memory
+\\
+Time: 50 ms
+\\
+Dependency: This action occurs right after `Encode Sound' (see below).
+\\
+Time is modulated by input variable: - 
+\\
+Added when the following input variable is true: Always included.
 
-\subsubsection{Change Goal}
-This production rule commands a change of the goal buffer in ACT-R. A goal buffer representation did not seem to be helpful to implement, since the goal would just be 'take over' during the whole takeover. Therefore, only the time-consuming production rule was implemented.
+\subsection{Meaning Sound}
 
-\subsubsection{Move Attention}
-As the 'impulse generator', the procedural memory commands every move of attention (see \cite{salvucci2009toward, salvucci2008threaded} for examples). This happened already in the 'attend aural' command. It also precedes every saccade. In this case, it is requested that attention is moved to the road.
+Description: The time for this action is derived from the 50ms which a request takes if only one matching chunk is present in declarative memory \cite{bothell2016tut}. Another 50ms are added to choose the right chunk from several matching ones, because the sound will most likely not be the only possible sound with which the car requests some action from the driver. For simplicity, it is assumed that the driver always chooses the right chunk. Such a severe misunderstanding at the very beginning of the takeover would lead to the car entering a 'minimal risk state' (such as stopping the car on the hard shoulder), which makes modeling of driver behavior unnecessary. 
+\\
+Resource: Declarative memory
+\\
+Time: 100ms
+\\
+Dependency: This action is always preceded by `Request Meaning Sound'.
+\\
+Time is modulated by input variable: - 
+\\
+Added when the following input variable is true: Always included.
+ 
+
+\subsection{Change Goal}
+
+Description: This production rule commands a change of the goal buffer in ACT-R. A goal buffer representation did not seem to be helpful to implement, since the goal would just be 'take over' during the whole takeover. Therefore, only the time-consuming production rule was implemented.  When mental workload was high, this production rule takes longer.
+\\
+Resource: Procedural memory
+\\
+Time: 50 ms / 300ms
+\\
+Dependency: The rule fires after the `Meaning Sound' action.
+\\
+Time is modulated by input variable: `Mental Workload'
+\\
+Added when the following input variable is true: Always included.
+
+\subsection{Move Attention 1}
+
+Description: As the 'impulse generator', the procedural memory commands every move of attention (see \cite{salvucci2009toward, salvucci2008threaded} for examples). This happened already in the 'attend aural' command. It also precedes every saccade. In this case, it is requested that attention is moved to the road.
 \label{moveAttention}
+\\
+Resource: Procedural memory
+\\
+Time: 50 ms
+\\
+Dependency: After `Change Goal'
+\\
+Time is modulated by input variable: - 
+\\
+Added when the following input variable is true: Always included.
 
 
 \begin{sidewaysfigure}
@@ -100,234 +168,798 @@ As the 'impulse generator', the procedural memory commands every move of attenti
 
 
 
-In case the driver is not ready to take over, the following inputs can model the driver's changing state. 
+\subsection{Quit Non-driving related task}
+Description: It has been observed that subjects take longer to disengage from a secondary task if the secondary task is not automatically terminated by the in-car entertainment (\cite{opel}). Therefore, another production rule is required that commands the disengagement from the non-driving related task.
+\\
+Resource: Procedural memory
+\\
+Time: 50 ms
+\\
+Dependency: After `Change Goal'.
+\\
+Time is modulated by input variable: - 
+\\
+Added when the following input variable is true: Lockout
 
 
-\subsection{Lockout}
-It has been observed that subjects take longer to disengage from a secondary task if the secondary task is not automatically quit by the in-car entertainment (\cite{opel}). 
-\subsubsection{Quit Non-driving related task}
-Therefore, another production rule is required that commands the disengagement from the non-driving related task.
+\subsection{Motor Preparation Head}
 
-\subsection{Expert}
-Depending on whether the person that takes over is novice or expert, the action 'encode sound' has a different length. 
+Description: In ACT-R, motor preparation time depends on the complexity of the movement and how different it is from the previous movement (\cite{bothell2004act, anderson2004integrated}). For simplicity, I will always use a motor preparation time of 250ms in my model, which corresponds to a typical motor preparation time in ACT-R (\cite{bothell2016tut}).
+\\
+Resource: Head Module
+\\
+Time: 250 ms
+\\
+Dependency: After `Move Attention 1'.
+\\
+Time is modulated by input variable: -  
+\\
+Added when the following input variable is true: `Gaze Off Road'
 
-\subsubsection{Encode Sound}
-A novice or someone who has not taken over for a very long time always listens to the whole output which takes five seconds. Thus, 'encode sound' takes five seconds. Someone who has experienced several Requests to Intervene (RtI) recently, 'encode sound' takes 1000ms. Thus, the warning tone for a critical scenario (e.g. avoidance of a crash) has to be different than the warning tone for an uncritical takeover (e.g. simply continuing to drive on a straight road). 
-\label{encodesound}
+\subsection{Motor Initiation Head}
 
+Description: Following ACT-R's implementation of the motor module, every motor action is preceded by a 50ms initiation (\cite{bothell2004act}).
+\\
+Resource: Head Module
+\\
+Time: 50 ms
+\\
+Dependency: After `Motor Preparation Head'.
+\\
+Time is modulated by input variable: -  
+\\
+Added when the following input variable is true: `Gaze Off Road'
 
-\subsection{Gaze Off}
-If the driver has his gaze off road, the following tasks are added:
+\subsection{Move Head}
+Description: Movement times are calculated by Fitt's law (\cite{fitts1954information}). The Index of Difficulty for head movement was calculated with $ID = \log _2 \left( \frac{2A}{W} \right)$. The main movement was assumed to be 90\textdegree (from co-driver seat to the road), the target size was assumed to be 18\textdegree. This is the area of the visual field that is covered by the macula. The resulting movement time was taken from (\cite{hoffmann2017head}). In this case Index of Difficulty was 2, and the resulting movement time 600ms.
+\\
+Resource: Head Module
+\\
+Time: 600 ms
+\\
+Dependency: After `Motor Initiation Head'.
+\\
+Time is modulated by input variable: -  
+\\
+Added when the following input variable is true: `Gaze Off Road'
 
-\subsubsection{Motor Preparation Head}\label{prep}
-In ACT-R, motor preparation time depends on the complexity of the movement and how different it is from the previous movement (\cite{bothell2004act, anderson2004integrated}). For simplicity, I will always use a motor preparation time of 250ms in my model, which corresponds to a typical motor preparation time in ACT-R (\cite{bothell2016tut}).
+\subsection{Move Attention 2}
+Description: A production rule. The first `Move Attention' was implemented for a general shift of attention to the road, this one represents the shift of attention to whatever is most prominent on the road. It initiates a saccade.
+\\
+Resource: Procedural Module
+\\
+Time: 50 ms
+\\
+Dependency: After the previous `Move Attention 1'.
+\\
+Time is modulated by input variable: -  
+\\
+Added when the following input variable is true: `Gaze Off Road'
 
-\subsubsection{Motor Initiation Head}\label{ini}
-Like in ACT-R, every motor action is preceded by a 50ms initiation (\cite{bothell2004act}).
+\subsection{Eye Movement Preparation}
+Description:As described in \cite{salvucci2001integrated}, every saccade is preceded by 135ms motor preparation.
+\\
+Resource: Eye Module
+\\
+Time: 135 ms
+\\
+Dependency: After `Move Attention 2'.
+\\
+Time is modulated by input variable: -  
+\\
+Added when the following input variable is true: `Gaze Off Road'
 
-\subsubsection{Move Head}\label{head}
-Movement times were calculated by Fitt's law (\cite{fitts1954information}). The Index of Difficulty for head movement was calculated with $ID = \log _2 \left( \frac{2A}{W} \right)$. The main movement was assumed to be 90\textdegree (from co-driver seat to the road), the target size was assumed to be 18\textdegree. This is the area of the visual field that is covered by the macula. The resulting movement time was taken from (\cite{hoffmann2017head}). In this case Index of Difficulty was 2, and the resulting movement time 600ms.
+\subsection{Saccade 1}\label{saccade}
+Description:As described in \cite{salvucci2001integrated}, every saccade consists of 50 ms (\cite{becker1979analysis}), 20 ms for saccade execution, and 2ms are added for every degree of visual angle subtended by the saccade. For simplicity, I always assume 10 degrees, which results in a saccade time of 80 ms. 
+\\
+Resource: Eye Module
+\\
+Time: 80 ms
+\\
+Dependency: After `Eye Movement Preparation'.
+\\
+Time is modulated by input variable: -  
+\\
+Added when the following input variable is true: `Gaze Off Road'
 
-%The main movement was assumed to be 60\textdegree (from co-driver seat to the road), the target size was assumed to be 30\textdegree (the part of the wind shield that shows the relevant part of the road). The resulting movement time was taken from (\cite{hoffmann2017head}). In this case Index of Difficulty was 2, and the resulting movement time 600ms. 
-
-\subsubsection{Move Attention}
-A production rule - see \ref{moveAttention}.
-
-\subsubsection{Eye Movement Preparation}\label{eyePrep}
-As described in \cite{salvucci2001integrated}, every saccade is preceded by 135ms motor preparation.
-
-\subsubsection{Saccade}\label{saccade}
-As described in \cite{salvucci2001integrated}, every saccade consists of 50 ms (\cite{becker1979analysis}), 20 ms for saccade execution, and 2ms are added for every degree of visual angle subtended by the saccade. For simplicity, I always assume 10 degrees, which results in a saccade time of 80 ms. 
-
-\subsubsection{Encode Visual Object}\label{encode}
-
-With the equation given in \cite{salvucci2001integrated}, encoding time was calculated to be 85ms. This is based on the assumption that spatial frequency of the object is 0.2 and the visual angle 5\textdegree (the person nearly looks at the object already).
-
-%With the equation given in \cite{salvucci2001integrated}, encoding time was calculated to be 135ms. This is based on the assumption that spatial frequency of the object is 0.5 and the visual angle 0 (the person already looks at the object). 
-
-\subsection{Urgency}\label{urgent}
-We assume that from now on, the driver has a rough understanding of how urgent the takeover is. This is mainly influenced by the takeover request, the time budget he is given to take over, and the amount of surrounding traffic. Additionally, it takes 30 ms to have a general understanding of a scene, according to \cite{thorpe1996speed}. From this point on, a production rule will take 50ms if the takeover is perceived as urgent, and 100ms if the situation is not perceived as urgent. The background of this is the following:
+\subsection{Encode Visual Object}
+Description: With the equation given in \cite{salvucci2001integrated}, encoding time was calculated to be 85ms. This is based on the assumption that spatial frequency of the object is 0.2 and the visual angle 5\textdegree (the person nearly looks at the object already).
+\\
+Resource: Visual Module
+\\
+Time: 85 ms
+\\
+Dependency: After `Saccade 1'.
+\\
+Time is modulated by input variable: -  
+\\
+Added when the following input variable is true: `Gaze Off Road'
+\\
+\textbf{Urgency by Time Budget}
+We assume that from now on, the driver has a rough understanding of how urgent the takeover is. This is mainly influenced by the time budget. Additionally, it takes 30 ms to have a general understanding of a scene, according to \cite{thorpe1996speed}. From this point on, a production rule will take 50ms if the takeover is perceived as urgent, and 100ms if the situation is not perceived as urgent. The background of this is the following:
 In ACT-R, each production rule has a utility value. This utility value is based on reinforcement learning and depends on its previous `usefulness' in the specific context (\cite{gunzelmann2011sleep}). In case there are several production rules that fit the current model state, the production rule with the highest utility value gets to fire. In general, only production rules with a utility higher than a certain threshold can fire. This threshold depends on a person's motivation. Thus, if the motivation to take over is low (the takeover is not urgent), the utility threshold is high and it takes longer until a production rule is selected. If a person rushes, the selection threshold is low and production rules are selected faster (and more likely erroneously) (\cite{reddi2000influence}). 
 
-\subsection{ Turn Body }
-If the body needs to be turned back to the road, the following tasks are added:
+\subsection{Thorax Motor Preparation}
+Description: - 
+\\
+Resource: Thorax Module
+\\
+Time: 250 ms
+\\
+Dependency: After `Move Attention 1'.
+\\
+Time is modulated by input variable: -  
+\\
+Added when the following input variable is true: `Body Turned Away'
 
-\subsubsection{Thorax Motor Preparation}
-With the same reasoning as for \ref{prep}, this takes 250ms. 
+\subsection{Thorax Motor Initiation}
+Description: -
+\\
+Resource: Thorax Module
+\\
+Time: 50 ms
+\\
+Dependency: After `Motor Preparation Thorax'.
+\\
+Time is modulated by input variable: -  
+\\
+Added when the following input variable is true: `Body Turned Away'
 
-\subsubsection{Thorax Motor Initiation}
-With the same reasoning as for \ref{ini}, this takes 50ms. 
+\subsection{Thorax Turn}
+Description: In \cite{befelein2016}, a takeover takes one second longer when the driver is turned away during the takeover request. In \cite{hoffmann2015movement}, a thorax movement with 60cm amplitude takes 400ms. Considering that our case is more complicated than in their experiment (turning in the car is not as easy and usually subjects adjust their seating after turning), one second seems a suitable time. 
+\\
+Resource: Thorax Module
+\\
+Time: 1000 ms
+\\
+Dependency: After `Motor Initiation Thorax'.
+\\
+Time is modulated by input variable: -  
+\\
+Added when the following input variable is true: `Body Turned Away'
 
-\subsubsection{Thorax Turn}
-In \cite{befelein2016}, a takeover takes one second longer when the driver is turned away during the takeover request. In \cite{hoffmann2015movement}, a thorax movement with 60cm amplitude takes 400ms. Considering that our case is more complicated than in their experiment (turning in the car is not as easy and usually subjects adjust their seating after turning), one second seems a suitable time. 
+\subsection{Request Unoccupy Hands}
+Description: In case the driver's hands are occupied, the item needs to be dropped (assumed on the co-driver seat) before the hands can be moved to the steering wheel. This is a production rule that requests the shift of attention to dropping whatever is in the driver's hand to the co-driver seat. 
+\\
+Resource: Procedural Memory
+\\
+Time: 50 ms / 100 ms
+\\
+Dependency: After `Move Attention 1'.
+\\
+Time is modulated by input variable: plus 50 ms if the `Time Budget' is long. 
+\\
+Added when the following input variable is true: `Hands Occupied'
 
-\subsection{Unoccupy Hands}
-In case the driver's hands are occupied, the item needs to be dropped (assumed on the co-driver seat) before the hands can be moved to the steering wheel. See section \ref{prod}
+\subsubsection{Move Attention 5}
+Description: A production rule that initiates head, hand and eye movement to the co-driver seat.
+\\
+Resource: Procedural Memory Module
+\\
+Time: 50 ms / 100 ms
+\\
+Dependency: After `Request Unoccupy Hands'.
+\\
+Time is modulated by input variable: plus 50 ms if the `Time Budget' is long.   
+\\
+Added when the following input variable is true: `Hands Occupied'
 
-\subsubsection{Request Unoccupy Hands}
-A production rule that requests the shift of attention to dropping whatever is in the driver's hand to the co-driver seat. 
+\subsection{Head to Co-driver seat}
+Description: - 
+\\
+Resource: Head Module
+\\
+Time: 600 ms
+\\
+Dependency: After `Move Attention 5'.
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: `Hands Occupied'
 
-\subsubsection{Move Attention}
-A production rule that initiates head, hand and eye movement to the co-driver seat.
+\subsection{Eye Movement Preparation}
+Description: - 
+\\
+Resource: Eye Module
+\\
+Time: 135 ms
+\\
+Dependency: After `Move Attention 4'.
+\\
+Time is modulated by input variable: 
+\\
+Added when the following input variable is true: `Hands Occupied'
 
-\subsubsection{Head to Co-driver seat}
-Movement time of the head as in \ref{head}.
+\subsection{Saccade}
+Description: - 
+\\
+Resource: Eye Module
+\\
+Time: 80 ms
+\\
+Dependency: After `Eye Movement preparation'.
+\\
+Time is modulated by input variable: 
+\\
+Added when the following input variable is true: `Hands Occupied'
 
-\subsubsection{Eye Movement Preparation}
-See \ref{eyePrep}.
+\subsection{Encode Visual Object}
+Description: -
+\\
+Resource: Visual Module
+\\
+Time: 85 ms
+\\
+Dependency: After `Saccade'
+\\
+Time is modulated by input variable: 
+\\
+Added when the following input variable is true: `Hands Occupied'
 
-\subsubsection{Saccade}
-See \ref{saccade}.
+\subsection{Drop Item}
+Description: The duration of this action is again calculated by Fitt's law, adapted for the the distance of the Hands. The same equation as in ACT-R is used: $MovementTime = 100 \cdot \log_2 \left( \frac{(DistanceHands)}{TargetSize} + 0.5\right)$ (\cite{bothell2004act}). If the Time Budget is short, the target size (=area where the item is dropped) is 40cm, because the driver is assumed to drop the item just anywhere as fast as possible. In an uncritical scenario, the target area is 20cm, because the driver is assumed to put the item to a certain place (e.g. a newspaper to the box in the side door).
+\\
+Resource: Hand Module
+\\
+Time: calculated by Fitt's law
+\\
+Dependency: After `Hands Motor Initiation'
+\\
+Time is modulated by input variable: -
+\\
+Added when the following input variable is true: `Hands Occupied'
 
-\subsubsection{Encode Visual Object}
-See \ref{encode}.
+ 
+\subsection{Move Attention 6}
+Description: A production rule that requests head, hand and eye movement back to the street.
+\\
+Resource: Procedural Memory Module
+\\
+Time: 50 ms / 100 ms
+\\
+Dependency: After `Move Attention 5'.
+\\
+Time is modulated by input variable: plus 50 ms if the `Time Budget' is long.   
+\\
+Added when the following input variable is true: `Hands Occupied'
 
-\subsubsection{Drop Item}
-The duration of this action is again calculated by Fitt's law, adapted for the the distance of the Hands. The same equation as in ACT-R is used: $MovementTime = 100 \cdot \log_2 \left( \frac{(DistanceHands)}{TargetSize} + 0.5\right)$ (\cite{bothell2004act}). If the takeover scenario is critical, the target size (=area where the item is dropped) is 40cm, because the driver is assumed to drop the item just anywhere as fast as possible. In an uncritical scenario, the target area is 20cm, because the driver is assumed to put the item to a certain place (e.g. a newspaper to the box in the side door). 
+\subsection{Head To Road}
+Description: -
+\\
+Resource: Head Module
+\\
+Time: 600 ms
+\\
+Dependency: After `Drop Item', `Saccade' and `Move Attention 6'.
+\\
+Time is modulated by input variable: -  
+\\
+Added when the following input variable is true: `Hands Occupied'
+%%hiervor nochmal dependencies chekcen!
 
-\subsubsection{Move Attention}
-A production rule that requests head, hand and eye movement back to the street.
+\subsection{Eye Movement Preparation}
+Description: -
+\\
+Resource: Eye Module
+\\
+Time: 135 ms
+\\
+Dependency: After `Move Attention 6' and `Saccade 4'.
+\\
+Time is modulated by input variable: -    
+\\
+Added when the following input variable is true: `Hands Occupied'
 
-\subsubsection{Head To Road}
-Movement time of the head as in \ref{head}.
+\subsection{Saccade}
+Description: - 
+\\
+Resource: Eye Module
+\\
+Time: 80 ms
+\\
+Dependency: After `Eye Movement Preparation'.
+\\
+Time is modulated by input variable: -
+\\
+Added when the following input variable is true: `Hands Occupied'
 
-\subsubsection{Eye Movement Preparation}
-See \ref{eyePrep}.
+\subsection{Encode Visual Object}
+Description: - 
+\\
+Resource: Visual Module
+\\
+Time: 85 ms
+\\
+Dependency: After `Saccade'.
+\\
+Time is modulated by input variable:   
+\\
+Added when the following input variable is true: `Hands Occupied'
 
-\subsubsection{Saccade}
-See \ref{saccade}.
+\subsection{Request Hands to Wheel}
+Description:A production rule that requests the shift of attention to moving the hands to the wheel. 
+\\
+Resource: Procedural Memory Module
+\\
+Time: 50 ms / 100 ms
+\\
+Dependency: After `Move Attention 1' and after `Move Attention 6'
+\\
+Time is modulated by input variable: plus 50 ms if the `Time Budget' is long.   
+\\
+Added when the following input variable is true: `Hands Occupied' or `Distance Hands' is bigger than zero.
 
-\subsubsection{Encode Visual Object}
-See \ref{encode}.
+\subsection{Hands Motor Preparation}
+Description: -
+\\
+Resource: Hands Module
+\\
+Time: 250 ms
+\\
+Dependency: After `Request Hands To Wheel'.
+\\
+Time is modulated by input variable: -   
+\\
+Added when the following input variable is true: `Hands Occupied' or `Distance Hands' is bigger than zero.
+
+\subsection{Hands Motor Initiation}
+Description: -
+\\
+Resource: Hands Module
+\\
+Time: 50 ms
+\\
+Dependency: After `Hands Motor Preparation'.
+\\
+Time is modulated by input variable: -   
+\\
+Added when the following input variable is true: `Hands Occupied' or `Distance Hands' is bigger than zero.
 
 \subsection{Hands To Wheel}
 
-\subsubsection{Request Hands to Wheel}
-A production rule that requests the shift of attention to moving the hands to the wheel. See \ref{prod}.
-
-\subsubsection{Hands Motor Preparation}
-See \ref{prep}.
-
-\subsubsection{Hands Motor Initiation}
-See \ref{ini}
-
-\subsubsection{Hands To Wheel}
-With the distance of the Hands, it is calculated with Fitt's law for Hand movement how long the movement will take. The same equation as in ACT-R is used: $MovementTime = 100 \cdot \log_2 \left( \frac{(DistanceHands)}{TargetSize} + 0.5\right)$ [\cite{bothell2004act}]. Target size was measured as 10cm, the distance of the hands is given as input into the model. 
-
-\subsection{Feet To Pedals}
-
-\subsubsection{Request Move Feet}
-Production rule that requests the movement of the feet to the pedals (gas and clutch) of the car.
-
-\subsubsection{Feet Motor Preparation}
-See \ref{prep}.
-
-\subsubsection{Feet Motor Initiation}
-See \ref{ini}.
-
-\subsubsection{Move Feet}
-The time for foot movement is 180ms, as in \cite{morrison1986movement}. 
-
-\subsection{Check Road}
-This part happens for every takeover, independent of input parameters.
-
-\subsubsection{Check Near Point}
-A production rule that requests to check the `near point' of the road. This concept is taken from Salvucci's driver model (\cite{salvucci2006modeling}).
-
-\subsubsection{Saccade to Near Point}
-See \ref{saccade}.
-
-\subsubsection{Encode Visual Object}
-See \ref{encode}.
+Description: With the distance of the Hands, it is calculated with Fitt's law for Hand movement how long the movement will take. The same equation as in ACT-R is used: $MovementTime = 100 \cdot \log_2 \left( \frac{(DistanceHands)}{TargetSize} + 0.5\right)$ [\cite{bothell2004act}]. Target size was measured as 10cm, the distance of the hands is given as input into the model. 
+\\
+Resource: Hands Module
+\\
+Time: Calculated by Fitt's Law
+\\
+Dependency: After `Hands Motor Initiation'.
+\\
+Time is modulated by input variable: -    
+\\
+Added when the following input variable is true: `Hands Occupied' or `Distance Hands' is bigger than zero.
 
 
-\subsubsection{Check Far Point}
-Production rule that requests to check the `far point' of the road. This concept is taken from Salvucci's driver model (\cite{salvucci2006modeling}).
+\subsection{Request Move Feet}
 
-\subsubsection{Saccade to Far Point}
-See \ref{saccade}.
+Description: Production rule that requests the movement of the feet to the pedals (gas and clutch) of the car.
+\\
+Resource: Procedural Memory Module
+\\
+Time: 50 ms / 100 ms
+\\
+Dependency: After `Change Goal'.
+\\
+Time is modulated by input variable: plus 50 ms if the `Time Budget' is long. 
+\\
+Added when the following input variable is true: `Feet Off Pedal'
 
-\subsubsection{Encode Visual Object}
-See \ref{encode}.
+\subsection{Feet Motor Preparation}
+Description: -
+\\
+Resource: Feet Module
+\\
+Time: 250 ms
+\\
+Dependency: After `Request Move Feet'.
+\\
+Time is modulated by input variable: -
+\\
+Added when the following input variable is true: `Feet Off Pedal'
 
-\subsubsection{Remember Curvature}\label{wm}
-From the information of near and far point, the model knows the curvature of the road. If the far point is straight over the near point, the curvature is zero. This information is stored in the working memory module. The default time for building such a representation (thus, before the chunk is built and put into working memory) is 200ms in ACT-R (\cite{bothell2016tut}). 
+\subsection{Feet Motor Initiation}
+Description: -
+\\
+Resource: Feet Module
+\\
+Time: 50 ms
+\\
+Dependency: After `Feet Motor Preparation'.
+\\
+Time is modulated by input variable: -
+\\
+Added when the following input variable is true: `Feet Off Pedal'
+
+\subsection{Move Feet}
+Description: The time for foot movement is 180ms, as in \cite{morrison1986movement}.
+\\
+Resource: Feet Module
+\\
+Time: 190 ms
+\\
+Dependency: After `Feet Motor Initiation'.
+\\
+Time is modulated by input variable: -  
+\\
+Added when the following input variable is true: `Feet Off Pedal'
+
+\subsection{Check Near Point}
+Description: A production rule that requests to check the `near point' of the road. This concept is taken from Salvucci's driver model (\cite{salvucci2006modeling}).
+\\
+Resource: Procedural Memory Module
+\\
+Time: 50 ms / 100 ms
+\\
+Dependency: After `Move Attention 1', `Move Head', `Thorax Turn', `Move Attention 2', `Encode Visual Object 3', `Request Hands to Wheel' and `Head To Road'
+\\
+Time is modulated by input variable: plus 50 ms if the `Time Budget' is long. 
+\\
+Added when the following input variable is true: always included
+
+\subsection{Saccade to Near Point}
+Description: - 
+\\
+Resource: Eyes Module
+\\
+Time: 80 ms
+\\
+Dependency: After `Check Near Point'. 
+\\
+Time is modulated by input variable: - 
+\\
+Added when the following input variable is true: always included
+
+\subsection{Encode Visual Object}
+Description: - 
+\\
+Resource: Visual Module
+\\
+Time: 85 ms
+\\
+Dependency: After `Saccade to Near Point'. 
+\\
+Time is modulated by input variable: - 
+\\
+Added when the following input variable is true: always included
 
 
-\subsection{Takeover In Noncritical Situation}
-In a noncritical situation, the driver is expected to take over driving on a straight road without any hazards. Thus, he only needs to take back control without any further action required. Thus, the following tasks are added :
+\subsection{Check Far Point}
 
-\subsubsection{Request Lever Pull}
-A production rule that requests the hands to move towards and pull the lever that deactivates the automation mode.
+Description: Production rule that requests to check the `far point' of the road. This concept is taken from Salvucci's driver model (\cite{salvucci2006modeling}).
+\\
+Resource: Procedural Memory Module
+\\
+Time: 50 ms / 100 ms
+\\
+Dependency: After `Check Near Point'. 
+\\
+Time is modulated by input variable: plus 50 ms if the `Time Budget' is long. 
+\\
+Added when the following input variable is true: always included
 
-\subsubsection{Feet Motor Preparation}
-See \ref{prep}.
+\subsection{Saccade to Far Point}
+Description: - 
+\\
+Resource: Eyes Module
+\\
+Time: 80 ms
+\\
+Dependency: After `Check Far Point'. 
+\\
+Time is modulated by input variable: - 
+\\
+Added when the following input variable is true: always included
 
-\subsubsection{Feet Motor Initiation}
-See \ref{ini}.
+\subsection{Encode Visual Object 7}
+Description: - 
+\\
+Resource: Visual Module
+\\
+Time: 85 ms
+\\
+Dependency: After `Saccade to Far Point'. 
+\\
+Time is modulated by input variable: - 
+\\
+Added when the following input variable is true: always included
 
-\subsubsection{Pull Lever}
-We assume that the lever pull can be compared to a key press in ACT-R. It takes 100ms (\cite{bothell2004act}).
+\subsection{Remember Curvature}
 
-\subsection{Takeover in a Critical Situation}
-In a critical situation, we assume that either the road is blocked, the car deviates from the lane due to a wind gust, the takeover is requested in a curve, or any other circumstances that require more complex action. Thus, simply deactivating the automation is not sufficient. The driver most likely will check whether it is possible to change lanes in case of an obstacle, and needs to have knowledge of his surroundings. This is only the case if there is surrounding traffic. In that case, we model gazes to back mirror, side mirror and back to the road. We assume the `worst case' that swerving is not possible and reaction time plus brake time need to be over before reaching an obstacle. If there is no traffic, we assume the driver to already know this from the first 'gist' of the scene \cite{oliva2006building}. Then, the driver does not look into the mirror but only brakes as soon as he has noticed the curvature of the road.
+Description: From the information of near and far point, the model knows the curvature of the road. If the far point is straight over the near point, the curvature is zero. This information is stored in the working memory module. The default time for building such a representation (thus, before the chunk is built and put into working memory) is 200ms in ACT-R (\cite{bothell2016tut}). 
+\\
+Resource: Working Memory Module
+\\
+Time: 200 ms
+\\
+Dependency: After `Encode Visual Object 7'. 
+\\
+Time is modulated by input variable: - 
+\\
+Added when the following input variable is true: always included
 
-\subsubsection{Request Check Rearward Mirror}
-A production rule.
+\\
+\textbf{Takeover In Noncritical Situation}
+\\
+In a noncritical situation, the driver is expected to take over driving on a straight road without any hazards. Thus, he only needs to take back control without any further action required. Thus, the following actions are added :
 
-\subsubsection{Move Head To Rearward Mirror}
-Since the head was moving already, motor preparation and initiation were omitted. Head movement was calculated to be 580ms with a 40\textdegree movement to the target and 10\textdegree target size. This was estimated by measures taken inside a car. 
+\subsection{Request Lever Pull}
+Description: A production rule that requests the hands to move towards and pull the lever that deactivates the automation mode.
+\\
+Resource: Procedural Memory Module
+\\
+Time: 50 ms / 100 ms
+\\
+Dependency: After `Remember Curvature'. 
+\\
+Time is modulated by input variable: plus 50 ms if the `Time Budget' is long. 
+\\
+Added when the following input variable is true: Non-critical Situation
+
+
+\subsection{Hands Motor Preparation}
+Description: -
+\\
+Resource: Hands Module
+\\
+Time: 250 ms
+\\
+Dependency: After `Request Lever Pull'. 
+\\
+Time is modulated by input variable: - 
+\\
+Added when the following input variable is true: Non-critical Situation
+
+\subsection{Hands Motor Initiation}
+Description: -
+\\
+Resource: Hands Module
+\\
+Time: 50 ms
+\\
+Dependency: After `Hands Motor Preparation'. 
+\\
+Time is modulated by input variable: - 
+\\
+Added when the following input variable is true: Non-critical Situation
+
+\subsection{Pull Lever}
+
+Description: We assume that the lever pull can be compared to a key press in ACT-R. It takes 100ms (\cite{bothell2004act}).
+\\
+Resource: Hands Module
+\\
+Time: 100 ms
+\\
+Dependency: After `Hands Motor Initiation'. 
+\\
+Time is modulated by input variable: - 
+\\
+Added when the following input variable is true: Non-critical Situation
+\\
+\textbf{Takeover in a Critical Situation}\\
+In a critical situation, we assume that either the road is blocked, the car deviates from the lane due to a wind gust, the takeover is requested in a curve, or any other circumstances that thus require more complex action. Thus, simply deactivating the automation is not sufficient. The driver most likely will check whether it is possible to change lanes in case of an obstacle, and needs to have knowledge of his surroundings. This is only the case if there is surrounding traffic. In that case, we model gazes to back mirror, side mirror and back to the road. We assume the `worst case' that swerving is not possible and reaction time plus brake time need to be over before reaching an obstacle. If there is no traffic, we assume the driver to already know this from the first 'gist' of the scene \cite{oliva2006building}. Then, the driver does not look into the mirror but only brakes as soon as he has noticed the curvature of the road.
+
+\subsection{Request Check Rearward Mirror}
+
+Description: A production rule.
+\\
+Resource: Procedural Memory
+\\
+Time: 50 ms
+\\
+Dependency: After `Check Far Point'. 
+\\
+Time is modulated by input variable: plus 50 ms if the `Time Budget' is long. 
+\\
+Added when the following input variable is true: Critical Situation, Traffic
+
+\subsection{Move Head To Rearward Mirror}
+
+Description: Since the head was moving already, motor preparation and initiation were omitted. Head movement was calculated to be 580ms with a 40\textdegree movement to the target and 10\textdegree target size. This was estimated by measures taken inside a car. 
+\\
+Resource: Head Module
+\\
+Time: 580 ms
+\\
+Dependency: After `Request Check Rearward Mirror'. 
+\\
+Time is modulated by input variable: 
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
 \subsubsection{Saccade To Rearward Mirror}
-See \ref{saccade}.
+
+Description: -
+\\
+Resource: Eye Module
+\\
+Time: 80 ms
+\\
+Dependency: After `Request Check Rearward Mirror'. 
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
 \subsubsection{Encode Visual Object}
-See \ref{encode}.
+Description: -
+\\
+Resource: Visual Module
+\\
+Time: 85 ms
+\\
+Dependency: After `Saccade to Rearward Mirror' and `Head to Rearward Mirror' 
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
 \subsubsection{Remember Visual Object}
-See \ref{wm}
+Description: -
+\\
+Resource: Working Memory
+\\
+Time: 200 ms
+\\
+Dependency: After `Encode Visual Object'. 
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
 
 \subsubsection{Request Check Side Mirror}
-A production rule.
+Description: A production Rule
+\\
+Resource: Procedural Memory Module
+\\
+Time: 50 ms
+\\
+Dependency: After `Head To Rearward Mirror' and `Saccade To Rearward Mirror' 
+\\
+Time is modulated by input variable:
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
 \subsubsection{Move Head To Side Mirror}
-Head movement was calculated to be 710ms with a 100\textdegree movement to the target and 10\textdegree target size. This was estimated by measures taken inside a car.
+
+Description: Head movement was calculated to be 710ms with a 100\textdegree movement to the target and 10\textdegree target size. This was estimated by measures taken inside a car.
+\\
+Resource: Head Module
+\\
+Time: 710 ms
+\\
+Dependency: After `Request Check Side Mirror'. 
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
 \subsubsection{Saccade To Side Mirror}
-See \ref{saccade}.
+Description: -
+\\
+Resource: Eye Module
+\\
+Time: 80 ms
+\\
+Dependency: After `Request Check Side Mirror'. 
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
 \subsubsection{Encode Visual Object}
-See \ref{encode}.
+Description: -
+\\
+Resource: Visual Module
+\\
+Time: 85 ms
+\\
+Dependency: After `Saccade to Side Mirror' and `Head To Side Mirror' 
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
 \subsubsection{Remember Visual Object}
-See \ref{wm}
+Description: -
+\\
+Resource: Working Memory Module
+\\
+Time: 200 ms
+\\
+Dependency: After `Encode Visual Object'. 
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
 
 \subsubsection{Request Gaze Back On Road}
-A production rule.
+Description: -
+\\
+Resource: Procedural Memory
+\\
+Time: 50 ms
+\\
+Dependency: After `Saccade to Side Mirror' and `Head Side'
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
 \subsubsection{Move Head Back To Road}
-Head movement was calculated to be 580ms with a 40\textdegree movement to the target and 10\textdegree target size. This was estimated by measures taken inside a car. 
+
+Description: Head movement was calculated to be 580ms with a 40\textdegree movement to the target and 10\textdegree target size. This was estimated by measures taken inside a car. 
+\\
+Resource: Head Module
+\\
+Time: 580 ms
+\\
+Dependency: After `Request Gaze Back On Road'. 
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
 \subsubsection{Saccade Back To Road}
-See \ref{saccade}.
+Description: -
+\\
+Resource: Eye Module
+\\
+Time: 80 ms
+\\
+Dependency: After `Request Gaze Back On Road'. 
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
 \subsubsection{Encode Visual Object}
-See \ref{encode}.
+Description: -
+\\
+Resource: Visual Module
+\\
+Time: 85 ms
+\\
+Dependency: After `Saccade Back To Road'. 
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
 \subsubsection{Request Surroundings Traffic from Working Memory}
-A production rule.
+Description: -
+\\
+Resource: Procedural Memory Module
+\\
+Time: 50 ms
+\\
+Dependency: After `Encode Visual Object'. 
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: Critical Situation, Traffic
 
-\subsubsection{Brake Time}
-This is set to zero to compare the output time of the model with what is given as takeover time in literature and our own trials. When applied, the model should be changed to calculate brake time here (Velocity is already an input to the model; a commented line of code gives the equation for brake time). 
+\subsection{Brake Time}
+ 
+Description: This is set to zero to compare the output time of the model with what is given as takeover time in literature and our own trials. When applied, the model should be changed to calculate brake time here (Velocity is already an input to the model; a commented line of code gives the equation for brake time).
+\\
+Resource: Feet Module
+\\
+Time: 50 ms
+\\
+Dependency: After `Remember Curvature' and ` Request Surroundings Traffic from Working Memory'
+\\
+Time is modulated by input variable:  
+\\
+Added when the following input variable is true: Critical Situation
 
-\subsection{Example model}
+ONLY BRAKE TIME IF ITS CRITICAL WITHOUT TRAFFIC
+\\
 Fig. \ref{gantt} shows the simplest takeover model in an uncritical situation.
-
-
-\subsection{Output}
-With these tasks, pyschedule then organizes the tasks in a way that the they are done as fast as possible while fulfilling the constraints of order and one task per module. Thus, for every takeover situation (=combination of input variables), pyschedule outputs exactly the same time. This is not realistic, because some people take longer and some shorter for taking over for reasons that are not captured by our model. Typically, reaction times are distributed in a skewed Weibull-distribution: There is one threshold under which it is impossible to react, most people take slightly longer than that threshold, and some are much slower. In ACT-R, this stochasticity is realized by different utilities for tasks. The higher the utility, the faster the rule is chosen to fire. In our model, we reach stochasticity by setting pyschedule's output as mean of a Weibull distribution. The distribution's shape parameter was set to 3. This has been found to be a typical reaction time distribution shape (\cite{derichs1998vergleich, whelan2008effective}).
+\\
+With these tasks, pyschedule then organizes the tasks in a way that the they are done as fast as possible while fulfilling the constraints of order and one task per module. Thus, for every takeover situation (=combination of input variables), pyschedule outputs exactly the same time. This is not realistic, because some people take longer and some shorter for taking over for reasons that are not captured by our model. Typically, reaction times are distributed in a skewed Weibull-distribution: There is one threshold under which it is impossible to react, most people take slightly longer than that threshold, and some are much slower. In ACT-R, this stochasticity is realized by different utilities for actions. The higher the utility, the faster the rule is chosen to fire. In our model, we reach stochasticity by setting pyschedule's output as mean of a Weibull distribution. The distribution's shape parameter was set to 3. This has been found to be a typical reaction time distribution shape (\cite{derichs1998vergleich, whelan2008effective}).
 %wäre es nicht richtiger unser output als minimum zu setzen??
 
 
@@ -507,20 +1139,29 @@ With these tasks, pyschedule then organizes the tasks in a way that the they are
     \caption{Comparison of experimental data with data predicted by the model for the Searching condition}\label{59}
 \end{figure}
 
-The model predicts a mean of 2.61 seconds for the baseline condition, for listening to an audiobook it is 2.75s, playing tetris 2.51, reading a magazine 4.74 and searching something on the rear bench seat also 4.74 (see Table \ref{cases} for 75 and 95 percentiles). For an example job-shop schedule of the baseline condition, see Figure \ref{gantt} . The input vectors to each of the conditions can be found in Table \ref{input} . We compared the 34 results for all five conditions with each predicted mean, see Fig. \ref{36}. This results in an $R^2$ of 0.217, which means that our model predicts 21.7\% of the variance in the data. The Mean Squared Error was 2.7. If we compare the means of the data with the predicted mean of the model,  $R^2$ is 0.96. If we draw from a Weibull-distribution for our prediction, the histograms of prediction and data can be found in \ref{35}, \ref{55},\ref{56},\ref{57},\ref{58},\ref{59}. This results in an $R^2$ of 0.36.
+\section{Evaluation}
+\subsection{Method of Evaluation}
+For evaluating the cognitive-motor driver model, the model's predictions are compared with 1)experimental test data and 2)data from literature. For both, the input variables were set in a way that reflected experimental setup.  The input vectors to each of the experimental test conditions can be found in Table \ref{input}. For comparison with experimental test data, 34 samples were drawn from the Weibull-distribution the model predicts. For comparison with literature data, the mean of the Weibull-distribution was compared to the mean that was reported in literature. 
+
+\subsection{Results of Evaluation}
+Input variables were set to reflect experimental setup of our the experimental test data. The model predicts a mean of 2.61 seconds for the baseline condition, for listening to an audiobook it is 2.75s, playing tetris 2.51, reading a magazine 4.74 and searching something on the rear bench seat also 4.74 (see Table \ref{cases} for 75 and 95 percentiles). For an example job-shop schedule of the baseline condition, see Figure \ref{gantt} . We compared predicted and experimental data in three ways. First, we compared - per condition - the 34 results with the predicted mean, see Fig. \ref{36}. $R^2$ was thus obtained by determining the error between model and experimental data every data point. Subsequently, it is squared and added up with the other squared errors, and divided by the amount of data points. This results in an $R^2$ of 0.217, which means that our model predicts 21.7\% of the variance in the data. Second, means of both prediction and expiermental data were compared. This results in an  $R^2$ of 0.96. Third, we drew 34 samples from the modeled Weibull-distribution for each condition. These 34 samples were sorted in ascending order. The same was done with the 34 samples of the experimental test data. Again, $R^2$ was assessed and showed to be 0.36. A general fit of the model's distribution shape can be found in Fig. bla. 
 
 grnauer erklären wie ich auf 36\%predicition vom cognitivem mdel hinbekomme - ich gehe davon aus wer schneller und wer langsamer typ ist
 
-For literature, means can only be compared to means. The papers of \cite{befelein2016} and \cite{gold2016taking} were compared to the cognitive-motor-model, because they both tested  the circumstances that we input in our model. One difference is that they have critical scenarios, and that they use a driving simulator. The takeover times given in each condition of the paper compared to the model prediction can be found in Table \ref{comlit}. $R^2$ is 0.64.  In Fig. \ref{44} we can see the comparison of the means of the literature and the Driver model.
+Furthermore, the model was compared to takeover times reported in literature. Because only means are reported, our model's output was compared to these means. The papers of \cite{befelein2016} and \cite{gold2016taking} were compared to the cognitive-motor-model, because they both tested  the circumstances that we input in our model. One difference is that they have critical scenarios, and that they use a driving simulator. The takeover times given in each condition of the paper compared to the model prediction can be found in Table \ref{comlit}. $R^2$ is 0.64.  In Fig. \ref{44} we can see the comparison of the means of the literature and the Driver model.
 
 \section{Discussion}
-In general, the model predicts too long takeover times compared to literature. This is because in literature, takeover that happened overhasty or even ended in a crash are considered. We, in contrast, would built a model for the normative takeover.
-\\ It is no surprise that comparing experimental data to the predicted mean results in a low $R^2$ - $R^2$ is a measure for mean and variance, and there is no variance in our mean.%%%%schrott!
- Comparison with the $R^2$ of the statistical analysis is hard, because the regression analysis trains and reports the $R^2$ on the same data, while the Driver Model is completely based on theoretical background and then compared to experimental data. For example,...
+In general, the model predicts too long takeover times compared to literature. This is because in literature, takeover that happened overhasty or even ended in a crash are considered. We, in contrast, built a model for the normative takeover.
+\\ 
+The $R^2$ must be interpreted with caution for the fit of the model's predicted mean with experimental data. For assessing $R^2$, the error between model and experimental data is determined for every data point. Subsequently, it is squared and added up with the other squared errors, and divided by the amount of data points. Therefore, strictly speaking, it is not correct to fit a mean (model) to several data points (experimental data). Thus, the $R^2$ of 0.36 for data drawn from the modeled distribution and experimental data should be evaluated.
+\\
+Another note of caution is due here since both this and Chapter 2 report $R^2$. This might lead to confusion, because the background of these $R^2$ is a completely different one. The $R^2$ reported in regression analysis describes the fit of the model to the data it has been modeled with. The $R^2$ reported here, on the other hand, describes a fit of experimental data to a model that has been established completely independently and only based on basic research findings.  
+\\
+\cite{plavvsic2010analysis} sets several requirements for modeling driver behavior: it should 1) employ knowledge of detailed cognitive structure but simulate performance on higher level 2) run with if-then rules 3) be modular (easy to add and change) and 4) reflect normative and naturalistic driver behavior. In this chapter, we described a model that meets those requirements by combining job-shop scheduling with background knowledge from ACT-R. 
 
 
 \section{Outlook}
-While we want to keep our model purely theoretical, it of course is possible to fit it to the experimental and literature data. This could not only improve the fit to the takeover time data, but also the fit to the substeps of the takeover (Hands on wheel etc.). 
+At the moment, the described model is fully based on basic research findings. Of course, it is possible to fit it to either of the two available data sets (literature research or experimental data). This could not only improve the fit to the takeover time data, but also the fit to the sub-steps of the takeover (Hands on wheel etc.). For example, the model predicts a takeover time of 4.85 seconds for the searching condition. In the experiments, subjects took on average 4.9 seconds to complete the takeover. This is a good estimation. However, the model predicts a time of 3.4 seconds for `hands on wheel'. In the experiments, in contrast, subjects have their hands on the wheel after 4.14 seconds. If desired, the model could be changed here to better represent experimental data. This could be done by rearranging actions and action lengths. For the reason of scientific blabla we decided against this intervention.
 
 
 
@@ -544,6 +1185,12 @@ While we want to keep our model purely theoretical, it of course is possible to 
   \end{tabular}
  \caption{Comparison with Literature}
 \end{table}\label{comlit}
+
+
+
+
+
+
 
 
 
