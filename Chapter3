@@ -1,14 +1,18 @@
-\chapter{Statistical Analysis} \label{Chapter3} 
+\chapter{Statistical Model} \label{Chapter3} 
 
 
 \section{Literature Data - Regression Analysis}\label{regLit}
+\subsection{Introduction}
+Several studies have investigated on factors that influence takeover time. While it is impossible to study all influencing 
+factors in one study, it is possible to compare the studies' results with each other. The following chapter had two aims.
+One was to conduct a meta-analysis of literature to find the variables that most crucially influence takeover time. 
+The second was to build a regression model.
 
-Several studies have investigated on factors that influence takeover time. While it is impossible to study all influencing factors in one study, it is possible to compare the studies' results with each other. The aim of the following meta-analysis was to find across studies which influencing factors are the most crucial ones to consider in a takeover model. In addition, a regression equation can be used to predict takeover time. 
-
-\subsection{Literature search}
+\subsection{Model}
+\subsubsection{Literature Search}
 We found a broad width of studies through an existing database at Bosch. Furthermore, we chose papers with matching titles from a Google scholar search with the keywords `takeover time highly automated driving'. From both searches, further publications were found through the cited references. 145 papers were found in total. 
 
-\subsection{Selection of Studies}
+\subsubsection{Selection of Studies}
 Of those papers, all papers were chosen that were concerned with Highly Automated Driving (SAE Level 3). In addition, we had the following inclusion criteria:
 \begin{itemize}
 \item The subjects knew that a takeover would occur and were instructed on how to behave in that case (Excluded papers: \cite{petermann2013lange, payre2016fully});
@@ -20,7 +24,7 @@ Of those papers, all papers were chosen that were concerned with Highly Automate
 \end{itemize}
 By this, we have a selection of 19 papers to be compared in the meta-analysis. Those were \cite{unfallforschung, eriksson2016take, korber2016influence, gold2016taking, maas2016losungsansatze, zeeb2016take, bueno2016different, louw2015engaging, feldhutter2016duration, befelein2016, Gold2015, Zeeb2015, kerschbaum2015transforming, walch2015autonomous, Lorenz2014, radlmayr2014traffic, Gold2013, feldhuetterFahrer, Gold2016}.
 
-\subsection{Criteria for Selection of Influencing Factors}
+\subsubsection{Criteria for Selection of Influencing Factors}
 As influencing factors we chose all factors that showed to have a relevant influence in the 19 papers. In addition, we chose two factors that we considered to be important and that could be inferred from the papers. 
 \\
 The factors chosen from the papers were the following:
@@ -42,7 +46,7 @@ The factors chosen because of their relevance were:
 \item Decision Necessary
 \end{itemize}
 
-\subsection{Regression Equation}\label{equ}
+\subsubsection{Regression Equation}\label{equ}
 Studies report mean or median, and some standard deviation. Data on single subjects is not given. Therefore, one line in design- and result matrix does not (as usual) include one subject, but one condition in a study. For example, if \cite{unfallforschung} had one baseline condition that on average took 2,2 seconds for the takeover, the first number of the result vector was 2,2. For the design matrix, we filled out every condition as `True', `Not True', or `Not Measured'.  As an example, I show how the row of the design matrix for \cite{unfallforschung}'s baseline condition was filled out:
  Gaze Off Road (`Not True'), Mirror Check Necessary(`Not Measured'), Body Turned Away(`Not True'), Hands Occupied(`Not True'), Cognitive Distraction(`Not True'), Much Traffic(`Not Measured'), Criticality of Situation(`Not Measured'), Decision Necessary(`Not Measured'), Time Pressure(`True'), Long Autonomous Ride(`Not True'), Elderly Subject(`Not Measured'). From a `regression' point of view, it would have been ideal to have a series of homogeneous observations with identical boundary conditions that test all possible combinations of factors. This will be assumed for the rest of the analysis and should be kept in mind as a possible source of error for the discussion. 
  \\
@@ -71,7 +75,7 @@ TakeOverTime = 3,21 + 0.42 \cdot Traffic - 0.35 \cdot Criticality_Situation + \e
  \end{split}
 \end{equation} \label{equLit2}
 
-\subsection{Checking the Multiple Regression Requirements}
+\subsubsection{Checking the Multiple Regression Requirements}
 This has been done after the manual on \cite{statsZuerich}.
 \\
 \subsubsection{Linearity of the problem}\label{req1}
