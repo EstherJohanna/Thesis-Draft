@@ -4,9 +4,39 @@
 
 \section{Introduction}
 
-While ACT-R works great to realistically model experiments that occur in an experimental setup, it is rarely used to model complex human behavior. A noteworthy example is \cite{salvucci2006modeling}. Unfortunately, learning and correctly coding complex behavior in ACT-R takes is meticulous work and certainly takes longer than six months. Another reported problem about ACT-R is its slow speed of calculation for complex tasks. We overcame problems of programming difficulties and long running time by combining the theoretical background of ACT-R with job shop scheduling. In job shop scheduling, certain tasks need to be done by resources . If necessary, order constraints can be set. Python's job shop scheduling implementation `Pyschedule' then chooses the order of tasks that leads to the fastest completion of the whole task set. The two methods of job shop scheduling and ACT-R were combined by using ACT-R's modules as `resources' in Pyschedule, and all of ACT-R's actions as `tasks'. Order constraints were set as few as possible for modeling a realistic takeover. In principle, the model resulting from this approach is very similar to an ACT-R model. One important difference is that it cannot model learning. For our use case, this is acceptable because we assume to model a takeover-trained driver. 
+While ACT-R works great to realistically model experiments that occur in aa laboratory setup, it is rarely used to model 
+complex human behavior. A noteworthy example is \cite{salvucci2006modeling}. Unfortunately, learning and correctly coding 
+complex behavior in ACT-R is meticulous work and certainly takes longer than six months. Another reported problem about 
+ACT-R is its slow speed of calculation for complex tasks. We overcame problems of programming difficulties and long running 
+time by combining the theoretical background of ACT-R with job shop scheduling. 
 \\
-As in every Pyschedule and ACT-R program, actions of one module can only happen successively, while all actions of different modules can happen simultaneously. The procedural memory is the 'impulse generator' that orchestrates the actions of the other modules by production rule firing. For every takeover situation, it needs to be decided which actions are included into the model and which ones are not. For example, when modeling a takeover where the subject has his gaze on the road already, a head movement towards the road does not need to be modeled anymore. Fig. \ref{tree} shows the resulting decision tree more graphically.  It is important to note that the added actions have nothing temporal about them; they only decide which actions are added to the collection of actions out of which in the end the fastest possible solution is built. An example of the simplest possible takeover model can be found in Fig. \ref{gantt}.
+In job shop scheduling, `resources' can execute `tasks' that can be constrained in their order. The name comes from a 
+`job shop': a manufacturing system in which machines are arranged and used in an order in which a task can be finished as 
+fast as possible, depending on which machines can do which tasks and in which order they need to be done. Examples are job 
+shops that make parts for industrial machinery, ships, airplanes, etc. Job shop scheduling in computer science is an 
+optimization problem that organizes tasks in a way that the tasks are fulfilled as fast as possible. Its application goes far 
+beyond that of a classical job shop. 
+\\
+In this thesis, the python job shop schedule implementation `Pyschedule' by Tim Nonner was used. As the core solver, the 
+CP-solver from OR-tools was used. This is a Google optimization tool. This solver tries out all possible combinations of 
+task order and resource assignment. If it reaches a solution that does not meet the constraints, it `unbounds' the variable, 
+goes one step back in its search tree (`backtracking'), and tries the next variable. In the end, OR-tools outputs all solutions
+that meet the constraints. Pyschedule identifies the one that has the shortest makespan (=time until all tasks are done). 
+\\
+The two methods of job shop 
+scheduling and ACT-R were combined by using ACT-R's modules as `resources' in Pyschedule, and all of ACT-R's actions as 
+`tasks'. Order constraints were set as few as possible for modeling a realistic takeover. In principle, the model resulting 
+from this approach is very similar to an ACT-R model. One important difference is that it cannot model learning. For our use 
+case, this is acceptable because we assume to model a takeover-trained driver. 
+\\
+As in every Pyschedule and ACT-R program, actions of one module can only happen successively, while all actions of different 
+modules can happen simultaneously. The procedural memory is the 'impulse generator' that orchestrates the actions of the other 
+modules by production rule firing. For every takeover situation, it needs to be decided which actions are included into the 
+model and which ones are not. For example, when modeling a takeover where the subject has his gaze on the road already, a head 
+movement towards the road does not need to be modeled anymore. Fig. \ref{tree} shows the resulting decision tree more 
+graphically.  It is important to note that the added actions have nothing temporal about them; they only decide which 
+actions are added to the collection of actions out of which in the end the fastest possible solution is built. An example 
+of the simplest possible takeover model can be found in Fig. \ref{gantt}.
 
 \section{Model}
 
