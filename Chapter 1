@@ -149,7 +149,7 @@ The studies presented thus far provide evidence that several factors influence t
 
 \subsection{Takeover Time}
 `We already know how much time a human takes to take over control from an automated driving car. It is between 0.1 seconds 
-and 40 minutes', J. Lee (see \cite{wickens20412introduction}) said during a presentation at Bosch. While his upper time guess 
+and 40 minutes' (J. Lee, 2017, presentation given at Bosch Research and Development, Renningen). While his worst case time guess 
 might be slightly exaggerated, his statement hints at a central challenge that still needs to be solved. `When is it 0.1 
 seconds, and when 40 minutes?' is an important question to ask. Much uncertainty still exists about factors that relevantly 
 influence takeover time. While mean takeover times look similar in the above-mentioned studies, individual results are 
@@ -212,15 +212,20 @@ Overall, it can be questioned how well these studies reflect actual takeover tim
   
    
   \end{tabular}
-  \caption{Overview of literature about takeover time. The $*$ means that a significant influence on takeover time was found.}
-\end{footnotesize}  
+  \caption{Overview of literature about takeover time. $*$ indicates a statistically significant influence on takeover time.
 \end{sidewaystable}
 
 
 
 \section{Aim of the thesis}
 
-This thesis attempts to shed light on the role of factors that influence takeover time. This is done in Chapter \ref{Chapter2}. Subsequently, a cognitive - motor takeover model is presented (Chapter \ref{Chapter3}). Compared to previous research, it has the advantage of being able to model critical as well as uncritical situations. Additionally, it is the first that models normative behavior. This is indispensable to ensure that the driver is given enough time for a calm, ideal takeover. By circumventing practical limitations impeded on experimental studies, a broad range of variables that describe driver state as well as takeover situation are considered. The model's predictions are then compared to data from an experiment as well as literature. In {Chapter4}, the findings of both previous chapters are compared and discussed.  
+This thesis attempts to shed light on the role of factors that influence takeover time. This is done in Chapter \ref{Chapter2}. 
+Subsequently, a cognitive - motor takeover model is presented (Chapter \ref{Chapter3}). Compared to previous research, it has 
+the advantage of being able to model critical as well as uncritical situations. Additionally, it is the first that models 
+normative behavior. This is indispensable to ensure that the driver is given enough time for a calm, ideal takeover. 
+By circumventing practical limitations impeded on experimental studies, a broad range of variables that describe driver state 
+as well as takeover situation are considered. The model's predictions are then compared to data from an experiment as well as 
+literature. In {Chapter4}, the findings of both previous chapters are compared and discussed.  
 \\
 The keywords that will be used in the thesis are summarized in \ref{key}.
 
@@ -248,7 +253,14 @@ The keywords that will be used in the thesis are summarized in \ref{key}.
 
 \subsection{Regression Analysis}
 
-Regression analysis is one of the most common procedures for predicting a dependent variable from one or multiple independent variable(s). Many researchers have used it in the field of rent indices (rent predicted by square meters, location,...), development economics, innovation research, credit-scoring, market research, premium calculation, ecology, neuroscience, medical sciences, and psychology, to name just a few (\cite{fahrmeir2007regression}). In a linear regression, one tries to fit the data of the dependent variable by a line. The line's intercept and slope are determined by an equation that looks like equation \ref{reg3}. It is also possible to fit by a logarithmic or any other function. Regression analysis is also the basis of machine learning, which lately became a popular tool used for pretty much anything.
+Regression analysis is one of the most common procedures for predicting a dependent variable from one or multiple independent 
+variable(s). Many researchers have used it in the field of rent indices (rent predicted by square meters, location,...), 
+development economics, innovation research, credit-scoring, market research, premium calculation, ecology, neuroscience, 
+medical sciences, and psychology, to name just a few (\cite{fahrmeir2007regression}). In a linear regression, one tries to 
+fit the data of the dependent variable by a line. The line's intercept and slope are determined by an equation that looks 
+like equation \ref{reg3}. It is also possible to fit by a logarithmic or any other function. One independent variable is 
+included in the regression equation in simple regression. Multiple regression includes several independent variables as 
+predictors.
 
 \begin{equation}
 \begin{split}\label{reg3}
@@ -259,7 +271,13 @@ TakeOverTime = \beta_{0} + \beta_{1} \cdot IndependentVariable_1 + \beta_{2} \cd
 
 \subsection{Cognitive Architectures}
 
-Cognitive Architectures are Artificial Intelligence that does not try to be perfect, but exactly like a human. They can model human behavior on different levels: While some model on the low level at the basis of neuronal firing (Nengo; \cite{bekolay2013nengo}), others model on task (ACT-R; \cite{anderson2004integrated}) or even multiple task level (PRIMs; \cite{taatgen2013diminishing}). Because we were interested in high-level behavior modeling, the subsequent introduction will outline the basics of ACT-R. 
+Among the large variety of Artificial Intelligence Implementations, Cognitive Architectures stand out mainly in one aspect:
+they are not designed to be as perfect and fast as possible, but to react and learn exactly like a human would.
+They can model 
+human behavior on different levels: While some model on the low level at the basis of neuronal firing 
+(Nengo; \cite{bekolay2013nengo}), others model on task (ACT-R; \cite{anderson2004integrated}) or even multiple task level
+(PRIMs; \cite{taatgen2013diminishing}). Because we were interested in high-level behavior modeling, the subsequent 
+introduction will outline the basics of ACT-R. 
 
 Of cognitive architectures, ACT-R is the best known and best described one. Other cognitive architectures exist, but most of them are not publicly available. The following explanations are based on the slides about ACT-R and PRIMS (which work very similar) from the Spring School on Cognitive Architectures in Groningen, 2017.
 \\
@@ -281,7 +299,7 @@ The time an action takes is always based on basic research findings. One example
 
 
 
-\subsection{Cognitive Driver Models}
+\subsubsection{Cognitive Driver Models}
 
 A considerable amount of literature has been published on driver models. Nearly all of it is based on statistical analysis of experimentally collected data. The advantage of cognitive models is that they do not rely on data. Additionally, cognitive models attempt to explain the neuronal underpinnings of observed behavior. Several cognitive driver models exist already (see \cite{bubb2015automobilergonomie} for an overview, on which the following section is based). 
 \\
