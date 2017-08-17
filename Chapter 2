@@ -959,8 +959,18 @@ ONLY BRAKE TIME IF ITS CRITICAL WITHOUT TRAFFIC
 \\
 Fig. \ref{gantt} shows the simplest takeover model in an uncritical situation.
 \\
-With these tasks, pyschedule then organizes the tasks in a way that the they are done as fast as possible while fulfilling the constraints of order and one task per module. Thus, for every takeover situation (=combination of input variables), pyschedule outputs exactly the same time. This is not realistic, because some people take longer and some shorter for taking over for reasons that are not captured by our model. Typically, reaction times are distributed in a skewed Weibull-distribution: There is one threshold under which it is impossible to react, most people take slightly longer than that threshold, and some are much slower. In ACT-R, this stochasticity is realized by different utilities for actions. The higher the utility, the faster the rule is chosen to fire. In our model, we reach stochasticity by setting pyschedule's output as mean of a Weibull distribution. The distribution's shape parameter was set to 3. This has been found to be a typical reaction time distribution shape (\cite{derichs1998vergleich, whelan2008effective}).
-%wäre es nicht richtiger unser output als minimum zu setzen??
+With these tasks, pyschedule then organizes the tasks in a way that the they are done as fast as possible while fulfilling 
+the constraints of order and one task per module. Thus, for every takeover situation (=combination of input variables), 
+pyschedule outputs exactly the same time. This is not realistic, because some people take longer and some shorter for taking 
+over for reasons that are not captured by our model. Typically, There is one threshold under which it is impossible to react,
+most people take slightly longer 
+than that threshold, and some are much slower.
+In ACT-R, this stochasticity is realized by different utilities for 
+actions. The higher the utility, the faster the rule is chosen to fire . 
+We approxinmated this distribution by setting pyschedule's output as mean of a skewed Weibull-distribution.
+The distribution's shape parameter was set to 3. This has been 
+found to be a typical reaction time distribution shape (\cite{derichs1998vergleich, whelan2008effective}).
+
 
 
 
@@ -1161,7 +1171,14 @@ Another note of caution is due here since both this and Chapter 2 report $R^2$. 
 
 
 \section{Outlook}
-At the moment, the described model is fully based on basic research findings. Of course, it is possible to fit it to either of the two available data sets (literature research or experimental data). This could not only improve the fit to the takeover time data, but also the fit to the sub-steps of the takeover (Hands on wheel etc.). For example, the model predicts a takeover time of 4.85 seconds for the searching condition. In the experiments, subjects took on average 4.9 seconds to complete the takeover. This is a good estimation. However, the model predicts a time of 3.4 seconds for `hands on wheel'. In the experiments, in contrast, subjects have their hands on the wheel after 4.14 seconds. If desired, the model could be changed here to better represent experimental data. This could be done by rearranging actions and action lengths. For the reason of scientific blabla we decided against this intervention.
+At the moment, the described model is fully based on basic research findings. Of course, it is possible to fit it to either 
+of the two available data sets (literature research or experimental data). This could not only improve the fit to the takeover 
+time data, but also the fit to the sub-steps of the takeover (Hands on wheel etc.). For example, the model predicts a takeover 
+time of 4.85 seconds for the searching condition. In the experiments, subjects took on average 4.9 seconds to complete the 
+takeover. This is a good estimation. However, the model predicts a time of 3.4 seconds for `hands on wheel'. In the experiments,
+in contrast, subjects have their hands on the wheel after 4.14 seconds. If desired, the model could be changed here to better 
+represent experimental data. This could be done by adding or deleting actions or by changing action lengths. 
+For reasons of scientific nature we decided against this intervention.
 
 
 
