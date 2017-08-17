@@ -47,8 +47,32 @@ The factors chosen because of their relevance were:
 \end{itemize}
 
 \subsubsection{Regression Equation}\label{equ}
-Studies report mean or median, and some standard deviation. Data on single subjects is not given. Therefore, one line in design- and result matrix does not (as usual) include one subject, but one condition in a study. For example, if \cite{unfallforschung} had one baseline condition that on average took 2,2 seconds for the takeover, the first number of the result vector was 2,2. For the design matrix, we filled out every condition as `True', `Not True', or `Not Measured'.  As an example, I show how the row of the design matrix for \cite{unfallforschung}'s baseline condition was filled out:
- Gaze Off Road (`Not True'), Mirror Check Necessary(`Not Measured'), Body Turned Away(`Not True'), Hands Occupied(`Not True'), Cognitive Distraction(`Not True'), Much Traffic(`Not Measured'), Criticality of Situation(`Not Measured'), Decision Necessary(`Not Measured'), Time Pressure(`True'), Long Autonomous Ride(`Not True'), Elderly Subject(`Not Measured'). From a `regression' point of view, it would have been ideal to have a series of homogeneous observations with identical boundary conditions that test all possible combinations of factors. This will be assumed for the rest of the analysis and should be kept in mind as a possible source of error for the discussion. 
+Studies report mean or median, and some standard deviation. Data on single subjects is not given. Therefore, one line in 
+design- and result matrix does not (as usual) include one subject, but one condition in a study. For example, 
+if \cite{unfallforschung} had one baseline condition that on average took 2,2 seconds for the takeover, the first 
+number of the result vector was 2,2. For the design matrix, we filled out every condition as `True' (1), `Not True' (-1), or 
+`Not Measured' (0).  An example of the first three rows is shown in Table. \ref{matrix}, a complete version can be found
+in the appendix. 
+
+\begin{table}
+ \centering
+  \begin{tabular}{ c | c | c | c| c}
+    \hline
+     & Gaze Off Road & Mirror Check Necessary & Body Turned Away & Hands Occupied & Cognitive Distraction
+    & Much Traffic & Criticality of Situation & Decision Necessary & Time Pressure & Long Autonomous Ride & Elderly Subject
+    \\ \hline
+    Vogelpohl, baseline &-1 & 0 % -1&-1&-1&0&0&0&01&-1&0\\ \hline
+    Vogelpohl, reading&1&0&-1&1&-1&0&0&0&1&-1&0\\ \hline
+    Vogelpohl, tetris&1&0&-1&1&1&0&0&0&1&-1&0\\ \hline
+    \hline
+    
+  \end{tabular}
+ \caption{Frequency Table}
+\end{table}\label{matrix}
+
+ From a `regression' point of view, it would have been ideal to have a series of homogeneous observations with identical 
+ boundary conditions that test all possible combinations of factors. This will be assumed for the rest of the analysis and 
+ should be kept in mind as a possible source of error for the discussion. 
  \\
  A complete version of design- and result matrix can be found in the Appendix. 
 \\
@@ -75,13 +99,23 @@ TakeOverTime = 3,21 + 0.42 \cdot Traffic - 0.35 \cdot Criticality_Situation + \e
  \end{split}
 \end{equation} \label{equLit2}
 
-\subsubsection{Checking the Multiple Regression Requirements}
+\subsubsection{Multiple Regression Assumptions}
 This has been done after the manual on \cite{statsZuerich}.
 \\
-\subsubsection{Linearity of the problem}\label{req1}
-Since we postulated a linear model, we have to check whether all independent variables have a linear relationship with the dependent variable when controlled for the other factors. This can be done by looking at the partial regression diagrams (See Fig \ref{4} and \ref{5} ). On the Y axis this shows the residual that would result if the dependent variable would be regressed on all independent variables except the one written on X. On the X axis it shows the residual that would result if X would be regressed on all other variables.  Thus, the part of the variance that is not explained by all factors but X is plotted against the part of X that is independent of the other variables. If these scatterplots look linear, we can assume a linear relationship. 
+Since we postulated a linear model, we have to check whether all independent variables have a linear relationship with the 
+dependent variable when controlled for the other factors. This can be done by looking at the partial regression diagrams 
+(Appendix). On the Y axis this shows the residual that would result if the dependent variable would be 
+regressed on all independent variables except the one written on X. On the X axis it shows the residual that would result if 
+X would be regressed on all other variables.  Thus, the part of the variance that is not explained by all factors but X is 
+plotted against the part of X that is independent of the other variables. If these scatterplots look linear, we can assume a 
+linear relationship. 
 \\
-As can be seen in Fig. \ref{4} and \ref{5}, the nominal scaling of the variables makes it hard to see whether the relationship is linear or not. The four columns most likely arise from the four possible combinations of the variables. A slight upward trend can be seen for `traffic', which suits to the significant Pearson correlation of 0.44 between traffic and takeover time. A slight downward trend can be seen for the partial regression plot of `criticality of the situation', which also suits to the significant Pearson correlation between Takeover time and Criticality of Situation of -0.18. We will keep in mind that the linearity of the problem might not be given.
+The nominal scaling of the variables makes it hard to see whether the relationship 
+is linear or not. The four columns most likely arise from the four possible combinations of the variables. A slight upward 
+trend can be seen for `traffic', which suits to the significant Pearson correlation of 0.44 between traffic and takeover time. 
+A slight downward trend can be seen for the partial regression plot of `criticality of the situation', which also suits to the 
+significant Pearson correlation between Takeover time and Criticality of Situation of -0.18. We will keep in mind that the 
+linearity of the problem might not be given.
 
 
 \begin{figure}
