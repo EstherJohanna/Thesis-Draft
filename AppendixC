@@ -1,0 +1,146 @@
+% Appendix A
+
+\chapter{Figures of Multiple Regression Assumptions}
+
+
+\section{Literature Data}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.5\textwidth]{Figures/4}
+\decoRule
+\caption{Partial Regression Diagram Traffic.}
+\label{4}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.5\textwidth]{Figures/5}
+\decoRule
+\caption{Partial Regression Diagram Criticality Situation.}
+\label{5}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.5\textwidth]{Figures/1}
+\decoRule
+\caption{Scatter plot of the standardized estimated value of y on the X-axis, and the standardized error terms (residuals) on the Y-axis. By visual inspection we estimate that the mean error is zero. To ensure homoscedasticity, the error has the same amount of variance for every value of the independent variable. Here, it is important that no `shape' can be seen. The dots need to be equally distributed along the x-axis. This seems to be the case. This can be statistically proven by e.g. the Breusch-Pagan-Test or the White-test , which would go beyond the scope of this thesis. }
+\label{1}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/2}
+\decoRule
+\caption{Histogram of residuals. We can confirm normal distribution.}
+\label{2}
+\end{figure}
+
+
+\begin{table}
+ \centering
+  \begin{footnotesize}
+  \begin{tabular}{ l | c | c | c| r}
+    \hline
+    Factor & Amount 0 & Amount 1 & Amount -1 & Sum\\ \hline
+     Much Traffic & 15 & 32 & 66 & 113\\ \hline
+     Criticality of Situation & 6 &  100 & 7 & 113 \\ \hline
+    \hline
+    
+  \end{tabular}
+ \caption{Frequency Table}
+ \end{footnotesize}
+\end{table}\label{frequ}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/Korrs}
+\decoRule
+\caption{Correlations between all variables.}
+\label{bla}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/3}
+\decoRule
+\caption{Coefficients and test for multicollinearity.}
+\label{3}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/15}
+\decoRule
+\caption{($R^2$) and ANOVA of the whole model. The independence of the error term can be checked by the Durbin-Watson test.  The statistic can have values between 0 and 4, both of which indicate a high correlation, while 2 indicates a low correlation. In our case, the Durbin-Watson value is 1, which indicates medium correlation between the error terms.}
+\label{15}
+\end{figure}
+
+\clearpage
+\section{Experimental Data}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.5\textwidth]{Figures/20}
+\decoRule
+\caption{Partial Regression Diagram Ride Duration.}
+\label{16}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.5\textwidth]{Figures/21}
+\decoRule
+\caption{Partial Regression Diagram Hands Occupied.}
+\label{16}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.5\textwidth]{Figures/22}
+\decoRule
+\caption{Partial Regression Diagram Body Towards Road.}
+\label{16}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.5\textwidth]{Figures/28}
+\decoRule
+\caption{Scatter Plot of errors.}
+\label{28}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/29}
+\decoRule
+\caption{Histogram of residuals.}
+\label{29}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/30}
+\decoRule
+\caption{Correlations between all variables .}
+\label{corr2}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/31}
+\decoRule
+\caption{Coefficients and multicollinearity measures.}
+\label{31}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/32}
+\decoRule
+\caption{Goodness of fit and ANOVA.$(R^2) = 0.22$.}
+\label{32}
+\end{figure}
