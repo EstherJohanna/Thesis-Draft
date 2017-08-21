@@ -1266,7 +1266,7 @@ Added when the following input variable is true: Critical Situation
 Fig. \ref{gantt} shows the simplest takeover model in an uncritical situation.
 \\
 
-With these tasks, pyschedule then organizes the tasks in a way that the they are done as fast as possible while fulfilling the constraints of order and one task per module. Thus, for every takeover situation (=combination of input variables), pyschedule outputs exactly the same time. This is not realistic, because some people take longer and some shorter for taking over for reasons that are not captured by our model. Typically, There is one threshold under which it is impossible to react, most people take slightly longer than that threshold, and some are much slower. In ACT-R, this stochasticity is realized by different utilities for actions. The higher the utility, the faster the rule is chosen to fire. We approximated this distribution by setting pyschedule's output as mean of a skewed Weibull-distribution. The distribution's shape parameter was set to 3. This has been found to be a typical reaction time distribution shape (\cite{derichs1998vergleich, whelan2008effective}).
+With these tasks, pyschedule then organizes the tasks in a way that the they are done as fast as possible while fulfilling the constraints of order and one task per module. Thus, for every takeover situation (=combination of input variables), pyschedule outputs exactly the same time. This is not realistic, because some people take longer and some shorter for taking over for reasons that are not captured by our model. Typically, There is one threshold under which it is impossible to react, most people take slightly longer than that threshold, and some are much slower. In ACT-R, this stochasticity is realized by different utilities for actions. The higher the utility, the faster the rule is chosen to fire. We approximated this distribution by setting pyschedule's output as mean of a skewed Gamma-distribution. The distribution's shape parameter was set to 3. This has been found to be a typical reaction time distribution shape (\cite{derichs1998vergleich, whelan2008effective}).
 
 
 
@@ -1306,144 +1306,13 @@ With these tasks, pyschedule then organizes the tasks in a way that the they are
 
 
 
-\section{Results}
 
 
 
-\begin{figure}
 
-\centering
 
-\includegraphics[width = 0.7\textwidth]{Figures/67}
 
-\decoRule
 
-\caption{Model prediction in comparison to experimental test data.}
-
-\label{35}
-
-\end{figure}
-
-
-
-\begin{figure}
-
-\centering
-
-\includegraphics[width = 0.7\textwidth]{Figures/68}
-
-\decoRule
-
-\caption{Model prediction in comparison to literature data.}
-
-\label{44}
-
-\end{figure}
-
-
-\begin{sidewaysfigure}
-
-\centering
-
-\includegraphics[width = 1\textwidth]{Figures/gantt.jpg}
-
-%\decoRule
-
-\caption{Decision tree of the model.}
-
-\label{gantt}
-
-\end{sidewaysfigure}
-
-
-
-\begin{table}
-
-\centering
-
-\begin{tabular}{ c | c | c | c | c | c | c }
-
-\hline
-
-
-
-& Reference & & Audiobook & & Searching Task & \\ \hline
-
-& Data & Prediction & Data & Prediction & Data & Prediction \\ \hline
-
-Median & 2.71 & 2.56& 3.1 & 2.82 & 4.9 & 4.85 \\ \hline
-
-75\% percentile & 3.33 & 3.44 & 3.91 & 3.72 & 6.4 & 5.73\\ \hline
-
-95\% percentile & 4.4 & 5.8 & 6.59 & 6 & 8.9 & 8 \\ \hline
-
-& & & & & & \\ \hline
-
-& Read & & Tetris \\ \hline
-
-&Data & Prediction & Data & Prediction\\ \hline
-
-Median& 4.76 & 4.85& 3.1 & 3.56 \\ \hline
-
-75\% percentile & 6.5 & 5.7 &4.1 & 4.38 \\ \hline
-
-95\% percentile & 9.4 & 8.26 & 7.19 & 6.83 \\ \hline
-
-
-
-\end{tabular}
-
-\caption{Predicted takeover times}
-
-\end{table}\label{cases}
-
-
-
-\begin{table}
-
-\centering
-
-\begin{tabular}{ c | c | c | c | c | c }
-
-\hline
-
-
-
-Input & Baseline & Audiobook & Tetris & Reading & Searching Task \\ \hline
-
-Expert&0&0&1&1&1 \\ \hline
-
-Gaze Off& 1&1&1&1&1\\ \hline
-
-Long Gaze& 1&1&1&1&1\\ \hline
-
-Body Turned&0 &0&0&0&1\\ \hline
-
-Lockout&1&1&0&0&0 \\ \hline
-
-Hands Occupied&0&0&0&1&1 \\ \hline
-
-Distance Hands&30&30&30&60&60\\ \hline
-
-Feet On Pedals&0&0&0&0&0 \\ \hline
-
-Dangerous Scenario&0&0&0&0&0 \\ \hline
-
-Driving Speed&120&120&120&120&120 \\ \hline
-
-Perceived Urgency&0&0&0&0&0\\ \hline
-
-Mental Workload&0&1&1&1&1\\ \hline
-
-Traffic&1&1&1&1&1\\ \hline
-
-
-
-\end{tabular}
-
-\caption{Input for each condition}
-
-\end{table}\label{input}
 
 
 
@@ -1454,31 +1323,121 @@ Traffic&1&1&1&1&1\\ \hline
 \subsection{Method of Evaluation}
 
 For evaluating the cognitive-motor driver model, the model's predictions are compared with 1)experimental test data and 2)data from literature. For both, the input variables were set in a way that reflected experimental setup. The input vectors to each of the test conditions can be found in Table \ref{input}. 
-\\For comparison with experimental test data, 34 samples were drawn from the Weibull-distribution the model predicts. For comparison with literature data, the mean of the Weibull-distribution was compared to the mean that was reported in literature. 
+\\
 
+For comparison with experimental test data, 34 samples were drawn from the Gamma-distribution the model predicts. For comparison with literature data, the mean of the Gamma-distribution was compared to the mean that was reported in literature. 
 
+\begin{table}
+
+\centering
+
+\begin{tabular}{ c | c | c | c | c | c }
+
+\hline
+
+Input & Baseline & Audiobook & Tetris & Reading & Searching Task \\ \hline
+Expert&0&0&1&1&1 \\ \hline
+Gaze Off& 1&1&1&1&1\\ \hline
+Long Gaze& 1&1&1&1&1\\ \hline
+Body Turned&0 &0&0&0&1\\ \hline
+Lockout&1&1&0&0&0 \\ \hline
+Hands Occupied&0&0&0&1&1 \\ \hline
+Distance Hands&30&30&30&60&60\\ \hline
+Feet On Pedals&0&0&0&0&0 \\ \hline
+Dangerous Scenario&0&0&0&0&0 \\ \hline
+Driving Speed&120&120&120&120&120 \\ \hline
+Perceived Urgency&0&0&0&0&0\\ \hline
+Mental Workload&0&1&1&1&1\\ \hline
+Traffic&1&1&1&1&1\\ \hline
+
+\end{tabular}
+\caption{Input for each condition}
+\end{table}\label{input}
 
 \subsection{Results of Evaluation}
 
-Input variables were set to reflect experimental setup of the experimental test data. The model predicts a mean takeover time of 2.61 seconds  for the baseline condition, for listening to an audiobook it is 2.75s, playing tetris 2.51, reading a magazine 4.74 and searching something on the rear bench seat also 4.74 (see Table \ref{cases} for 75 and 95 percentiles). For an example job-shop schedule of the baseline condition, see Figure \ref{gantt} . Predicted and experimental data was compared in three ways. First, we compared - per condition - the 34 results with the predicted mean, see Fig. \ref{36}. $R^2$ was thus obtained by determining the error between model and experimental data every data point. Subsequently, it is squared and added up with the other squared errors, and divided by the amount of data points. This results in an $R^2$ of 0.217, which means that our model explains 21.7\% of the variance in the data. Second, means of both prediction and experimental data were compared. This results in an $R^2$ of 0.96. Third, we drew 34 samples from the modeled Weibull-distribution for each condition. These 34 samples were sorted in ascending order. The same was done with the 34 samples of the experimental test data. This approach presumes the knowledge of general takeover speed for an individual subject. It is thus based on the same idea as including subject number as random effect in the General Linear Mixed Model (see Chapter 2). Again, $R^2$ was assessed and showed to be 0.36. Fig. \ref{gam}, shows the distributions of experimental and model data for the reading condition. 
+Input variables were set to reflect experimental setup of the experimental test data. The model predicts a mean takeover time of 2.61 seconds  for the baseline condition, for listening to an audiobook it is 2.75s, playing tetris 2.51, reading a magazine 4.74 and searching something on the rear bench seat also 4.74 (see Table \ref{cases} and Figure \ref{cases2} for 75 and 95 percentiles). 
+\clearpage
+\begin{figure}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/71}
+\decoRule
+\caption{Predicted and measured takeover times. Y-Axis: seconds.}
+\label{33}
+\end{figure}\label{cases2}
+
+\begin{table}
+\centering
+\begin{tabular}{ c | c | c | c | c | c | c }
+\hline
+& Reference & & Audiobook & & Searching Task & \\ \hline
+& Data & Prediction & Data & Prediction & Data & Prediction \\ \hline
+Median & 2.71 & 2.56& 3.1 & 2.82 & 4.9 & 4.85 \\ \hline
+75\% percentile & 3.33 & 3.44 & 3.91 & 3.72 & 6.4 & 5.73\\ \hline
+95\% percentile & 4.4 & 5.8 & 6.59 & 6 & 8.9 & 8 \\ \hline
+& & & & & & \\ \hline
+& Read & & Tetris \\ \hline
+&Data & Prediction & Data & Prediction\\ \hline
+Median& 4.76 & 4.85& 3.1 & 3.56 \\ \hline
+75\% percentile & 6.5 & 5.7 &4.1 & 4.38 \\ \hline
+95\% percentile & 9.4 & 8.26 & 7.19 & 6.83 \\ \hline
+\end{tabular}
+\caption{Predicted and measured takeover times.}
+\end{table}\label{cases}
+\clearpage
+For an example job-shop schedule of the baseline condition, see Figure \ref{gantt} . 
+
+\begin{sidewaysfigure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/gantt.jpg}
+%\decoRule
+\caption{Decision tree of the model.}
+\label{gantt}
+\end{sidewaysfigure}
+
+Predicted and experimental data was compared in three ways. First, we compared - per condition - the 34 results with the predicted mean, see Fig. \ref{67}. 
+
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.7\textwidth]{Figures/67}
+\decoRule
+\caption{Model prediction in comparison to experimental test data.}
+\label{67}
+\end{figure}
+
+
+$R^2$ was thus obtained by determining the error between model and experimental data every data point. Subsequently, it is squared and added up with the other squared errors, and divided by the amount of data points. This results in an $R^2$ of 0.217, which means that our model explains 21.7\% of the variance in the data. Second, means of both prediction and experimental data were compared. This results in an $R^2$ of 0.96. Third, we drew 34 samples from the modeled Gamma-distribution for each condition. These 34 samples were sorted in ascending order. The same was done with the 34 samples of the experimental test data. This approach presumes the knowledge of general takeover speed for an individual subject. It is thus based on the same idea as including subject number as random effect in the General Linear Mixed Model (see Chapter 2). Again, $R^2$ was assessed and showed to be 0.36. Fig. \ref{gam}, shows the distributions of experimental and model data for the reading condition. 
 \\
 Furthermore, the model was compared to takeover times reported in literature. Because only means are reported, our model's output was compared to these means. The papers of \cite{befelein2016} and \cite{gold2016taking} were compared to the cognitive-motor-model, because they both tested the circumstances that we input in our model. One difference is that they have critical scenarios, and that they use a driving simulator. The takeover times given in each condition of the paper compared to the model prediction can be found in Table \ref{comlit}. $R^2$ is 0.66. In Fig. \ref{44} we can see the comparison of the means of the literature and the Driver model.  
 
+\begin{figure}
+\centering
+\includegraphics[width = 0.7\textwidth]{Figures/68}
+\decoRule
+\caption{Model prediction in comparison to literature data.}
+\label{44}
+\end{figure}
 
 
 \section{Discussion}
 
 
-A model based on cognitive and motor basic research findings has been presented. It successfully considers the influencing variables ‘Expert’, ‘Gaze Off Road’, ‘Long Gaze’, `Body Turned', `Lockout', `Hands Occupied', `Distance Hands', `Feet on Pedals', `Dangerous Scenario', `Time Budget', `Mental Workload', and `Traffic' . When considering the outcome of the statistical chapter, it should additionally include the variable ‘individual subject fastness’. This could lead to a draw from the upper or lower part of the Weibull-distribution and would lead to a goodness of fit of 0.36. When compared to the means of our data, our means predict 96\% of the variance of the data. When compared to literature means, $R^2$ is 0.64.  All in all, this model can be seen as an ‘allround-tool’ that works for any driver state and takeover situation.
+A model based on cognitive and motor basic research findings has been presented. It successfully considers the influencing variables ‘Expert’, ‘Gaze Off Road’, ‘Long Gaze’, `Body Turned', `Lockout', `Hands Occupied', `Distance Hands', `Feet on Pedals', `Dangerous Scenario', `Time Budget', `Mental Workload', and `Traffic' . When considering the outcome of the statistical chapter, it should additionally include the variable ‘individual subject fastness’. This could lead to a draw from the upper or lower part of the Gamma-distribution and would lead to a goodness of fit of 0.36. When compared to the means of our data, our means predict 96\% of the variance of the data. When compared to literature means, $R^2$ is 0.64.  All in all, this model can be seen as an ‘allround-tool’ that works for any driver state and takeover situation.
 \\
+
 In general, the model predicts too long takeover times compared to literature. This may be due to the fact that literature reports takeovers that happened overhasty or even ended in a crash. We, in contrast, built a model for a normative takeover. The most prominent difference between model and data is the one for the `Befelein - Baseline' - condition, while prediction of the `Gold - Baseline' - is much better. The longer prediction of the Befelein condition is due to traffic that is present in all his conditions.
 \\ 
+
 The $R^2$ must be interpreted with caution for the fit of the model's predicted mean with experimental data. For assessing $R^2$, the error between model and experimental data is determined for every data point. Subsequently, it is squared and added up with the other squared errors, and divided by the amount of data points. Therefore, strictly speaking, it is not correct to fit a mean (output of the model) to several data points (experimental data). Thus, the $R^2$ of 0.36 for data drawn from the modeled distribution and experimental data should be evaluated.
 \\
-Another option to model drivers that take longer and shorter for the takeover would have been to implement additional actions in the cognitive-motor model. We decided against this and for a Weibull distribution instead. This seemed to better represent driver behavior and suited better to previously published ACT-R models. Instead of doing more actions, subjects thus differ in their speed of completing the same actions. 
+
+Another option to model drivers that take longer and shorter for the takeover would have been to implement additional actions in the cognitive-motor model. We decided against this and for a Gamma distribution instead. This seemed to better represent driver behavior and suited better to previously published ACT-R models. Instead of doing more actions, subjects thus differ in their speed of completing the same actions. 
 \\
+
 Another note of caution is due here since both this and Chapter 2 report $R^2$. This might lead to confusion, because the background of these $R^2$ is a completely different one. The $R^2$ reported in regression analysis describes the fit of the model to the data it has been modeled with. The $R^2$ reported here, on the other hand, describes a fit of experimental data to a model that has been established completely independently and only based on basic research findings. 
 \\
+
 \cite{plavvsic2010analysis} sets several requirements for modeling driver behavior: it should 1) employ knowledge of detailed cognitive structure but simulate performance on higher level 2) run with if-then rules 3) be modular (easy to add and change) and 4) reflect normative and naturalistic driver behavior. In this chapter, we described a model that meets those requirements by combining job-shop scheduling with background knowledge from ACT-R. 
 
 
