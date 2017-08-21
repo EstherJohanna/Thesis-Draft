@@ -1,1262 +1,423 @@
-\chapter{A Cognitive-Motor Driver Model} 
+\chapter{Statistical Model} \label{Chapter3} 
 
-\label{Chapter3} 
 
-\section{Introduction}
+\section{Literature Data - Regression Analysis}\label{regLit}
+\subsection{Introduction}
+Several studies have investigated on factors that influence takeover time. While it is impossible to study all influencing 
+factors in one study, it is possible to compare the studies' results with each other. The following chapter had two aims.
+One was to conduct a meta-analysis of literature to find the variables that most crucially influence takeover time. 
+The second was to build a regression model. This was based on two data sets. One was obtained by literature research, and one by experiments that were conducted at Bosch.
 
-While ACT-R works great to realistically model experiments that occur in aa laboratory setup, it is rarely used to model 
-complex human behavior. A noteworthy example is \cite{salvucci2006modeling}. Unfortunately, learning and correctly coding 
-complex behavior in ACT-R is meticulous work and certainly takes longer than six months. Another reported problem about 
-ACT-R is its slow speed of calculation for complex tasks. We overcame problems of programming difficulties and long running 
-time by combining the theoretical background of ACT-R with job shop scheduling. 
-\\
-In job shop scheduling, `resources' can execute `tasks' that can be constrained in their order. The name comes from a 
-`job shop': a manufacturing system in which machines are arranged and used in an order in which a task can be finished as 
-fast as possible, depending on which machines can do which tasks and in which order they need to be done. Examples are job 
-shops that make parts for industrial machinery, ships, airplanes, etc. Job shop scheduling in computer science is an 
-optimization problem that organizes tasks in a way that the tasks are fulfilled as fast as possible. Its application goes far 
-beyond that of a classical job shop. 
-\\
-In this thesis, the python job shop schedule implementation `Pyschedule' by Tim Nonner was used. As the core solver, the 
-CP-solver from OR-tools was used. This is a Google optimization tool. This solver tries out all possible combinations of 
-task order and resource assignment. If it reaches a solution that does not meet the constraints, it `unbounds' the variable, 
-goes one step back in its search tree (`backtracking'), and tries the next variable. In the end, OR-tools outputs all solutions
-that meet the constraints. Pyschedule identifies the one that has the shortest makespan (=time until all tasks are done). 
-\\
-The two methods of job shop 
-scheduling and ACT-R were combined by using ACT-R's modules as `resources' in Pyschedule, and all of ACT-R's actions as 
-`tasks'. Order constraints were set as few as possible for modeling a realistic takeover. In principle, the model resulting 
-from this approach is very similar to an ACT-R model. One important difference is that it cannot model learning. For our use 
-case, this is acceptable because we assume to model a takeover-trained driver. 
-\\
-As in every Pyschedule and ACT-R program, actions of one module can only happen successively, while all actions of different 
-modules can happen simultaneously. The procedural memory is the 'impulse generator' that orchestrates the actions of the other 
-modules by production rule firing. For every takeover situation, it needs to be decided which actions are included into the 
-model and which ones are not. For example, when modeling a takeover where the subject has his gaze on the road already, a head 
-movement towards the road does not need to be modeled anymore. Fig. \ref{tree} shows the resulting decision tree more 
-graphically.  It is important to note that the added actions have nothing temporal about them; they only decide which 
-actions are added to the collection of actions out of which in the end the fastest possible solution is built. An example 
-of the simplest possible takeover model can be found in Fig. \ref{gantt}.
+\subsection{Model}
+\subsubsection{Literature Search}
+We found a broad width of studies through an existing database at Bosch. Furthermore, we chose papers with matching titles from a Google scholar search with the keywords `takeover time highly automated driving'. From both searches, further publications were found through the cited references. 145 papers were found in total. 
 
-\section{Model}
-
-Inspired by the modules that are typically postulated within ACT-R, the following modules are considered important for modeling a takeover-scenario:
-\\
-Cognitive Modules:
+\subsubsection{Selection of Studies}
+Of those papers, all were chosen that were concerned with Highly Automated Driving (SAE Level 3). In addition, we had the following inclusion criteria:
 \begin{itemize}
-\item
-Procedural Memory
-\item
-Working Memory
-\item
-Declarative Memory
-\item
-Visual Module
+\item The subjects knew that a takeover would occur and were instructed on how to behave in that case (Excluded papers: \cite{petermann2013lange, payre2016fully});
+\item Takeover consists of a takeover request, time given for the takeover, and a full transfer of control after the driver indicates that he wants to take back control (Excluded papers: \cite{larsson2014learning, strand2014semi} );
+\item studies that measured takeover time (excluded \cite{uebernahmeHAF})
+\item enough information about the study was given (Excluded : \cite{giesler2013});
+\item they measured something that we expect to have an influence `on the road'; excluded \cite{naujoks2014effect} because they test visual vs. visual-auditory takeover requests; we expect always visual-auditory to be used, because it is the most realistic HMI design;
+\item about highly automated driving in a car, not platooning or trucks (excluded \cite{willemsen2014transition, belderbos2015authority}).
 \end{itemize}
-Motor Modules:
-\begin{itemize}
-\item
-Aural module
-\item 
-Head module
-\item
-Eyes Module
-\item
-Feet Module
-\item
-Thorax Module\\
-\end{itemize}
-Takeover time is modulated by several variables. For example, a driver most likely takes longer for a takeover if he first has to turn back towards the road. The following modulating variables can be determined in the model:
+By this, we have a selection of 19 papers to be compared in the meta-analysis. Those were \cite{unfallforschung, eriksson2016take, korber2016influence, gold2016taking, maas2016losungsansatze, zeeb2016take, bueno2016different, louw2015engaging, feldhutter2016duration, befelein2016, Gold2015, Zeeb2015, kerschbaum2015transforming, walch2015autonomous, Lorenz2014, radlmayr2014traffic, Gold2013, feldhuetterFahrer, Gold2016}.
+
+\subsubsection{Criteria for Selection of Influencing Factors}
+As influencing factors we chose all factors that showed to have a relevant influence in the 19 papers. In addition, we chose two factors that we considered to be important and that could be inferred from the papers. 
 \\
+
+The factors chosen from the papers were the following:
 \begin{itemize}
-\item
-Expert (yes/no) - differentiates between a novice that listens to the whole takeover request before taking over, and someone who immediately recognizes the takeover request
-\item
-Gaze Off (yes/no) - whether the driver looks towards the street or elsewhere at the takeover request
-\item
-Long Gaze (yes/no) - duration of the current off- or on-road gaze. If the driver just looked away from the road, he does not need to build up situation awareness anymore
-\item
-Body Turned (yes/no) - whether the driver has his body turned away from the steering wheel or not
-\item
-Lockout (yes/no) - determines whether the secondary task is automatically terminated by in-car entertainment
-\item
-Hands Occupied (yes/no) - whether the driver's hands are occupied
-\item
-Distance Hands (yes/no) - how far the hands are away from the steering wheel
-\item
-Feet on Pedals (yes/no) - whether the feet are on gas pedal and clutch
-\item 
-Dangerous Scenario (yes/no) - whether the situation in which the driver needs to take over is dangerous / critical or not
-\item
-Driving Speed (km/h) - this is only needed for calculating the brake time in case of a dangerous scenario
-\item
-Low Time Budget (yes/no) - whether the driver has only little time to take over control
-\item
-Mental Workload (yes/no) - whether the driver was mentally distracted during the takeover request
-\item
-Traffic (yes/no) - whether there was traffic around or not
+\item Gaze Off Road
+\item Body Turned Away
+\item Hands Occupied
+\item Cognitive Distraction
+\item Much Traffic
+\item Criticality Of Situation
+\item Time Pressure
+\item Long Autonomous Ride
+\item Elderly Subject
 \end{itemize}
 
-Even though we are certain that extreme drowsiness has an influence on takeover time, we excluded it as an influencing variable. In that case, driving should not be allowed and the car should enter a minimal risk state rather than giving control to a drowsy driver. Also boredom was excluded, because its consequences can vary between a fast, overhasty takeover due to surprise, or a slow takeover. Cognitive demand is only asked as `yes' or `no' because it is hard to measure in more detail.  
-\\
-In the following, all actions are described. By combining these depending on the input variables, we will model a normative `driving school' takeover. 
-\\
-\subsection{Attend Aural}
-Description: The takeover begins with a production rule. It commands the Aural module to encode the sound that is heard, see \ref{encodesound}. 
-\\
-Resource: Procedural memory
-\\
-Time:A production rule always takes 50 ms in ACT-R, which we adopted for our model (\cite{bothell2004act, anderson2009can}). 
-\\
-Dependency: This is the first action.
-\\
-Time is modulated by input variable: - 
-\\
-Added when the following input variable is true: Always included.
-
-\subsection{Encode Sound}
-
-Description: A novice or someone who has not taken over for a very long time always listens to the whole output which takes five seconds. Thus, 'encode sound' takes five seconds. Someone who has experienced several Requests to Intervene (RtI) recently, 'encode sound' takes 1000ms. Thus, the warning tone for a critical scenario (e.g. avoidance of a crash) has to be different than the warning tone for an uncritical takeover (e.g. simply continuing to drive on a straight road). 
-\label{encodesound} 
-\\
-Resource: Aural Module
-\\
-Time: 1000 ms / 5000 ms
-\\
-Dependency: After `Attend Aural'.
-\\
-Time is modulated by input variable: `Expert' 
-\\
-Added when the following input variable is true: Always included.
-
-\subsection{Request Meaning Sound}
-
-Description: After the sound has been encoded, another production rule commands the procedural memory to retrieve the meaning of the sound from declarative memory. This is different than in e.g. (\cite{anderson2009can}), where the sound is only encoded and 'immediately' understood. The model by Anderson models behavior in a simple reaction time experiment. Whereas the driver is assumed to be familiar with the takeover request, he has to remember in a first instance that this sound is the request to take over. Other than in reaction time experiments, drivers 1) might be surprised to be requested to take over 2) have to realize that this sound means a takeover request (and not e.g. an empty tank). Therefore, he is required to remember what the sound means. In some cases, it will be a very long time ago that the driver was last requested to take over. 
-\\
-Resource: Procedural memory
-\\
-Time: 50 ms
-\\
-Dependency: This action occurs right after `Encode Sound' (see below).
-\\
-Time is modulated by input variable: - 
-\\
-Added when the following input variable is true: Always included.
-
-\subsection{Meaning Sound}
-
-Description: The time for this action is derived from the 50ms which a request takes if only one matching chunk is present in declarative memory \cite{bothell2016tut}. Another 50ms are added to choose the right chunk from several matching ones, because the sound will most likely not be the only possible sound with which the car requests some action from the driver. For simplicity, it is assumed that the driver always chooses the right chunk. Such a severe misunderstanding at the very beginning of the takeover would lead to the car entering a 'minimal risk state' (such as stopping the car on the hard shoulder), which makes modeling of driver behavior unnecessary. 
-\\
-Resource: Declarative memory
-\\
-Time: 100ms
-\\
-Dependency: This action is always preceded by `Request Meaning Sound'.
-\\
-Time is modulated by input variable: - 
-\\
-Added when the following input variable is true: Always included.
- 
-
-\subsection{Change Goal}
-
-Description: This production rule commands a change of the goal buffer in ACT-R. A goal buffer representation did not seem to be helpful to implement, since the goal would just be 'take over' during the whole takeover. Therefore, only the time-consuming production rule was implemented.  When mental workload was high, this production rule takes longer.
-\\
-Resource: Procedural memory
-\\
-Time: 50 ms / 300ms
-\\
-Dependency: The rule fires after the `Meaning Sound' action.
-\\
-Time is modulated by input variable: `Mental Workload'
-\\
-Added when the following input variable is true: Always included.
-
-\subsection{Move Attention 1}
-
-Description: As the 'impulse generator', the procedural memory commands every move of attention (see \cite{salvucci2009toward, salvucci2008threaded} for examples). This happened already in the 'attend aural' command. It also precedes every saccade. In this case, it is requested that attention is moved to the road.
-\label{moveAttention}
-\\
-Resource: Procedural memory
-\\
-Time: 50 ms
-\\
-Dependency: After `Change Goal'
-\\
-Time is modulated by input variable: - 
-\\
-Added when the following input variable is true: Always included.
-
-
-\begin{sidewaysfigure}
-\centering
-\includegraphics[width = 1\textwidth]{Figures/UntitledDiagram.jpg}
-%\decoRule
-\caption{Flow diagram to determine required actions depending on the model input variables.}
-\label{tree}
-\end{sidewaysfigure}
-
-
-
-\subsection{Quit Non-driving related task}
-Description: It has been observed that subjects take longer to disengage from a secondary task if the secondary task is not automatically terminated by the in-car entertainment (\cite{opel}). Therefore, another production rule is required that commands the disengagement from the non-driving related task.
-\\
-Resource: Procedural memory
-\\
-Time: 50 ms
-\\
-Dependency: After `Change Goal'.
-\\
-Time is modulated by input variable: - 
-\\
-Added when the following input variable is true: Lockout
-
-
-\subsection{Motor Preparation Head}
-
-Description: In ACT-R, motor preparation time depends on the complexity of the movement and how different it is from the previous movement (\cite{bothell2004act, anderson2004integrated}). For simplicity, I will always use a motor preparation time of 250ms in my model, which corresponds to a typical motor preparation time in ACT-R (\cite{bothell2016tut}).
-\\
-Resource: Head Module
-\\
-Time: 250 ms
-\\
-Dependency: After `Move Attention 1'.
-\\
-Time is modulated by input variable: -  
-\\
-Added when the following input variable is true: `Gaze Off Road'
-
-\subsection{Motor Initiation Head}
-
-Description: Following ACT-R's implementation of the motor module, every motor action is preceded by a 50ms initiation (\cite{bothell2004act}).
-\\
-Resource: Head Module
-\\
-Time: 50 ms
-\\
-Dependency: After `Motor Preparation Head'.
-\\
-Time is modulated by input variable: -  
-\\
-Added when the following input variable is true: `Gaze Off Road'
-
-\subsection{Move Head}
-Description: Movement times are calculated by Fitt's law (\cite{fitts1954information}). The Index of Difficulty for head movement was calculated with $ID = \log _2 \left( \frac{2A}{W} \right)$. The main movement was assumed to be 90\textdegree (from co-driver seat to the road), the target size was assumed to be 18\textdegree. This is the area of the visual field that is covered by the macula. The resulting movement time was taken from (\cite{hoffmann2017head}). In this case Index of Difficulty was 2, and the resulting movement time 600ms.
-\\
-Resource: Head Module
-\\
-Time: 600 ms
-\\
-Dependency: After `Motor Initiation Head'.
-\\
-Time is modulated by input variable: -  
-\\
-Added when the following input variable is true: `Gaze Off Road'
-
-\subsection{Move Attention 2}
-Description: A production rule. The first `Move Attention' was implemented for a general shift of attention to the road, this one represents the shift of attention to whatever is most prominent on the road. It initiates a saccade.
-\\
-Resource: Procedural Module
-\\
-Time: 50 ms
-\\
-Dependency: After the previous `Move Attention 1'.
-\\
-Time is modulated by input variable: -  
-\\
-Added when the following input variable is true: `Gaze Off Road'
-
-\subsection{Eye Movement Preparation}
-Description:As described in \cite{salvucci2001integrated}, every saccade is preceded by 135ms motor preparation.
-\\
-Resource: Eye Module
-\\
-Time: 135 ms
-\\
-Dependency: After `Move Attention 2'.
-\\
-Time is modulated by input variable: -  
-\\
-Added when the following input variable is true: `Gaze Off Road'
-
-\subsection{Saccade 1}\label{saccade}
-Description:As described in \cite{salvucci2001integrated}, every saccade consists of 50 ms (\cite{becker1979analysis}), 20 ms for saccade execution, and 2ms are added for every degree of visual angle subtended by the saccade. For simplicity, I always assume 10 degrees, which results in a saccade time of 80 ms. 
-\\
-Resource: Eye Module
-\\
-Time: 80 ms
-\\
-Dependency: After `Eye Movement Preparation'.
-\\
-Time is modulated by input variable: -  
-\\
-Added when the following input variable is true: `Gaze Off Road'
-
-\subsection{Encode Visual Object}
-Description: With the equation given in \cite{salvucci2001integrated}, encoding time was calculated to be 85ms. This is based on the assumption that spatial frequency of the object is 0.2 and the visual angle 5\textdegree (the person nearly looks at the object already).
-\\
-Resource: Visual Module
-\\
-Time: 85 ms
-\\
-Dependency: After `Saccade 1'.
-\\
-Time is modulated by input variable: -  
-\\
-Added when the following input variable is true: `Gaze Off Road'
-\\
-\textbf{Urgency by Time Budget}
-We assume that from now on, the driver has a rough understanding of how urgent the takeover is. This is mainly influenced by the time budget. Additionally, it takes 30 ms to have a general understanding of a scene, according to \cite{thorpe1996speed}. From this point on, a production rule will take 50ms if the takeover is perceived as urgent, and 100ms if the situation is not perceived as urgent. The background of this is the following:
-In ACT-R, each production rule has a utility value. This utility value is based on reinforcement learning and depends on its previous `usefulness' in the specific context (\cite{gunzelmann2011sleep}). In case there are several production rules that fit the current model state, the production rule with the highest utility value gets to fire. In general, only production rules with a utility higher than a certain threshold can fire. This threshold depends on a person's motivation. Thus, if the motivation to take over is low (the takeover is not urgent), the utility threshold is high and it takes longer until a production rule is selected. If a person rushes, the selection threshold is low and production rules are selected faster (and more likely erroneously) (\cite{reddi2000influence}). 
-
-\subsection{Thorax Motor Preparation}
-Description: - 
-\\
-Resource: Thorax Module
-\\
-Time: 250 ms
-\\
-Dependency: After `Move Attention 1'.
-\\
-Time is modulated by input variable: -  
-\\
-Added when the following input variable is true: `Body Turned Away'
-
-\subsection{Thorax Motor Initiation}
-Description: -
-\\
-Resource: Thorax Module
-\\
-Time: 50 ms
-\\
-Dependency: After `Motor Preparation Thorax'.
-\\
-Time is modulated by input variable: -  
-\\
-Added when the following input variable is true: `Body Turned Away'
-
-\subsection{Thorax Turn}
-Description: In \cite{befelein2016}, a takeover takes one second longer when the driver is turned away during the takeover request. In \cite{hoffmann2015movement}, a thorax movement with 60cm amplitude takes 400ms. Considering that our case is more complicated than in their experiment (turning in the car is not as easy and usually subjects adjust their seating after turning), one second seems a suitable time. 
-\\
-Resource: Thorax Module
-\\
-Time: 1000 ms
-\\
-Dependency: After `Motor Initiation Thorax'.
-\\
-Time is modulated by input variable: -  
-\\
-Added when the following input variable is true: `Body Turned Away'
-
-\subsection{Request Unoccupy Hands}
-Description: In case the driver's hands are occupied, the item needs to be dropped (assumed on the co-driver seat) before the hands can be moved to the steering wheel. This is a production rule that requests the shift of attention to dropping whatever is in the driver's hand to the co-driver seat. 
-\\
-Resource: Procedural Memory
-\\
-Time: 50 ms / 100 ms
-\\
-Dependency: After `Move Attention 1'.
-\\
-Time is modulated by input variable: plus 50 ms if the `Time Budget' is long. 
-\\
-Added when the following input variable is true: `Hands Occupied'
-
-\subsubsection{Move Attention 5}
-Description: A production rule that initiates head, hand and eye movement to the co-driver seat.
-\\
-Resource: Procedural Memory Module
-\\
-Time: 50 ms / 100 ms
-\\
-Dependency: After `Request Unoccupy Hands'.
-\\
-Time is modulated by input variable: plus 50 ms if the `Time Budget' is long.   
-\\
-Added when the following input variable is true: `Hands Occupied'
-
-\subsection{Head to Co-driver seat}
-Description: - 
-\\
-Resource: Head Module
-\\
-Time: 600 ms
-\\
-Dependency: After `Move Attention 5'.
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: `Hands Occupied'
-
-\subsection{Eye Movement Preparation}
-Description: - 
-\\
-Resource: Eye Module
-\\
-Time: 135 ms
-\\
-Dependency: After `Move Attention 4'.
-\\
-Time is modulated by input variable: 
-\\
-Added when the following input variable is true: `Hands Occupied'
-
-\subsection{Saccade}
-Description: - 
-\\
-Resource: Eye Module
-\\
-Time: 80 ms
-\\
-Dependency: After `Eye Movement preparation'.
-\\
-Time is modulated by input variable: 
-\\
-Added when the following input variable is true: `Hands Occupied'
-
-\subsection{Encode Visual Object}
-Description: -
-\\
-Resource: Visual Module
-\\
-Time: 85 ms
-\\
-Dependency: After `Saccade'
-\\
-Time is modulated by input variable: 
-\\
-Added when the following input variable is true: `Hands Occupied'
-
-\subsection{Drop Item}
-Description: The duration of this action is again calculated by Fitt's law, adapted for the the distance of the Hands. The same equation as in ACT-R is used: $MovementTime = 100 \cdot \log_2 \left( \frac{(DistanceHands)}{TargetSize} + 0.5\right)$ (\cite{bothell2004act}). If the Time Budget is short, the target size (=area where the item is dropped) is 40cm, because the driver is assumed to drop the item just anywhere as fast as possible. In an uncritical scenario, the target area is 20cm, because the driver is assumed to put the item to a certain place (e.g. a newspaper to the box in the side door).
-\\
-Resource: Hand Module
-\\
-Time: calculated by Fitt's law
-\\
-Dependency: After `Hands Motor Initiation'
-\\
-Time is modulated by input variable: -
-\\
-Added when the following input variable is true: `Hands Occupied'
-
- 
-\subsection{Move Attention 6}
-Description: A production rule that requests head, hand and eye movement back to the street.
-\\
-Resource: Procedural Memory Module
-\\
-Time: 50 ms / 100 ms
-\\
-Dependency: After `Move Attention 5'.
-\\
-Time is modulated by input variable: plus 50 ms if the `Time Budget' is long.   
-\\
-Added when the following input variable is true: `Hands Occupied'
-
-\subsection{Head To Road}
-Description: -
-\\
-Resource: Head Module
-\\
-Time: 600 ms
-\\
-Dependency: After `Drop Item', `Saccade' and `Move Attention 6'.
-\\
-Time is modulated by input variable: -  
-\\
-Added when the following input variable is true: `Hands Occupied'
-%%hiervor nochmal dependencies chekcen!
-
-\subsection{Eye Movement Preparation}
-Description: -
-\\
-Resource: Eye Module
-\\
-Time: 135 ms
-\\
-Dependency: After `Move Attention 6' and `Saccade 4'.
-\\
-Time is modulated by input variable: -    
-\\
-Added when the following input variable is true: `Hands Occupied'
-
-\subsection{Saccade}
-Description: - 
-\\
-Resource: Eye Module
-\\
-Time: 80 ms
-\\
-Dependency: After `Eye Movement Preparation'.
-\\
-Time is modulated by input variable: -
-\\
-Added when the following input variable is true: `Hands Occupied'
-
-\subsection{Encode Visual Object}
-Description: - 
-\\
-Resource: Visual Module
-\\
-Time: 85 ms
-\\
-Dependency: After `Saccade'.
-\\
-Time is modulated by input variable:   
-\\
-Added when the following input variable is true: `Hands Occupied'
-
-\subsection{Request Hands to Wheel}
-Description:A production rule that requests the shift of attention to moving the hands to the wheel. 
-\\
-Resource: Procedural Memory Module
-\\
-Time: 50 ms / 100 ms
-\\
-Dependency: After `Move Attention 1' and after `Move Attention 6'
-\\
-Time is modulated by input variable: plus 50 ms if the `Time Budget' is long.   
-\\
-Added when the following input variable is true: `Hands Occupied' or `Distance Hands' is bigger than zero.
-
-\subsection{Hands Motor Preparation}
-Description: -
-\\
-Resource: Hands Module
-\\
-Time: 250 ms
-\\
-Dependency: After `Request Hands To Wheel'.
-\\
-Time is modulated by input variable: -   
-\\
-Added when the following input variable is true: `Hands Occupied' or `Distance Hands' is bigger than zero.
-
-\subsection{Hands Motor Initiation}
-Description: -
-\\
-Resource: Hands Module
-\\
-Time: 50 ms
-\\
-Dependency: After `Hands Motor Preparation'.
-\\
-Time is modulated by input variable: -   
-\\
-Added when the following input variable is true: `Hands Occupied' or `Distance Hands' is bigger than zero.
-
-\subsection{Hands To Wheel}
-
-Description: With the distance of the Hands, it is calculated with Fitt's law for Hand movement how long the movement will take. The same equation as in ACT-R is used: $MovementTime = 100 \cdot \log_2 \left( \frac{(DistanceHands)}{TargetSize} + 0.5\right)$ [\cite{bothell2004act}]. Target size was measured as 10cm, the distance of the hands is given as input into the model. 
-\\
-Resource: Hands Module
-\\
-Time: Calculated by Fitt's Law
-\\
-Dependency: After `Hands Motor Initiation'.
-\\
-Time is modulated by input variable: -    
-\\
-Added when the following input variable is true: `Hands Occupied' or `Distance Hands' is bigger than zero.
-
-
-\subsection{Request Move Feet}
-
-Description: Production rule that requests the movement of the feet to the pedals (gas and clutch) of the car.
-\\
-Resource: Procedural Memory Module
-\\
-Time: 50 ms / 100 ms
-\\
-Dependency: After `Change Goal'.
-\\
-Time is modulated by input variable: plus 50 ms if the `Time Budget' is long. 
-\\
-Added when the following input variable is true: `Feet Off Pedal'
-
-\subsection{Feet Motor Preparation}
-Description: -
-\\
-Resource: Feet Module
-\\
-Time: 250 ms
-\\
-Dependency: After `Request Move Feet'.
-\\
-Time is modulated by input variable: -
-\\
-Added when the following input variable is true: `Feet Off Pedal'
-
-\subsection{Feet Motor Initiation}
-Description: -
-\\
-Resource: Feet Module
-\\
-Time: 50 ms
-\\
-Dependency: After `Feet Motor Preparation'.
-\\
-Time is modulated by input variable: -
-\\
-Added when the following input variable is true: `Feet Off Pedal'
-
-\subsection{Move Feet}
-Description: The time for foot movement is 180ms, as in \cite{morrison1986movement}.
-\\
-Resource: Feet Module
-\\
-Time: 190 ms
-\\
-Dependency: After `Feet Motor Initiation'.
-\\
-Time is modulated by input variable: -  
-\\
-Added when the following input variable is true: `Feet Off Pedal'
-
-\subsection{Check Near Point}
-Description: A production rule that requests to check the `near point' of the road. This concept is taken from Salvucci's driver model (\cite{salvucci2006modeling}).
-\\
-Resource: Procedural Memory Module
-\\
-Time: 50 ms / 100 ms
-\\
-Dependency: After `Move Attention 1', `Move Head', `Thorax Turn', `Move Attention 2', `Encode Visual Object 3', `Request Hands to Wheel' and `Head To Road'
-\\
-Time is modulated by input variable: plus 50 ms if the `Time Budget' is long. 
-\\
-Added when the following input variable is true: always included
-
-\subsection{Saccade to Near Point}
-Description: - 
-\\
-Resource: Eyes Module
-\\
-Time: 80 ms
-\\
-Dependency: After `Check Near Point'. 
-\\
-Time is modulated by input variable: - 
-\\
-Added when the following input variable is true: always included
-
-\subsection{Encode Visual Object}
-Description: - 
-\\
-Resource: Visual Module
-\\
-Time: 85 ms
-\\
-Dependency: After `Saccade to Near Point'. 
-\\
-Time is modulated by input variable: - 
-\\
-Added when the following input variable is true: always included
-
-
-\subsection{Check Far Point}
-
-Description: Production rule that requests to check the `far point' of the road. This concept is taken from Salvucci's driver model (\cite{salvucci2006modeling}).
-\\
-Resource: Procedural Memory Module
-\\
-Time: 50 ms / 100 ms
-\\
-Dependency: After `Check Near Point'. 
-\\
-Time is modulated by input variable: plus 50 ms if the `Time Budget' is long. 
-\\
-Added when the following input variable is true: always included
-
-\subsection{Saccade to Far Point}
-Description: - 
-\\
-Resource: Eyes Module
-\\
-Time: 80 ms
-\\
-Dependency: After `Check Far Point'. 
-\\
-Time is modulated by input variable: - 
-\\
-Added when the following input variable is true: always included
-
-\subsection{Encode Visual Object 7}
-Description: - 
-\\
-Resource: Visual Module
-\\
-Time: 85 ms
-\\
-Dependency: After `Saccade to Far Point'. 
-\\
-Time is modulated by input variable: - 
-\\
-Added when the following input variable is true: always included
-
-\subsection{Remember Curvature}
-
-Description: From the information of near and far point, the model knows the curvature of the road. If the far point is straight over the near point, the curvature is zero. This information is stored in the working memory module. The default time for building such a representation (thus, before the chunk is built and put into working memory) is 200ms in ACT-R (\cite{bothell2016tut}). 
-\\
-Resource: Working Memory Module
-\\
-Time: 200 ms
-\\
-Dependency: After `Encode Visual Object 7'. 
-\\
-Time is modulated by input variable: - 
-\\
-Added when the following input variable is true: always included
-
-\\
-\textbf{Takeover In Noncritical Situation}
-\\
-In a noncritical situation, the driver is expected to take over driving on a straight road without any hazards. Thus, he only needs to take back control without any further action required. Thus, the following actions are added :
-
-\subsection{Request Lever Pull}
-Description: A production rule that requests the hands to move towards and pull the lever that deactivates the automation mode.
-\\
-Resource: Procedural Memory Module
-\\
-Time: 50 ms / 100 ms
-\\
-Dependency: After `Remember Curvature'. 
-\\
-Time is modulated by input variable: plus 50 ms if the `Time Budget' is long. 
-\\
-Added when the following input variable is true: Non-critical Situation
-
-
-\subsection{Hands Motor Preparation}
-Description: -
-\\
-Resource: Hands Module
-\\
-Time: 250 ms
-\\
-Dependency: After `Request Lever Pull'. 
-\\
-Time is modulated by input variable: - 
-\\
-Added when the following input variable is true: Non-critical Situation
-
-\subsection{Hands Motor Initiation}
-Description: -
-\\
-Resource: Hands Module
-\\
-Time: 50 ms
-\\
-Dependency: After `Hands Motor Preparation'. 
-\\
-Time is modulated by input variable: - 
-\\
-Added when the following input variable is true: Non-critical Situation
-
-\subsection{Pull Lever}
-
-Description: We assume that the lever pull can be compared to a key press in ACT-R. It takes 100ms (\cite{bothell2004act}).
-\\
-Resource: Hands Module
-\\
-Time: 100 ms
-\\
-Dependency: After `Hands Motor Initiation'. 
-\\
-Time is modulated by input variable: - 
-\\
-Added when the following input variable is true: Non-critical Situation
-\\
-\textbf{Takeover in a Critical Situation}\\
-In a critical situation, we assume that either the road is blocked, the car deviates from the lane due to a wind gust, the takeover is requested in a curve, or any other circumstances that thus require more complex action. Thus, simply deactivating the automation is not sufficient. The driver most likely will check whether it is possible to change lanes in case of an obstacle, and needs to have knowledge of his surroundings. This is only the case if there is surrounding traffic. In that case, we model gazes to back mirror, side mirror and back to the road. We assume the `worst case' that swerving is not possible and reaction time plus brake time need to be over before reaching an obstacle. If there is no traffic, we assume the driver to already know this from the first 'gist' of the scene \cite{oliva2006building}. Then, the driver does not look into the mirror but only brakes as soon as he has noticed the curvature of the road.
-
-\subsection{Request Check Rearward Mirror}
-
-Description: A production rule.
-\\
-Resource: Procedural Memory
-\\
-Time: 50 ms
-\\
-Dependency: After `Check Far Point'. 
-\\
-Time is modulated by input variable: plus 50 ms if the `Time Budget' is long. 
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-\subsection{Move Head To Rearward Mirror}
-
-Description: Since the head was moving already, motor preparation and initiation were omitted. Head movement was calculated to be 580ms with a 40\textdegree movement to the target and 10\textdegree target size. This was estimated by measures taken inside a car. 
-\\
-Resource: Head Module
-\\
-Time: 580 ms
-\\
-Dependency: After `Request Check Rearward Mirror'. 
-\\
-Time is modulated by input variable: 
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-\subsubsection{Saccade To Rearward Mirror}
-
-Description: -
-\\
-Resource: Eye Module
-\\
-Time: 80 ms
-\\
-Dependency: After `Request Check Rearward Mirror'. 
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-\subsubsection{Encode Visual Object}
-Description: -
-\\
-Resource: Visual Module
-\\
-Time: 85 ms
-\\
-Dependency: After `Saccade to Rearward Mirror' and `Head to Rearward Mirror' 
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-\subsubsection{Remember Visual Object}
-Description: -
-\\
-Resource: Working Memory
-\\
-Time: 200 ms
-\\
-Dependency: After `Encode Visual Object'. 
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-
-\subsubsection{Request Check Side Mirror}
-Description: A production Rule
-\\
-Resource: Procedural Memory Module
-\\
-Time: 50 ms
-\\
-Dependency: After `Head To Rearward Mirror' and `Saccade To Rearward Mirror' 
-\\
-Time is modulated by input variable:
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-\subsubsection{Move Head To Side Mirror}
-
-Description: Head movement was calculated to be 710ms with a 100\textdegree movement to the target and 10\textdegree target size. This was estimated by measures taken inside a car.
-\\
-Resource: Head Module
-\\
-Time: 710 ms
-\\
-Dependency: After `Request Check Side Mirror'. 
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-\subsubsection{Saccade To Side Mirror}
-Description: -
-\\
-Resource: Eye Module
-\\
-Time: 80 ms
-\\
-Dependency: After `Request Check Side Mirror'. 
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-\subsubsection{Encode Visual Object}
-Description: -
-\\
-Resource: Visual Module
-\\
-Time: 85 ms
-\\
-Dependency: After `Saccade to Side Mirror' and `Head To Side Mirror' 
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-\subsubsection{Remember Visual Object}
-Description: -
-\\
-Resource: Working Memory Module
-\\
-Time: 200 ms
-\\
-Dependency: After `Encode Visual Object'. 
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-
-\subsubsection{Request Gaze Back On Road}
-Description: -
-\\
-Resource: Procedural Memory
-\\
-Time: 50 ms
-\\
-Dependency: After `Saccade to Side Mirror' and `Head Side'
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-\subsubsection{Move Head Back To Road}
-
-Description: Head movement was calculated to be 580ms with a 40\textdegree movement to the target and 10\textdegree target size. This was estimated by measures taken inside a car. 
-\\
-Resource: Head Module
-\\
-Time: 580 ms
-\\
-Dependency: After `Request Gaze Back On Road'. 
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-\subsubsection{Saccade Back To Road}
-Description: -
-\\
-Resource: Eye Module
-\\
-Time: 80 ms
-\\
-Dependency: After `Request Gaze Back On Road'. 
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-\subsubsection{Encode Visual Object}
-Description: -
-\\
-Resource: Visual Module
-\\
-Time: 85 ms
-\\
-Dependency: After `Saccade Back To Road'. 
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-\subsubsection{Request Surroundings Traffic from Working Memory}
-Description: -
-\\
-Resource: Procedural Memory Module
-\\
-Time: 50 ms
-\\
-Dependency: After `Encode Visual Object'. 
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: Critical Situation, Traffic
-
-\subsection{Brake Time}
- 
-Description: This is set to zero to compare the output time of the model with what is given as takeover time in literature and our own trials. When applied, the model should be changed to calculate brake time here (Velocity is already an input to the model; a commented line of code gives the equation for brake time).
-\\
-Resource: Feet Module
-\\
-Time: 50 ms
-\\
-Dependency: After `Remember Curvature' and ` Request Surroundings Traffic from Working Memory'
-\\
-Time is modulated by input variable:  
-\\
-Added when the following input variable is true: Critical Situation
-
-ONLY BRAKE TIME IF ITS CRITICAL WITHOUT TRAFFIC
-\\
-Fig. \ref{gantt} shows the simplest takeover model in an uncritical situation.
-\\
-With these tasks, pyschedule then organizes the tasks in a way that the they are done as fast as possible while fulfilling 
-the constraints of order and one task per module. Thus, for every takeover situation (=combination of input variables), 
-pyschedule outputs exactly the same time. This is not realistic, because some people take longer and some shorter for taking 
-over for reasons that are not captured by our model. Typically, There is one threshold under which it is impossible to react,
-most people take slightly longer 
-than that threshold, and some are much slower.
-In ACT-R, this stochasticity is realized by different utilities for 
-actions. The higher the utility, the faster the rule is chosen to fire . 
-We approxinmated this distribution by setting pyschedule's output as mean of a skewed Weibull-distribution.
-The distribution's shape parameter was set to 3. This has been 
-found to be a typical reaction time distribution shape (\cite{derichs1998vergleich, whelan2008effective}).
-
-
-
-
-
-
-
-%in anpassung an boschdaten:
-%turnSA rausgenommen weil es zu lang dauert mit den ganzen vielen saccaden
-%- encode sound kürzer weil die das ja schon erwarten
-%- change goal immer gleichlang (unabhängig von workload) - dafür je nach workload move attention 400ms lang wegen niedriger utility
-%- wenn dangerous move head nur 300ms
-%- ansonsten bleibt es bei den 600 aus dem paper
-%- to wheel bekommt zusätzlich zu fitts law noch 600ms dazu weil die sich nicht eilig und nicht so zielgerichtet bewegen
-%- head2coseat und zurück dauert normale 600 bei not urgent und 300 bei urgent
-%- wenn gefährlich drop mit fitts law, ansonsten noch plus 600ms.
-%- wenn urgent production rule check near 50, ansonsten 160ms.
-%- wenn es gefährlich ist und mental workload hoch dauert check side back und road 400ms wegen utility, sonst 50ms. 
-%- wenn gefährlich mehr traffic heißt mehr saccaden
-%- eyemove prep reingemacht bei salvucci sccaden
-%- lever press takes 200 instead of 100
-%- noch eine saccade rein wenn man hände am lever hat aber noch nicht gepresst (aus video)
-%SA komplett rausgelassen!
-
-\section{Results}
-
-\begin{figure}
-\centering
-\includegraphics[width = 0.7\textwidth]{Figures/36}
-\decoRule
-\caption{Model prediction in comparison to literature data.}
-\label{36}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width = 0.7\textwidth]{Figures/63}
-\decoRule
-\caption{Model prediction in comparison to our data.}
-\label{35}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width = 0.7\textwidth]{Figures/44}
-\decoRule
-\caption{Model prediction in comparison to literature data.}
-\label{44}
-\end{figure}
-
-
-\begin{sidewaysfigure}
-\centering
-\includegraphics[width = 1\textwidth]{Figures/gantt.jpg}%groesser machen und zentrieren und schift direkt drunter (zum jpg machen)
-%\decoRule
-\caption{Decision tree of the model.}
-\label{gantt}
-\end{sidewaysfigure}
+The factors chosen because of their relevance were:
+\begin{itemize}
+\item Mirror Check Needed
+\item Decision Necessary
+\end{itemize}
+
+\subsubsection{Regression Equation}\label{equ}
+Studies report mean or median, and some standard deviation. Data on single subjects is not given. Therefore, one line in 
+design- and result matrix does not (as usual) include one subject, but one condition in a study. For example, 
+if \cite{unfallforschung} had one baseline condition that on average took 2,2 seconds for the takeover, the first 
+number of the result vector was 2,2. For the design matrix, we filled out every condition as `True' (1), `Not True' (-1), or 
+`Not Measured' (0).  An example of the first three rows is shown in Table. \ref{matrix}, a complete version can be found
+in the appendix. 
 
 \begin{table}
  \centering
-  \begin{tabular}{ c | c | c | c | c | c | c }
+ \begin{footnotesize}
+  \begin{tabular}{ c | c | c | c| c | c| c| c| c| c| c| c| c}
+    \hline
+     & \begin{turn}{-90}Gaze Off Road\end{turn} & \begin{turn}{-90}Mirror Check Necessary\end{turn} & \begin{turn}{-90}Body Turned Away\end{turn} &\begin{turn}{-90} Hands Occupied\end{turn} & \begin{turn}{-90}Cognitive Distraction\end{turn} & \begin{turn}{-90}Much Traffic\end{turn} & \begin{turn}{-90}Criticality of Situation\end{turn} & \begin{turn}{-90}Decision Necessary\end{turn} & \begin{turn}{-90}Time Pressure\end{turn} & \begin{turn}{-90}Long Autonomous Ride\end{turn} & \begin{turn}{-90}Elderly Subject\end{turn} &\begin{turn}{-90}Takeover Time\end{turn}\\ \hline
+    Vogelpohl, baseline &-1 & 0 & -1&-1&-1&0&0&0&1&-1&0&2.2\\ \hline
+    Vogelpohl, reading&1&0&-1&1&-1&0&0&0&1&-1&0&4.5\\ \hline
+    Vogelpohl, Tetris&1&0&-1&1&1&0&0&0&1&-1&0&5.0\\ \hline
     \hline
     
-     &                        Reference & &        Audiobook &  &       Searching Task & \\ \hline
-      &                        Data & Prediction & Data & Prediction & Data & Prediction \\ \hline
-      Median              & 2.71 & 2.56&        3.1 &    2.82 &         4.9 & 4.85 \\ \hline
-      75\% percentile & 3.33 & 3.44 &       3.91 &   3.72 &        6.4 & 5.73\\ \hline
-      95\% percentile & 4.4 & 5.8 &          6.59 & 6       &         8.9 & 8 \\ \hline
-       & & & & & & \\ \hline
-       & Read & & Tetris \\ \hline
-      &Data & Prediction & Data & Prediction\\ \hline
-     Median& 4.76 & 4.85& 3.1 & 3.56 \\ \hline
-     75\% percentile & 6.5 & 5.7 &4.1 & 4.38  \\ \hline
-     95\% percentile & 9.4 & 8.26 & 7.19 & 6.83   \\ \hline
+  \end{tabular}
+ \caption{Frequency Table}
+ \end{footnotesize}
+\end{table}\label{matrix}
+
+ From a `regression' point of view, it would have been ideal to have a series of homogeneous observations with identical 
+ boundary conditions that test all possible combinations of factors. This will be assumed for the rest of the analysis and 
+ should be kept in mind as a possible source of error for the discussion.  
+\\
+
+While some of the factors are `naturally binary' (Gaze Off Road, Mirror Check Necessary, Body Turned, Hands Occupied and Decision Necessary), for others a threshold needed to be set. Elderly Subject, Long Autonomous Ride and Tiredness were binary because they were only investigated in one study each with a relevant difference. Only one study included subjects over 60 years old (\cite{korber2016influence}); and only one study drives 20 minutes highly automated until they request to take over (\cite{feldhutter2016duration}). Cognitive Distraction was rated as `High' when the subject played Tetris, solved the 20 question task, read an email, solved the difficult remote association test, calculated, did the 2-back task, did a cognitive-motoric task or had to do a fill-in-the-blanks text. It was rated low when the subjects did nothing, read newspaper, watched a video, solved the easy remote association task or the surrogate reference task. In \cite{feldhuetterFahrer} subjects could choose their activities which was rated as cognitively demanding. For traffic, the threshold was chosen between no traffic at all and traffic existed on the road. This showed to induce a bigger difference than little and much traffic in \cite{gold2016taking}. A takeover situation was rated urgent when a collision had to be avoided, and as uncritical when a ride simply had to be continued on a straight road. Also `curve with wind gust' in \cite{Zeeb2015} was rated as urgent. For Time Pressure the threshold was set at 6 seconds, because Gold et al. find that at 5 seconds an overhasty takeover occurs, but not at 7 seconds (\cite{Gold2013}). 
+\\
+
+Thus, we postulate the following regression equation:
+\begin{equation}
+\begin{split}
+TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Mirror Check Necessary + \\
+\beta_{3} \cdot Body Turned Away + \beta_{4} \cdot Hands Occupied  + \beta_{5} \cdot Cognitive Distraction + \\
+\beta_{6} \cdot Much Traffic + \beta_{7} \cdot Criticality of Situation +  \beta_{8} \cdot Decision Necessary + \\
+\beta_{9} \cdot  Time Pressure + \beta_{10} \cdot Long Autonomous Ride  + \beta_{11} \cdot Elderly Subject  + \\ 
+\epsilon_{i}
+ \end{split}
+\end{equation} \label{equLit1}
+
+If participants have their gaze off road during the takeover request, it is expected that they take longer for the takeover because additional time is needed to direct the gaze towards the road. The same holds for a necessary mirror check, a turned away body , occupied hands, cognitive distraction and a decision that needs to be taken. If there is much traffic, we expect that it takes longer to build up situation awareness before the takeover, because the situation is more complex. The Criticality of the situation is supposed to speed up the takeover in case of an urgent situation (e.g. collision avoidance) and to slow down in the case of a not urgent scenario (e.g. simply continue to drive on a straight road). Under higher time pressure, the subject is also expected to take over faster than without time pressure. After a long autonomous ride, boredom and tiredness are expected to make the whole takeover slower. The effect of age is expected to be small, according to studies (\cite{korber2016influence}). 
+\\
+
+After doing a regression with equation \ref{equLit1}, we included the variables 'Traffic' and `Criticality of the Situation'. They were determined by the `enter' method, because the variables were chosen based on the a-priori hypothesis that all those variables have a relevant influence, based on literature. Equation \ref{equLit2} results from a regression with only those two variables:
+
+\begin{equation}
+\begin{split}
+TakeOverTime = 3,21 + 0.42 \cdot Traffic - 0.35 \cdot Criticality_Situation + \epsilon_{i}
+ \end{split}
+\end{equation} \label{equLit2}
+
+\subsubsection{Multiple Regression Assumptions}
+This has been done after the manual on \cite{statsZuerich}. The figures supporting the assumptions that were made can be found in the appendix. 
+\\
+
+Since we postulated a linear model, we have to check whether all independent variables have a linear relationship with the 
+dependent variable when controlled for the other factors. This can be done by looking at the partial regression diagrams.
+ On the Y axis this shows the residual that would result if the dependent variable would be 
+regressed on all independent variables except the one written on X. On the X axis it shows the residual that would result if 
+X would be regressed on all other variables.  Thus, the part of the variance that is not explained by all factors but X is 
+plotted against the part of X that is independent of the other variables. If these scatter plots look linear, we can assume a 
+linear relationship. 
+\\
+
+The nominal scaling of the variables makes it hard to see whether the relationship 
+is linear or not. The four columns most likely arise from the four possible combinations of the variables. A slight upward 
+trend can be seen for `traffic', which suits to the significant Pearson correlation of 0.44 between traffic and takeover time. 
+A slight downward trend can be seen for the partial regression plot of `criticality of the situation', which also suits to the 
+significant Pearson correlation between Takeover time and Criticality of Situation of -0.18. We will keep in mind that the 
+linearity of the problem might not be given.
+\\
+
+We assume that the postulated model is linear in its coefficients, and that all subjects were drawn from a random sample. Most likely we have a skew for a WEIRD sample (western, educated, industrialized, rich, democratic, see \cite{jones2010weird}). Furthermore, we hypothesize that the the error term has a mean of zero for every value of an independent variable. Homoscedasticity is excluded by visual inspection. We assume an independent and normally distributed error term. 
+\\
+
+Table \ref{frequ} shows a frequency table of the design matrix. Traffic has been high in 32 cases, and none in 66 cases. A (driving simulator-) critical situation has been given in 100 cases, whereas only 7 conditions are given for uncritical takeover scenarios. Therefore, there will be a high correlation between the constant (a vector of ones) and criticality (nearly a vector of ones). While a correlation between takeover time and the variables is desired, correlations between variables are not. As can be seen in \ref{bla}, traffic and criticality of the situation have an insignificant correlation of 0.096. In addition, the measures of Tolerance Value and Variation Inflation Factor (`VIF', which is simply the inverse of the Tolerance Value) are typically examined. Those are measures of multicollinearity. While one can have multiple variables that do not correlate pairwise, there might still be significant multicollinearity between the set of all of them. The Tolerance Value is calculated by $T_{j} = 1- R^{2}$, where $R^{2}$ is the coefficient of Determination. $R^{2}$ measures how much of the variance of the dependent variable is explained by this independent variable. In other words, VIF and Tolerance Value measure how much larger the variance of the regression coefficient is than if the variable had been completely uncorrelated with other variables in the model. This Tolerance Value should, as a rule of thumb, not be smaller than 0.1. Including correlating variables in a model leads to p-values that are higher (=less significant) by a factor of the VIF than they otherwise would be. 
+\\
+
+None of the Tolerance Values are smaller than 0.1. While this first seems surprising due to the correlation between `criticality' and the constant, Belsley writes in his book on `Regression Diagnostics' that high correlations are not always problematic (\cite{belsley2005regression}). Some authors even suggest correlations as high as 0.7 should not be considered severe (\cite{mason1991collinearity}). Thus, we will continue our analysis while keeping the correlation between the two in mind for subsequent analysis. \\
+
+\subsection{Results}\label{resLit}%evaluation?
+
+Our model predicts four values: 3.21 seconds for a takeover with no traffic and an uncritical scenario; 3.63 seconds for a takeover with traffic in an uncritical scenario; 2.86 seconds for a takeover without traffic in a critical scenario; and 3.28 seconds for a takeover with traffic in a critical scenario (see Table. \ref{cases}).
+
+\begin{table}
+ \centering
+  \begin{tabular}{ l | c | c}
+    \hline
+    
+    & Critical Scenario & Uncritical Scenario\\ \hline
+     No Traffic & 2.86 & 3.21\\ \hline
+      Traffic & 3.28 & 3.63\\ \hline
+    \hline
     
   \end{tabular}
  \caption{Predicted takeover times}
 \end{table}\label{cases}
 
-\begin{table}
- \centering
-  \begin{tabular}{ c | c | c | c | c | c }
-    \hline
-    
-    Input & Baseline & Audiobook & Tetris & Reading & Searching Task \\ \hline
-     Expert&0&0&1&1&1 \\ \hline
-     Gaze Off& 1&1&1&1&1\\ \hline
-     Long Gaze& 1&1&1&1&1\\ \hline
-     Body Turned&0 &0&0&0&1\\ \hline
-     Lockout&1&1&0&0&0 \\ \hline
-     Hands Occupied&0&0&0&1&1 \\ \hline
-     Distance Hands&30&30&30&60&60\\ \hline
-     Feet On Pedals&0&0&0&0&0  \\ \hline
-     Dangerous Scenario&0&0&0&0&0 \\ \hline
-     Driving Speed&120&120&120&120&120 \\ \hline
-     Perceived Urgency&0&0&0&0&0\\ \hline
-     Mental Workload&0&1&1&1&1\\ \hline
-     Traffic&1&1&1&1&1\\ \hline
-    
-  \end{tabular}
- \caption{Input for each condition}
-\end{table}\label{input}
+`Constant', `much traffic' and `criticality of the situation' are highly significant. This significance depends on 1) the magnitude of the effect, 2) the magnitude of the error variance, 3) the variance of the variable itself, 4) the amount of data, and 5) the number of variables in the model. All five can be reasons that the other variables did not become significant (in the first run of the regression, see \ref{equLit1}). 
+\\
+
+`Much traffic' and `Criticality of Situation' have an effect of similar strength, but in opposite directions. It makes sense that a person takes longer to prepare for the takeover if there is more traffic, and that one is faster if the situation is critical. The constant of 3,21 seconds suits to typical takeover times in literature. Those two factors having the biggest influence suits to the recently published dissertation by Christian Gold. He finds by regression analysis that Time Budget, Repetition (which we did not include as variable) and traffic density are the main predictors of takeover time (\cite{Gold2016}). `Time Budget' and `Criticality of the Situation' could be summarized as `urgency' of the takeover, and `traffic' is also what we find to be a relevant influencing factor. Thus, our model fits to Gold's findings. The insignificant variables of the first run of the regression should not be interpreted due to their insignificance and correlation with one another. Matlab and Excel confirmed the results obtained with SPSS. 
+\\
+
+ $R^2$ measures the amount of variability in takeover time that is explained by the model. The adjusted $R^2$ is corrected by the amount of independent variables. This is necessary because $R^2$ rises with the amount of independent variables, even if they do not add any information. The adjusted $R^2$ is reduced by the number of independent variables and increased by sample size. The achievable $R^2$ depends on the variance present in the data. Thus, also a model with a low  $R^2$ can be a good model, if there is a lot of `natural' variance in the data (like e.g. with humans) (\cite{Gold2016}). In our case, 23,2\% of the variability of takeover time are explained by our two variables (Fig. \ref{15}). A plot of the takeover time against the predicted takeover time can be found in Fig. \ref{16}. The significance of different studies can be compared by the effect size. The resulting effect size can be calculated by Cohen's d: $\sqrt{\frac{0.232}{1-0.232}} = 0.55$. This corresponds to a strong effect according to Cohen (\cite{cohen1992power}). 
+The lower part of Fig. \ref{15} shows the ANOVA of the complete regression model, which is calculated to be significant. Fig. \ref{16} shows a plot of measured against predicted takeover time. The four rows clearly represent the four predicted values, for each of which several measured values exist. Thus, our model does not include all influencing variables yet.
 
 \begin{figure}
-    \centering
-    \begin{subfigure}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{55.jpg}
-        \caption{Data}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{58.png}
-        \caption{Model}
-    \end{subfigure}
-    \caption{Comparison of experimental data with data predicted by the model for the Baseline condition.}\label{55}
+\centering
+\includegraphics[width = 0.5\textwidth]{Figures/66}
+\decoRule
+\caption{X-Axis:measured Value of takeover time ; Y-Axis: Predicted Value of takeover time.} %intercept stimmt total nicht??
+\label{16}
+\end{figure}
+
+\subsection{Discussion}
+
+Our model shows that traffic and criticality of the scenario have an influence on takeover time, $ F(2,112) = 17.89, p = 0.000, n = 113$. With traffic, takeover time increases by 0.42 seconds, and with criticality of the situation, takeover time decreases by 0.35 seconds. 23\% of the variance in our data are explained by these two independent variables, which corresponds to a strong effect according to Cohen (\cite{cohen1992power}).
+\\
+
+When including all firstly hypothesized variables in the multiple linear regression, variables highly correlate with each other. This is because they are only measured on a nominal level and correlate as soon as variables have been measured in the same combination in different studies. Here it has to be kept in mind that correlations between variables only indicate how often they were measured together in studies, and says nothing about a relationship between the variables themselves. A correlation between any variable with takeover time, on the other hand, does say something about the influence of this factor on takeover time. 
+If variables (including the constant) correlate, they partly explain each other and do not necessarily add completely new information. This can be compared to a matrix that does not have full rank because its rows are linearly dependent; it results in an ill-defined problem because we have more variables we want to find than equations that can independently explain those variables. Thus, using a design matrix with vectors that correlate leads to imprecise estimates of the regression parameters. As a consequence, variables compete for statistical power, and each single one only adds little explanatory value. This is most likely the reason why only two variables out of eleven became statistically significant. Even though the VIFs indicate that no multicollinearity exists, a high correlation between variables might still have an influence and lead to high p-values and high variability of estimated betas. When using the `forward' regression method, `criticality of the situation' and `traffic' are chosen as included variables. The `forward' method starts without any variables, and adds variables until adding another variable does not lead to a significant improvement of the fit anymore. Thus, it is not only due to the competition for explanatory power that only two variables are included in the model.  There certainly is another problem hidden in the design matrix: some studies that investigated the same factor report conflicting results. While for example most studies find that a gaze off road leads to longer takeover times, Louw et al. have a lower mean takeover time in the group that had the gaze off road (\cite{louw2015engaging}). Here, it should be mentioned that they do not use a driving simulator, but conduct the study in front of a computer screen. This might lead to unrealistic perception of the driving situation and takeover scenario. Excluding these conflictive studies, on the other hand, does not improve the fit of the model. Another problem might be that studies are less comparable than expected. Most likely, factors other than the ones included in our regression varied between studies. This might be little things: Differences in simulators, study setup, study subjects, etc. might be reasons that make studies incomparable. Also, a nominal scale has a low level of measurement, which means that it contains little information. This can hardly be changed because most measures are nominal by how they were measured or reported in the given studies. Furthermore, in many studies takeover times were reported independent of takeover quality. Thus, if an overhasty takeover leading to high lane deviations and lateral accelerations occurred, takeover time was very short. Even if e.g. traffic would have had an influence on the takeover time, this would have been omitted by the fact that the takeover happened overhasty. Since we are modeling a normative (`driving school') takeover, we would be interested in any factor that influences takeover time in the case of a calm, planned takeover.
+
+\subsection{Outlook}
+Since the linearity of the problem as well as the linearity of the coefficients could not be verified, a next step could be to try a nonlinear regression, or a linear regression with nonlinear coefficients. In case we chose a linear regression even though the correct model is not linear, the slope and intercept estimates and the fitted values from the linear regression will be biased (\cite{statsrequ}). 
+
+
+%https://stats.stackexchange.com/questions/70899/what-correlation-makes-a-matrix-singular-and-what-are-implications-of-singularit?noredirect=1&lq=1
+
+
+\section{Experimental Data - Regression Analysis}\label{regBosch}
+To compare literature with results of our own study, we also conducted a multiple linear regression with data obtained from our own experiments. 34 subjects conducted six takeovers with each 5 or 15 minutes of non-driving related task in between (depending on their group). They drove on the right lane of a German highway with about 100 km/h. During the `Highly automated driving' mode, a wizard drove the car from the co-driver seat, while the subject sat on the driver seat. When a takeover request was issued, the wizard gave control to the subject one second after two levers on the steering wheel were pressed. The subject either 1) did nothing (baseline), 2) listened to an audiobook, 3) searched a figure out of several on the back seat, 4) read a journal or 5) played tetris on a tablet.
+ 
+\subsection{Regression Equation}
+For the regression with our own data we included as much as possible of the factors that were also measured in the literature regression. `Criticality of the situation' could not be assessed, because the study took place on a real road. Thus, all situations were uncritical. Therefore, mirror checks and decisions were never required. Furthermore, there was no time pressure because there was no hazard before which the participant urgently needed to have absolved the takeover. Takeover time was again measured in seconds. Age was binary for under and above 45 years; Gaze off road was binary; Hand and body position were binary; what was called `traffic' in the literature regression was here measured in whether a car was in front which could be `no car ahead', `appropriate distance to front vehicle' or `short distance to front vehicle'. The length of the ride before takeover was either `long' (15 minutes) or `short' (5 minutes). Mental workload (=Cognitive Distraction) during takeover request was rated by participants on a scale from 0 to 15. %Perceived Time Pressure at the takeover request was rated on a scale from 1-3. 
+\\
+
+In a first regression we determined the variables that have a relevant influence on takeover time based on equation \ref{equdata}. As a result, we included `Ride Duration', `Hands Occupied' and `Body Towards Road' in our regression model. The resulting equation is Equation \ref{equdata2}
+
+\begin{equation}
+\begin{split}
+TakeOverTime = \beta_{0} + \beta_{1} \cdot Gaze Off Road + \beta_{2} \cdot Body Turned Away +\\
+ \beta_{3} \cdot Hands Occupied  + \beta_{4} \cdot Cognitive Distraction + \beta_{5} \cdot Much Traffic +\\
+ \beta_{6} \cdot Long Autonomous Ride  + \beta_{7} \cdot Elderly Subject  + \\ 
+\epsilon_{i}
+ \end{split}
+ \label{equdata}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+TakeOverTime = 2,98 + 0.56 \cdot Ride Duration + 1.75 \cdot Hands Occupied + 0.96 \cdot Body Towards Road + \epsilon_{i}
+ \end{split}
+ \label{equdata2}
+\end{equation}
+
+
+\subsection{Multiple Regression Assumptions}
+
+Again, all assumptions have been checked, and corresponding figures can be found in the appendix. 
+\\
+
+It did not become clear whether strict exogeneity could be assumed. Roughly, the mean error is zero. In case it is not, this would imply the existence of an implicit X. This means that a variable that influences takeover time in all experiments is not included in the regression equation. This would lead to biased fitted estimates for the slope and intercept. Another option in case of linear dependency in the plot of residuals against fitted values is an implicit block effect. This can be detected by performing an analysis of covariance. This divides the data into different regression lines. If there is a significant difference between the slopes, the linear relationship between X and Y varies with the value of the blocking factor (\cite{statsrequ}). For simplicity, we will assume strict exogeneity. 
+\\
+
+Futhermore, there is a significant correlation between `Hands Occupied' and `Body Towards Road'. This makes sense, because when the body is turned away, hands are always occupied due to the experimental setting. Still, the VIF is never higher than 10 (Fig. \ref{31}). Thus, we can assume that collinearity is under the typically accepted value. 
+
+\subsection{Results}\label{resData}%evaluation
+Our model predicts eight values. `Hands Occupied' and `Body Turned To Road' are highly significant. `Ride Duration' also shows to be significant. This significance depends on 1) the magnitude of the effect, 2) the magnitude
+of the error variance, 3) the variance of the variable itself, 4) the amount of data, and
+5) the number of variables in the model. All five can be reasons that the other variables did
+not become significant (in the first run of the regression, see \ref{equdata}). 
+ If the driver's hands or body need to be placed in the right position for taking over, and also if the driver got strongly disengaged from the driving task by a long autonomous ride, takeover time increases. Thus, it makes sense that all coefficients are positive. With an adjusted $R^2$ of 29.3\%, the effect size of our regression model by Cohen's d is $\sqrt{\frac{0.293}{1-0.293}} = 0.64$. This corresponds to a strong effect according to Cohen (\cite{cohen1992power}). 
+The lower part of Fig. \ref{32} shows the ANOVA of the complete regression model, which is calculated to be significant. A scatter plot of predicted against measured takeover time can be found in Fig. \ref{33}. The two rows show that for two predicted values, there is a variety of actually measured values. Thus, our model does not capture all influencing variables yet.
+\\
+
+A box plot of every participant's takeover time range is shown in Fig. \ref{52}. The times ranges arise from the takeover times for five takeovers per person. The shortest range of takeover times is 0.8 seconds in participant seven, and the largest is 6.51 in participant 31. 
+
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/33}
+\decoRule
+\caption{Predicted against measured takeover time.}
+\label{33}
 \end{figure}
 
 \begin{figure}
-    \centering
-    \begin{subfigure}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{56.jpg}
-        \caption{Data}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{61.png}
-        \caption{Model}
-    \end{subfigure}
-    \caption{Comparison of experimental data with data predicted by the model for the Reading condition}\label{56}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/52}
+\decoRule
+\caption{Takeover times for all five takeovers ( = conditions) per subject.}
+\label{52}
+\end{figure}
+
+\subsection{Discussion}
+Our multiple regression analysis shows that ride duration, hand occupancy and body position influence takeover time, $F(3,169) = 24,38, p = 0.000, n = 34$. While a longer previous ride duration prolongs takeover time by 0.56 seconds, occupied hands prolong it by 1.75 seconds. A body that is turned away from the road at the takeover request leads to a takeover that takes 0.96 seconds longer. 29.3\% of the variance of the data are explained by these three independent variables, which is a strong effect according to Cohen (\cite{cohen1992power}). While `Hand Occupancy' and `Body Turned To Road' could be a representative of `motor' readiness, `length of ride before TOR' could be a representative of the `cognitive' readiness. 
+
+
+\subsection{Outlook}
+Also in this case it would be interesting to see how well a nonlinear model or nonlinear coefficients predict the data. Furthermore, the prediction of the model is increased to an adjusted $R^2$ of 85\% by modeling with a Generalized Linear Mixed Model (personal communication with Christian Purucker, 2017). He included the subject number as a random effect, in addition to the same variables we used as fixed effects. This means that the prediction can be increased from 29\% explanation of variance to 85\% by including per person the information of how long the previous takeover took, for example predicting the third takeover by saying `this subject was 0.05 seconds faster than the other subjects in the previous two takeovers'. Subsequently, for this subject the intercept is adjusted accordingly. When using only the person as a independent variable, already 54\% of the variance in the data could be explained. This can be confirmed when examining Fig. \ref{52}. If all participants would take roughly the same time for the same condition, the bar plots would be on a similar height and would have similar distributions. This is not the case. It seems more like some people take generally more time, and some generally less time. The ones that react fast are fast independent of outer circumstances. For the slower subjects the condition does seem to have an influence on takeover time, considering the larger spread of the higher takeover times. Thus, it seems like there is a large individual factor that should be included in each prediction. A general reaction time test, on the other hand, did not improve the fit of the model when used as a random effect. 
+
+
+\section{Experimental Data - Factor Analysis} \label{svd}
+\subsection{Introduction}
+\begin{figure}
+\centering
+\includegraphics[width = 0.3\textwidth]{Figures/19}
+\decoRule
+\caption{Conceptual idea of the principal component analysis}
+\label{19}
+\end{figure}
+Another option to interpret the (previously called) design- and result matrix is by Factor Analysis. Its advantage is that it is not disturbed by multicollinearity in the design matrix, because it clusters variables that are collinear. While it can not be used to predict takeover time, it can be used to reduce the dimensionality of the problem (thus, the amount of relevant influencing factors). This might be useful for other modeling approaches or future study design. 
+\\
+
+From the seven variables that we included in our regression, some always were recorded together just by how they occur naturally. For example, if someone's hands are occupied, most likely his gaze will also be off road - looking at whatever is in one's hands. Thus, there is more information measured than might actually be needed - there might be `double information' in our variables. For future study design, it would be useful to know which, for example, three variables need to be measured to give independent information about driver state and takeover situation. To strip down the problem to what actually has independent influence on our data, one can conduct a factor analysis.
+To understand factor analysis, it is important to understand its core calculation, the principal component analysis (`PCA'):
+ \\
+ 
+In PCA, one tries to explain observations for many particular things in few general explanations. For example, if I have 100 CDs at home, when asked for my music preference, I will most likely not answer all 100 names of those CDs, but `I like Jazz'. Another example is handling the data of Magnetic Resonance Imaging: Instead of reporting all voxels of all subjects that were active for a certain task, I report `For all subjects, the motor cortex was active'. PCA tries to find those underlying features like `Jazz' and `motor cortex' in our examples. Graphically, this can be imagined as shown in Fig. \ref{19}. While factors 1 to n correspond to the many voxels with different activities, their change in activity can be traced back to a combination of activity in `motor cortex' and `visual cortex' , which are the `real' explanatory factors behind the differences in the result (h1 and h2). In mathematical terms, this is called dimensionality reduction. As an example, we will reduce a 3-dimensional matrix F to a 2-dimensional matrix. We plot the matrix in 3-D space and draw a 2-D plane into it. Subsequently, we project all data points on this 2-D plane. This projection is now our matrix with reduced dimensions. The plane should be drawn in a way that the projected distance is as short as possible. 
+\\
+
+The following explanations about factor analysis are based on (\cite{field2009discovering}). As it becomes clear already in the description of PCA, factor analysis is done to reduce the size of a data set while retaining as much information as possible. For this, I try to find underlying factors in my data by clustering variables that correlate highly (thus, give similar information). To give Andy Field's example: I conduct a questionnaire that measures per person 1)social skills, 2)selfishness, 3)how interesting others find them, 4)how much time they talk about the other in a conversation 5) how much they talk about themselves in a conversation and 6) how often they lie to people (6 variables). When correlating all those variables with one another, one gets to the correlation matrix (R matrix). In the R matrix, one can see that the variables `social skills', `talking about the other', and `how interesting they are found' correlate highly with one another. Also the variables `talking about oneself', `selfishness' and `liar' correlate highly. Thus, one could state that two main factors could explain the data: the first `variable-cloud' could be described as Sociability (`social skills', `talking about the other', and `how interesting they are found'), the second as Consideration(`talking about oneself', `selfishness' and `liar'). When plotting the variables along the two `factor-axes', the first thus clusters around the axis for Sociability, the second along the axis for Consideration. The X and Y values of these variables describe how much a variable `loads' on that factor, and correspond to the elements of the factor's eigenvectors. Factor loading, thus, is the correlation of a variable with a factor. For example, `social skills' will load highly on the sociability factor, but low on the consideration factor. Ideally, every variable loads highly on one factor and low on another factor. Most often, I do not know previously by how many factors my variables can be described. For this, I first obtain the eigenvalues of the correlation matrix of my data. Subsequently, I look at a plot that shows, sorted by size, the eigenvalues against the factor with which they are associated. This is called Scree-Plot (see Fig. \ref{48}). This plot has a point of inflexion. To reduce dimensions, I only want to keep the factors that explain most of my data (i.e. that have high eigenvalues). Thus, I keep as many factors as I can find on the scree-plot before the point of inflexion. Other methods of factor extraction are Kaiser's criterion and Jolliffe's method (see \cite{field2009discovering}, Chapter 17.4.5 for more information). Now, I try to arrange these factors in a way that variables load highly on only one factor and low on the other. This can either be done by keeping the axes in 90\textdegree angle to each other (orthogonal rotation), or in a way that the axes are laid through the variables as closely as possible (oblique rotation). While orthogonal rotation leads to factors that are uncorrelated, factors can (and most likely will) still correlate in oblique rotation.  
+
+\subsection{Results}
+\begin{figure}
+\centering
+\includegraphics[width = 1\textwidth]{Figures/47}
+\decoRule
+\caption{Variance explained by the two factors}
+\label{47}
 \end{figure}
 
 \begin{figure}
-    \centering
-    \begin{subfigure}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{57.jpg}
-        \caption{Data}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{60.png}
-        \caption{Model}
-    \end{subfigure}
-    \caption{Comparison of experimental data with data predicted by the model for the Tetris condition}\label{57}
+\centering
+\includegraphics[width = 0.6\textwidth]{Figures/48}
+\decoRule
+\caption{Scree-Plot: X-Axis Component Number, Y-Axis Eigenvalues}
+\label{48}
 \end{figure}
 
 \begin{figure}
-    \centering
-    \begin{subfigure}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{53.jpg}
-        \caption{Data}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{59.png}
-        \caption{Model}
-    \end{subfigure}
-    \caption{Comparison of experimental data with data predicted by the model for the Audiobook condition}\label{58}
+\centering
+\includegraphics[width = 0.8\textwidth]{Figures/45}
+\decoRule
+\caption{Correlation Matrix}
+\label{45}
 \end{figure}
 
 \begin{figure}
-    \centering
-    \begin{subfigure}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{54.jpg}
-        \caption{Data}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{62.png}
-        \caption{Model}
-    \end{subfigure}
-    \caption{Comparison of experimental data with data predicted by the model for the Searching condition}\label{59}
+\centering
+\includegraphics[width = 0.4\textwidth]{Figures/49}
+\decoRule
+\caption{Factor Loadings}
+\label{49}
 \end{figure}
 
-\section{Evaluation}
-\subsection{Method of Evaluation}
-For evaluating the cognitive-motor driver model, the model's predictions are compared with 1)experimental test data and 2)data from literature. For both, the input variables were set in a way that reflected experimental setup.  The input vectors to each of the experimental test conditions can be found in Table \ref{input}. For comparison with experimental test data, 34 samples were drawn from the Weibull-distribution the model predicts. For comparison with literature data, the mean of the Weibull-distribution was compared to the mean that was reported in literature. 
+\begin{figure}
+\centering
+\includegraphics[width = 0.5\textwidth]{Figures/50}
+\decoRule
+\caption{Factor Loadings as 2D Plot}
+\label{50}
+\end{figure}
 
-\subsection{Results of Evaluation}
-Input variables were set to reflect experimental setup of our the experimental test data. The model predicts a mean of 2.61 seconds for the baseline condition, for listening to an audiobook it is 2.75s, playing tetris 2.51, reading a magazine 4.74 and searching something on the rear bench seat also 4.74 (see Table \ref{cases} for 75 and 95 percentiles). For an example job-shop schedule of the baseline condition, see Figure \ref{gantt} . We compared predicted and experimental data in three ways. First, we compared - per condition - the 34 results with the predicted mean, see Fig. \ref{36}. $R^2$ was thus obtained by determining the error between model and experimental data every data point. Subsequently, it is squared and added up with the other squared errors, and divided by the amount of data points. This results in an $R^2$ of 0.217, which means that our model predicts 21.7\% of the variance in the data. Second, means of both prediction and expiermental data were compared. This results in an  $R^2$ of 0.96. Third, we drew 34 samples from the modeled Weibull-distribution for each condition. These 34 samples were sorted in ascending order. The same was done with the 34 samples of the experimental test data. Again, $R^2$ was assessed and showed to be 0.36. A general fit of the model's distribution shape can be found in Fig. bla. 
+\begin{figure}
+\centering
+\includegraphics[width = 0.5\textwidth]{Figures/51}
+\decoRule
+\caption{Bartlett's Test}
+\label{51}
+\end{figure}
 
-grnauer erklären wie ich auf 36\%predicition vom cognitivem mdel hinbekomme - ich gehe davon aus wer schneller und wer langsamer typ ist
+I use the same matrix as for the regression with the same seven variables. A correlation matrix can be found in Fig. \ref{45}. Bartlett's test shows that our matrix is significantly different from an identity matrix, which is a requirement for conducting the PCA. If it would be too similar to an identity matrix, this would mean our correlations are too low to conduct a PCA. Factor extraction occurred on the basis of all eigenvalues greater than 1 (Kaiser's criterion), which extracts two factors. This can be verified when examining the Scree-Plot (Fig. \ref{48}). These two factors explain 41.5\% of variance in the data (Fig. \ref{47}). To ensure that no collinearity exists between factors, we used orthogonal rotation (`varimax' in SPSS). The loading of the two factors can be found in Fig. \ref{49}, and as a plot in Fig. \ref{50}. Since factor 1 has high absolute loadings on `Hands Occupied', `Body Towards Road' and `Gaze Off Road', it could be interpreted as `motor distraction'. The second factor has high loadings on `Ride Duration', `Age' and `Mental workload'. 
 
-Furthermore, the model was compared to takeover times reported in literature. Because only means are reported, our model's output was compared to these means. The papers of \cite{befelein2016} and \cite{gold2016taking} were compared to the cognitive-motor-model, because they both tested  the circumstances that we input in our model. One difference is that they have critical scenarios, and that they use a driving simulator. The takeover times given in each condition of the paper compared to the model prediction can be found in Table \ref{comlit}. $R^2$ is 0.64.  In Fig. \ref{44} we can see the comparison of the means of the literature and the Driver model.
+\subsection{Discussion}
+While it makes sense that motor distraction can be clustered, Ride duration, age and mental workload most likely do not have any influence on one another - at least not in how much they occur together. Knowing that all motor distraction can be clustered, it might be enough to measure only one variable per factor to be informed about the current driver state. The variables load high on the one and low on the other factor very nicely. What first seems confusing is that `Hands Occupied' and `Gaze Off Road' correlate negatively. If one's hands are occupied, most likely one's gaze is also off road. But, it might well be that a subject has the eyes off road even though his hands are not occupied. Thus, in our data it seems like there are many of those cases, which explains the negative correlation. 
+\\
+
+Strictly speaking, principal component analysis and factor analysis are two different things. Principal component analysis only decomposes our data into several linear factors, and assumes that all the variance between the variables is common variance (variance that is shared with other variables, in opposite to unique variance). In factor analysis, a mathematical model is derived from which factors are estimated. We conducted a PCA because it is `conceptually less complex' (\cite{field2009discovering}) and \cite{guadagnoli1988relation} find that its results do not differ too much from factor analysis.
+
+\section{Experimental Data - Singular Value Decomposition}
+\subsection{Introduction}
+While the factor analysis is suitable to see which factors need to be measured to infer the driver state, this says nothing about the factor's influence on takeover time yet. For this, we again do a singular value decomposition, followed by a weighting by takeover time. 
+
+\subsection{Method}
+The first step is to perform a mean normalization and feature scaling on matrix F with size (n x p). Second, the covariance matrix $\Sigma$ is calculated for F. Subsequently, the singular value decomposition is computed on $\Sigma$ to obtain its eigenvectors. 
+
+As an equation:
+\begin{equation}
+\begin{split}
+(U, S, V) = SVD(\Sigma).
+ \end{split}
+\end{equation}
+
+Now, U (n x p) is a unitary matrix. S (p x p) is the diagonal matrix containing the singular values. It describes the amount of variance retained by the reduction. V (p x p) are the eigenvectors ( = loading of the variable onto the factors) of $\Sigma$. They corresponds to the hyperplane in 2D in our previously mentioned example. Now, we are interested in the influence of these singular values on our result vector r (n x 1). It contains n takeover times in our case. $S^{-1} \cdot U'$ describe the principal components of our data. Now, we weight these principal components by takeover time. Thus, we calculate:
+
+\begin{equation}
+\begin{split}
+\gamma = S^{-1} \cdot U' \cdot r
+ \end{split}
+\end{equation}
+
+Now, we check for the highest absolute values of gamma which variables load on them. This will be the variables that explain most of the variance in the data (\cite{christensen2011plane}).
+
+\subsection{Results}
+The V resulting from the singular value decomposition (`svd()' function in Matlab) of our matrix F looks the following: 
+\\
+$
+ \begin{bmatrix} \label{V}
+ 
+   Variable & Factor 1 & Factor 2 & Factor 3 & Factor 4 & Factor 5 & Factor 6 &Factor 7\\
+  Age &  -0.19 &   -0.9& 0.08 & -0.25 & 0.13 & 0.18 & 0.2 \\
+  Long Ride &   -0.06  &  -0.17  &  0.21 & 0.93 & 0.24 & 0.03 & 0.05\\
+  Gaze Off Road& -0.04 &  -0.25  & 0.68 & 0.1 & 0.19 & 0.4 & -0.52 \\
+  Hands Occupied &  -0.04  & -0.11&  0.59 & -0.1 & -0.06 & -0.77 & -0.16 \\
+  Body Turned&  -0.02 &   -0.05 & 0.35 & -0.04 & -0.1 & 0.46 & -0.81  \\
+  Traffic &  -0.03 &  -0.21& -0.15 & 0.24 & -0.93 & -0.04 & 0.03  \\
+  Mental Workload& -0.98  & 0.21& -0.03 & -0.02 & -0.01 &  0 & 0  \\
+   
+
+\end{bmatrix}
+$ 
+\\
+
+While the result of $\gamma = S^{-1} \cdot U' \cdot r$ is:
+\\
+ $
+ \begin{bmatrix} \label{gamma}
+   Factor 1 & -0.46\\
+   Factor 2 & -1.6\\
+   Factor3 &  1.72\\
+  Factor 4 &   0.1\\
+  Factor 5 &   0.32\\
+  Factor 6 &  -0.49\\
+  Factor 7 &  -0.67\\
+\end{bmatrix}
+$ 
+\\
+Apparently, factors two and three are the most important ones when weighted by takeover time (see $\gamma$). Thus, we now identify which variables load the most on factor two and three. These correspond to columns two and three in matrix V. While mainly `age' loads on Factor two, Factor three is loaded by `Gaze Off Road', `Hands Occupied' and `Body turned'.   
+
+\subsection{Discussion}
+These two factors are very similar to the two factors we already found when not weighting by takeover time: One factor is loaded highly by motor distraction tasks (factor three) and one by age (factor two). In this case only `age' had a high loading, but also the loadings for Traffic and Mental Workload are at -0.21 and 0.21, respectively. Now, clustering for cognitive distraction makes sense - because age, mental workload and traffic all most likely influence takeover time by cognitively challenging the driver. These two factors have no multicollinearity and thus independently influence takeover time. Thus, it can be assumed that the most crucial points to pay attention to in designing future driving studies are to have one task that is mainly motoric, and one that is mainly cognitive. This is in line with previous research assumptions of nearly all papers that examine takeover time.
+\\
+
+The multiple linear regression in section \ref{regBosch} resulted in `Ride Duration', `Hands Occupied' and `Body Turned' having the strongest influence besides the constant. This, again, supports that one motor and one cognitive variable should always be included. All three were variables we also found to be important in the factor analysis and the singular value decomposition. 
+
 
 \section{Discussion}
-In general, the model predicts too long takeover times compared to literature. This is because in literature, takeover that happened overhasty or even ended in a crash are considered. We, in contrast, built a model for the normative takeover.
-\\ 
-The $R^2$ must be interpreted with caution for the fit of the model's predicted mean with experimental data. For assessing $R^2$, the error between model and experimental data is determined for every data point. Subsequently, it is squared and added up with the other squared errors, and divided by the amount of data points. Therefore, strictly speaking, it is not correct to fit a mean (model) to several data points (experimental data). Thus, the $R^2$ of 0.36 for data drawn from the modeled distribution and experimental data should be evaluated.
+ The initial objective of this chapter was to identify the factors that independently and relevantly influence takeover time. While the literature regression found ‘Traffic’ and `Criticality of the Scenario’ as significant variables, the regression on experimental data found ‘Ride Duration’, ‘Occupied Hands’ and ‘Body Turned’. The first model has an $R^2$ of 23\%, the second of 29.3\% The most obvious finding to emerge from the SVD is that there is a cognitive and a motor part of the takeover. If SVD is conducted for Factor analysis, it finds one factor that is loaded by ‘Age’, ‘Mental Workload’ and ‘Ride Duration’ and another factor that is loaded by ‘Hands Occupied', `Body Towards Road' and `Gaze Off Road'. If SVD is conducted to then be weighted by takeover time, it finds one factor that is loaded by ‘Age’, Mental Workload’ and ‘Traffic’, and another by Gaze Off Road', `Hands Occupied' and `Body turned'. 
 \\
-Another note of caution is due here since both this and Chapter 2 report $R^2$. This might lead to confusion, because the background of these $R^2$ is a completely different one. The $R^2$ reported in regression analysis describes the fit of the model to the data it has been modeled with. The $R^2$ reported here, on the other hand, describes a fit of experimental data to a model that has been established completely independently and only based on basic research findings.  
+
+The finding that is not in line with all other outcomes is the regression equation that results from the literature data. Several reasons exist for taking the literature regression with a grain of salt. One is that experimental setups differ greatly, another that it is hard to do a regression with only means. Furthermore, the takeover times do not consider takeover quality and greatly differ in that aspect. As Gold mentions, simulator studies are limited in their ability to induce haptic and vestibular stimuli, risk perception, and are therefore only suitable for reporting relative and not absolute values (\cite{Gold2016}). 
 \\
-\cite{plavvsic2010analysis} sets several requirements for modeling driver behavior: it should 1) employ knowledge of detailed cognitive structure but simulate performance on higher level 2) run with if-then rules 3) be modular (easy to add and change) and 4) reflect normative and naturalistic driver behavior. In this chapter, we described a model that meets those requirements by combining job-shop scheduling with background knowledge from ACT-R. 
 
+While the result from the experimental regression fits to the SVD results because it includes one cognitive and two motor variable as significant, another outcome might be a lot more important: The main variable that explains variability of the data is the individual subject. Including the subject as random effect changes $R^2$ from 29\% to 85\%! It can thus be suggested that the important take-home message for variables that influence takeover time is:
 
-\section{Outlook}
-At the moment, the described model is fully based on basic research findings. Of course, it is possible to fit it to either 
-of the two available data sets (literature research or experimental data). This could not only improve the fit to the takeover 
-time data, but also the fit to the sub-steps of the takeover (Hands on wheel etc.). For example, the model predicts a takeover 
-time of 4.85 seconds for the searching condition. In the experiments, subjects took on average 4.9 seconds to complete the 
-takeover. This is a good estimation. However, the model predicts a time of 3.4 seconds for `hands on wheel'. In the experiments,
-in contrast, subjects have their hands on the wheel after 4.14 seconds. If desired, the model could be changed here to better 
-represent experimental data. This could be done by adding or deleting actions or by changing action lengths. 
-For reasons of scientific nature we decided against this intervention.
+\begin{itemize}
+\item	Include and measure one variable for motor distraction
+\item	Include and measure one variable for cognitive distraction
+\item	Include information on how fast the subject was in previous takeovers.
+\end{itemize}
 
+This finding is contrary to previous studies which have suggested that different motor or cognitive tasks relevantly change takeover time. We find that it is not necessary to include and measure several motor and cognitive variables. One each should be enough to be able to predict with high accuracy, when combined with information on the specific subject. This could explain why studies on that field differ: \cite{zeeb2016take} and \cite{befelein2016} report that cognitive variables mainly influence takeover time (to the longer). \cite{Gold2015} conclude that cognitive tasks influence cognitively demanding takeovers, but only motor tasks influence easy and well-practiced takeovers. In \cite{gold2016taking} and \cite{louw2015engaging} it is observed that cognitive distraction only has a minor effect on takeover time. \cite{feldhutter2016duration} even finds faster takeover times for subjects that were cognitively distracted.  
+\\
 
+The large influence of inter-individual differences might also explain the various outcomes of studies: \cite{louw2015engaging} find that a gaze off road fastens takeover time, while all other studies find the opposite. Within the study of \cite{korber2016influence}, elderly subjects take longer than younger ones in some conditions and shorter in other conditions. Non-urgent takeovers are faster in \cite{zeeb2016take} (within study) and slower in \cite{eriksson2016take} (between studies) and \cite{walch2015autonomous} (within study). \cite{Gold2015} finds the fastest takeover times for the cognitively very demanding 2-back task, medium takeover times for reading (which is mostly motorically demanding compared to the two other tasks), and the longest times for the again cognitively demanding surrogate reference task. All in all, it can be summarized that studies do not come to clear, coherent solutions. The cause of this might be the great influence of inter-individual differences.
+\\
 
-
-\begin{table}
- \centering
-  \begin{tabular}{ c | c | c | c | c | c }
-    \hline
-    
-     & Data & Model \\ \hline
-     Befelein - Baseline & 2.4 & 3.55 \\ \hline
-     Befelein - calculate &3.8 & 3.7\\ \hline
-     Befelein - search & 3.5 & 5.72\\ \hline
-     Befelein - watch Video&4&5.7\\ \hline
-     Befelein - Tetris& 4.7&5.7 \\ \hline
-     Gold - Baseline &2.49&2.77\\ \hline
-     Gold - Traffic&3.46 & 4.36\\ \hline
-     Gold - Mental Workload & 2.69 & 2.92  \\ \hline
-     Gold - Mental Workload and Traffic & 3.61 & 4.51\\ \hline
-    
-  \end{tabular}
- \caption{Comparison with Literature}
-\end{table}\label{comlit}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+All in all, the findings discussed in this chapter have important implications for developing future models of takeover time.
 
